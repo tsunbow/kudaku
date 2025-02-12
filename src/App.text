@@ -1,0 +1,1007 @@
+<script setup lang="js">
+import trim1 from "./assets/img/main_img.png";
+import KU from "./assets/img/KU1.svg";
+import DA from "./assets/img/DA.svg";
+import KU2 from "./assets/img/KU2.svg";
+import creativeArea from "./assets/img/creative-area.svg";
+import bg from "./assets/img/bg.png";
+import logo_top from "./assets/img/logo_top.svg";
+import x19 from "./assets/img/1-9.png";
+import ellipse from "./assets/img/ellipse.png";
+import x41 from "./assets/img/4-1.png";
+import x271 from "./assets/img/27-1.png";
+import x281 from "./assets/img/28-1.png";
+import x631 from "./assets/img/63-1.png";
+import x701 from "./assets/img/70-1.png";
+import vector from "./assets/img/vector.png";
+</script>
+
+<template>
+  <div class="desktop">
+    <div class="div">
+      <div class="overlap">
+        <div class="overlap-group">
+          <div class="overlap-2">
+            <div class="frame">
+              <div class="overlap-group-2">
+                <div class="frame-2">
+                  <img class="trim" alt="Trim" :src="trim1" />
+                </div>
+
+                <img class="KU" alt="Ku" :src="KU" />
+
+                <img class="DA" alt="Da" :src="DA" />
+
+                <img
+                  class="creative-area"
+                  alt="Creative area"
+                  :src="creativeArea"
+                />
+
+                <img class="img" alt="Ku" :src="KU2" />
+              </div>
+            </div>
+
+            <img class="group" alt="Group" :src="logo_top" />
+
+            <img class="element" alt="Element" :src="x701" />
+
+            <div class="group-2">
+              <div class="text-wrapper">Play Concept</div>
+
+              <div class="overlap-3">
+                <img class="vector" alt="Vector" :src="vector" />
+
+                <div class="ellipse" />
+              </div>
+            </div>
+
+            <img class="element-2" alt="Element" :src="x281" />
+
+            <img class="element-3" alt="Element" :src="x19" />
+
+            <img class="element-4" alt="Element" :src="x631" />
+
+            <div class="frame-3">
+              <div class="overlap-group-wrapper">
+                <div class="overlap-group-3">
+                  <div class="text-wrapper-2">
+                    私たちは問う.
+                    <br />
+                    誰かの顔色ではなく, そこに埋もれた　　　&nbsp;&nbsp;を.
+                  </div>
+
+                  <div class="text-wrapper-3">本質</div>
+                </div>
+              </div>
+
+              <div class="overlap-wrapper">
+                <div class="overlap-4">
+                  <div class="text-wrapper-2">
+                    私たちは試す.
+                    <br />
+                    既成概念を取っ払って,&nbsp;&nbsp;道標となる
+                    　　　&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    を.
+                  </div>
+
+                  <div class="text-wrapper-4">アプローチ</div>
+                </div>
+              </div>
+
+              <div class="div-wrapper">
+                <div class="overlap-5">
+                  <div class="text-wrapper-2">
+                    私たちは進む.
+                    <br />
+                    アンテナを張り巡らし,&nbsp;&nbsp;時代の　　　&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;を.
+                  </div>
+
+                  <div class="text-wrapper-5">半歩先</div>
+                </div>
+              </div>
+
+              <div class="group-3">
+                <div class="overlap-6">
+                  <div class="text-wrapper-2">
+                    私たちは巻き込む.
+                    <br />
+                    領域や組織を超えたチームで,&nbsp;&nbsp;衝突を恐れない&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;を.
+                  </div>
+
+                  <div class="text-wrapper-6">議論</div>
+                </div>
+              </div>
+
+              <div class="group-4">
+                <div class="overlap-7">
+                  <div class="text-wrapper-2">
+                    私たちは願う.
+                    <br />
+                    産まれたアイデアが多くの人に&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ことを.
+                  </div>
+
+                  <div class="text-wrapper-7">愛される</div>
+                </div>
+              </div>
+
+              <div class="group-5">
+                <div class="overlap-8">
+                  <div class="text-wrapper-2">
+                    私たちは並び歩む.
+                    <br />
+                    クライアントと本音で&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    ,&nbsp;&nbsp;感性を&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    .&nbsp;&nbsp;&nbsp;&nbsp; しながら.
+                  </div>
+
+                  <div class="text-wrapper-8">向きあい</div>
+
+                  <div class="text-wrapper-9">共有</div>
+                </div>
+              </div>
+
+              <div class="group-6">
+                <div class="overlap-9">
+                  <div class="text-wrapper-10">
+                    私たちは&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    .
+                  </div>
+
+                  <div class="text-wrapper-11">砕く</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <img class="element-5" alt="Element" :src="x271" />
+        </div>
+
+        <img class="element-6" alt="Element" :src="x41" />
+      </div>
+
+      <div class="overlap-10">
+        <img class="frame-4" alt="Frame" :src="bg" />
+
+        <img class="element-7" alt="Element" :src="ellipse" />
+
+        <p class="where-we-are">
+          <span class="span">W</span>
+
+          <span class="text-wrapper-12">
+            here
+            <br />
+            &nbsp;&nbsp;we
+            <br />
+          </span>
+
+          <span class="text-wrapper-13"> . A</span>
+
+          <span class="text-wrapper-12">re</span>
+        </p>
+
+        <div class="text-wrapper-14">
+          砕区は、既存のやり方やルールに縛られない
+          <br />
+          クリエイティブ・エリア。
+          <br />
+          <br />
+          少数精鋭チームにより、
+          <br />
+          全体像を把握・共有しながら細部にこだわっていく。
+          <br />
+          無駄をカットし、然るべき部分にリソースを配分する。
+          <br />
+          <br />
+          プロデューサー、映像作家、アートディレクター、写真家、空間デザイナーなどが交わり
+          <br />
+          クライアントとの自由な発想とコラボレーションで
+          <br />
+          心と人を動かすアウトプットを産み、愛されるブランドを育む。
+        </div>
+
+        <img class="group-7" alt="Group" :src="logo_top" />
+      </div>
+
+      <div class="frame-5">
+        <div class="overlap-11">
+          <img class="vector-2" alt="Vector" :src="vector" />
+
+          <div class="group-8">
+            <div class="overlap-group-4">
+              <p class="let-s-talk">
+                <span class="text-wrapper-15">L</span>
+
+                <span class="text-wrapper-16">e</span>
+
+                <span class="text-wrapper-17">t</span>
+
+                <span class="text-wrapper-18">’</span>
+
+                <span class="text-wrapper-16">s </span>
+
+                <span class="text-wrapper-19">T</span>
+
+                <span class="text-wrapper-16">alk</span>
+              </p>
+
+              <div class="ellipse-2" />
+            </div>
+          </div>
+        </div>
+
+        <div class="element-KUDAKU">©2025&nbsp;&nbsp;KUDAKU</div>
+      </div>
+
+      <div class="frame-6">
+        <div class="text-wrapper-20">Statement</div>
+
+        <div class="text-wrapper-21">Where We Are</div>
+
+        <div class="frame-7">
+          <div class="text-wrapper-22">Our Projects</div>
+        </div>
+
+        <div class="text-wrapper-21">Let’s Talk</div>
+
+        <div class="text-wrapper-23">Play Concept</div>
+
+        <div class="rectangle" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<style>
+@import url('https://use.typekit.net/jnv8yhd.css');
+@import url('https://use.typekit.net/azb1dqq.css');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&family=Zen+Old+Mincho&display=swap');
+
+.desktop {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.desktop .div {
+  background-image: url(./assets/img/noise.jpg);
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 6031px;
+  position: relative;
+  width: 1440px;
+}
+
+.desktop .overlap {
+  height: 3280px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1440px;
+}
+
+.desktop .overlap-group {
+  height: 2801px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1440px;
+}
+
+.desktop .overlap-2 {
+  height: 2499px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1440px;
+}
+
+.desktop .frame {
+  height: 818px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1440px;
+}
+
+.desktop .overlap-group-2 {
+  height: 631px;
+  position: relative;
+  top: 165px;
+}
+
+.desktop .frame-2 {
+  align-items: flex-start;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+  left: 388px;
+  position: absolute;
+  top: 24px;
+}
+
+.desktop .trim {
+  height: 498px;
+  object-fit: cover;
+  position: relative;
+  width: 664px;
+}
+
+.desktop .KU {
+  height: 379px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 517px;
+}
+
+.desktop .DA {
+  height: 224px;
+  left: 0;
+  position: absolute;
+  top: 297px;
+  width: 287px;
+}
+
+.desktop .creative-area {
+  height: 56px;
+  left: 1046px;
+  position: absolute;
+  top: 96px;
+  width: 116px;
+}
+
+.desktop .img {
+  height: 360px;
+  left: 991px;
+  position: absolute;
+  top: 271px;
+  width: 449px;
+}
+
+.desktop .group {
+  height: 132px;
+  left: 688px;
+  position: absolute;
+  top: 356px;
+  width: 65px;
+}
+
+.desktop .element {
+  height: 447px;
+  left: 1017px;
+  object-fit: cover;
+  position: absolute;
+  top: 1175px;
+  width: 295px;
+}
+
+.desktop .group-2 {
+  height: 108px;
+  left: 843px;
+  position: absolute;
+  top: 366px;
+  width: 92px;
+}
+
+.desktop .text-wrapper {
+  color: #ffffff;
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  left: 5px;
+  letter-spacing: 0.42px;
+  line-height: 16.1px;
+  position: absolute;
+  text-align: center;
+  top: 98px;
+  white-space: nowrap;
+}
+
+.desktop .overlap-3 {
+  border-radius: 45px;
+  height: 90px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 90px;
+}
+
+.desktop .vector {
+  height: 22px;
+  left: 34px;
+  position: absolute;
+  top: 34px;
+  width: 25px;
+}
+
+.desktop .ellipse {
+  border: 1px solid;
+  border-color: #d9d9d9;
+  border-radius: 45px;
+  height: 90px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 90px;
+}
+
+.desktop .element-2 {
+  height: 331px;
+  left: 720px;
+  object-fit: cover;
+  position: absolute;
+  top: 2168px;
+  width: 510px;
+}
+
+.desktop .element-3 {
+  height: 225px;
+  left: 1138px;
+  object-fit: cover;
+  position: absolute;
+  top: 2083px;
+  width: 302px;
+}
+
+.desktop .element-4 {
+  height: 299px;
+  left: 289px;
+  object-fit: cover;
+  position: absolute;
+  top: 1784px;
+  width: 252px;
+}
+
+.desktop .frame-3 {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  left: 0;
+  position: absolute;
+  top: 807px;
+  width: 1282px;
+}
+
+.desktop .overlap-group-wrapper {
+  height: 96px;
+  position: relative;
+  width: 878px;
+}
+
+.desktop .overlap-group-3 {
+  height: 100px;
+  position: relative;
+  width: 874px;
+}
+
+.desktop .text-wrapper-2 {
+  color: #ffffff;
+  font-family: "Zen Kaku Gothic New", serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 46px;
+  left: 0;
+  letter-spacing: -4.60px;
+  line-height: 64.4px;
+  position: absolute;
+  top: 0;
+}
+
+.desktop .text-wrapper-3 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 691px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 15px;
+  white-space: nowrap;
+}
+
+.desktop .overlap-wrapper {
+  height: 96px;
+  position: relative;
+  width: 1077px;
+}
+
+.desktop .overlap-4 {
+  height: 100px;
+  position: relative;
+  width: 1073px;
+}
+
+.desktop .text-wrapper-4 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 649px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 43px;
+  white-space: nowrap;
+}
+
+.desktop .div-wrapper {
+  height: 96px;
+  position: relative;
+  width: 861px;
+}
+
+.desktop .overlap-5 {
+  height: 100px;
+  position: relative;
+  width: 857px;
+}
+
+.desktop .text-wrapper-5 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 557px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 43px;
+  white-space: nowrap;
+}
+
+.desktop .group-3 {
+  height: 96px;
+  position: relative;
+  width: 1060px;
+}
+
+.desktop .overlap-6 {
+  height: 100px;
+  position: relative;
+  width: 1056px;
+}
+
+.desktop .text-wrapper-6 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 861px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 43px;
+  white-space: nowrap;
+}
+
+.desktop .group-4 {
+  height: 96px;
+  position: relative;
+  width: 1035px;
+}
+
+.desktop .overlap-7 {
+  height: 100px;
+  position: relative;
+  width: 1031px;
+}
+
+.desktop .text-wrapper-7 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 599px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 43px;
+  white-space: nowrap;
+}
+
+.desktop .group-5 {
+  height: 96px;
+  position: relative;
+  width: 1194px;
+}
+
+.desktop .overlap-8 {
+  height: 100px;
+  position: relative;
+  width: 1188px;
+}
+
+.desktop .text-wrapper-8 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 429px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 43px;
+  white-space: nowrap;
+}
+
+.desktop .text-wrapper-9 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 879px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 43px;
+  white-space: nowrap;
+}
+
+.desktop .group-6 {
+  height: 49.36px;
+  position: relative;
+  width: 378.5px;
+}
+
+.desktop .overlap-9 {
+  height: 57px;
+  position: relative;
+  top: -4px;
+  width: 360px;
+}
+
+.desktop .text-wrapper-10 {
+  color: #ffffff;
+  font-family: "Zen Kaku Gothic New", serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 46px;
+  left: 0;
+  letter-spacing: -4.60px;
+  line-height: 64.4px;
+  position: absolute;
+  top: 21px;
+  white-space: nowrap;
+}
+
+.desktop .text-wrapper-11 {
+  color: #ff0000;
+  font-family: "Zen Old Mincho", serif;
+  font-weight: 400;
+  font-style: normal;
+  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
+  font-size: 78px;
+  left: 204px;
+  letter-spacing: 0;
+  line-height: 148.2px;
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+}
+
+.desktop .element-5 {
+  height: 403px;
+  left: 176px;
+  object-fit: cover;
+  position: absolute;
+  top: 2398px;
+  width: 277px;
+}
+
+.desktop .element-6 {
+  height: 528px;
+  left: 555px;
+  object-fit: cover;
+  position: absolute;
+  top: 2752px;
+  width: 611px;
+}
+
+.desktop .overlap-10 {
+  height: 1440px;
+  left: 0;
+  position: absolute;
+  top: 3341px;
+  width: 1440px;
+}
+
+.desktop .frame-4 {
+  height: 958px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1440px;
+}
+
+.desktop .element-7 {
+  height: 400px;
+  left: 434px;
+  position: absolute;
+  top: 1040px;
+  width: 1006px;
+}
+
+.desktop .where-we-are {
+  color: #ffffff;
+  font-family: nautica, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 255.4px;
+  left: 676px;
+  letter-spacing: 7.66px;
+  line-height: 293.8px;
+  position: absolute;
+  top: 597px;
+}
+
+.desktop .span {
+  font-weight: 500;
+  letter-spacing: 19.58px;
+}
+
+.desktop .text-wrapper-12 {
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 220px;
+  letter-spacing: 14.52px;
+  line-height: 253.0px;
+}
+
+.desktop .text-wrapper-13 {
+  font-family: ivyora-display, sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 220px;
+  letter-spacing: 14.52px;
+  line-height: 253.0px;
+}
+
+.desktop .text-wrapper-14 {
+  color: #ffffff;
+  font-family: "Zen Kaku Gothic New", serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  left: 340px;
+  letter-spacing: -1.60px;
+  line-height: 30.4px;
+  position: absolute;
+  top: 867px;
+  width: 715px;
+}
+
+.desktop .group-7 {
+  height: 162px;
+  left: 1163px;
+  position: absolute;
+  top: 927px;
+  width: 72px;
+}
+
+.desktop .frame-5 {
+  background-image: url(./assets/img/2-9.png);
+  background-position: 50% 50%;
+  background-size: cover;
+  height: 876px;
+  left: 0;
+  position: absolute;
+  top: 5155px;
+  width: 1440px;
+}
+
+.desktop .overlap-11 {
+  height: 180px;
+  left: 464px;
+  position: absolute;
+  top: 343px;
+  width: 510px;
+}
+
+.desktop .vector-2 {
+  height: 180px;
+  left: 132px;
+  position: absolute;
+  top: 0;
+  width: 249px;
+}
+
+.desktop .group-8 {
+  height: 162px;
+  left: 0;
+  position: absolute;
+  top: 8px;
+  width: 510px;
+}
+
+.desktop .overlap-group-4 {
+  height: 178px;
+  position: relative;
+  top: -1px;
+  width: 503px;
+}
+
+.desktop .let-s-talk {
+  color: #ff0000;
+  font-family: nautica, sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 160.9px;
+  left: 0;
+  line-height: 185.0px;
+  position: absolute;
+  text-align: center;
+  top: 1px;
+  white-space: nowrap;
+}
+
+.desktop .text-wrapper-15 {
+  letter-spacing: 0;
+}
+
+.desktop .text-wrapper-16 {
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 114.3px;
+  letter-spacing: 0;
+  line-height: 131.4px;
+}
+
+.desktop .text-wrapper-17 {
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 114.3px;
+  letter-spacing: -37.86px;
+  line-height: 131.4px;
+}
+
+.desktop .text-wrapper-18 {
+  font-size: 114.3px;
+  letter-spacing: 13.05px;
+  line-height: 131.4px;
+}
+
+.desktop .text-wrapper-19 {
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -44.00px;
+}
+
+.desktop .ellipse-2 {
+  border: 1px solid;
+  border-color: #ff0000;
+  border-radius: 203.01px / 88.82px;
+  height: 178px;
+  left: 53px;
+  position: absolute;
+  top: 0;
+  width: 406px;
+}
+
+.desktop .element-KUDAKU {
+  color: #ff0000;
+  font-family: ivyora-display, sans-serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 32px;
+  left: 593px;
+  letter-spacing: 1.60px;
+  line-height: 36.8px;
+  position: absolute;
+  text-align: center;
+  top: 852px;
+  white-space: nowrap;
+}
+
+.desktop .frame-6 {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  left: 1166px;
+  padding: 0px 7px;
+  position: fixed;
+  top: 56px;
+  width: 227px;
+}
+
+.desktop .text-wrapper-20 {
+  color: #ffffff;
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  letter-spacing: 0.54px;
+  line-height: 20.7px;
+  margin-top: -1.00px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.desktop .text-wrapper-21 {
+  color: #ffffff;
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  letter-spacing: 0.54px;
+  line-height: 20.7px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.desktop .frame-7 {
+  align-items: flex-start;
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 5px;
+  position: relative;
+}
+
+.desktop .text-wrapper-22 {
+  color: #ffffff80;
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  letter-spacing: 0.54px;
+  line-height: 20.7px;
+  margin-top: -1.00px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.desktop .text-wrapper-23 {
+  color: #ffffff;
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0.54px;
+  line-height: 20.7px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.desktop .rectangle {
+  background-color: #ff0000;
+  height: 3px;
+  left: 145px;
+  position: absolute;
+  top: 99px;
+  width: 75px;
+}
+</style>
