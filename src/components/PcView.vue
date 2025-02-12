@@ -6,8 +6,8 @@ import KU2 from '@/assets/img/KU2.svg'
 import creativeArea from '@/assets/img/creative-area.svg'
 import bg from '@/assets/img/bg.png'
 import logo_top from '@/assets/img/logo_top.svg'
+import logo_red from '@/assets/img/logo_red.svg'
 import x19 from '@/assets/img/1-9.png'
-import ellipse from '@/assets/img/ellipse.png'
 import layer from '@/assets/img/layer.png'
 import x41 from '@/assets/img/4-1.png'
 import x271 from '@/assets/img/27-1.png'
@@ -15,146 +15,126 @@ import x281 from '@/assets/img/28-1.png'
 import x631 from '@/assets/img/63-1.png'
 import x701 from '@/assets/img/70-1.png'
 import vector from '@/assets/img/vector.png'
+
+import MouseFollower from '@/components/MouseFollower.vue'
+// import TextRevealAnimation from '@/components/TextRevealAnimation.vue'
+import ScrollRevealDescription from '@/components/ScrollRevealDescription.vue'
+import BlurLogo from '@/components/BlurLogo.vue'
+import RevealLogo from '@/components/RevealLogo.vue'
 </script>
 
 <template>
+  <MouseFollower />
   <div class="pc">
     <div class="hero">
-      <div class="video-frame">
-        <img class="trim" alt="Trim" :src="video" />
-        <img class="group" alt="Group" :src="logo_top" />
-        <div class="movie-play">
-          <div class="ellipse">
-            <img class="vector" alt="Vector" :src="vector" />
-          </div>
-          <div class="text-wrapper">Play Concept</div>
+      <div class="hero-body">
+        <div class="video-frame">
+          <img class="trim" alt="Trim" :src="video" />
         </div>
+        <img class="KU" alt="Ku" :src="KU" />
+        <img class="DA" alt="Da" :src="DA" />
+        <img class="KU2" alt="Ku" :src="KU2" />
+        <img class="creative-area" alt="Creative area" :src="creativeArea" />
       </div>
-      <img class="KU" alt="Ku" :src="KU" />
-      <img class="DA" alt="Da" :src="DA" />
-      <img class="KU2" alt="Ku" :src="KU2" />
-      <img class="creative-area" alt="Creative area" :src="creativeArea" />
+      <div class="frame-6">
+        <div class="frame-6-text">Statement</div>
+
+        <div class="frame-6-text">Where We Are</div>
+
+        <div class="frame-7">
+          <div class="frame-6-text">Our Projects</div>
+        </div>
+
+        <div class="frame-6-text">Let’s Talk</div>
+
+        <div class="frame-6-text">Play Concept</div>
+
+        <div class="rectangle" />
+      </div>
     </div>
 
-    <img class="element" alt="Element" :src="x701" />
-    <img class="element-2" alt="Element" :src="x281" />
-    <img class="element-3" alt="Element" :src="x19" />
-    <img class="element-4" alt="Element" :src="x631" />
-    <img class="element-5" alt="Element" :src="x271" />
-    <img class="element-6" alt="Element" :src="x41" />
-
-    <div class="description">
-      <div class="description-text">
-        私たちは問う.
-        <br />
-        誰かの顔色ではなく, そこに埋もれた<span class="emphasis">本質</span>を.
+    <div class="hero-play">
+      <BlurLogo class="group" :logoSrc="logo_top" />
+      <div class="movie-play">
+        <div class="ellipse">
+          <img class="vector" alt="Vector" :src="vector" />
+        </div>
+        <div class="text-wrapper">Play Concept</div>
       </div>
-      <div class="description-text">
-        私たちは試す.
-        <br />
-        既成概念を取っ払って,道標となる<span class="emphasis">アプローチ</span>を.
-      </div>
-      <div class="description-text">
-        私たちは進む.
-        <br />
-        アンテナを張り巡らし,時代の<span class="emphasis">半歩先</span>を.
-      </div>
-      <div class="description-text">
-        私たちは巻き込む.
-        <br />
-        領域や組織を超えたチームで,衝突を恐れない<span class="emphasis">議論</span>を.
-      </div>
-      <div class="description-text">
-        私たちは願う.
-        <br />
-        産まれたアイデアが多くの人に<span class="emphasis">愛される</span>ことを.
-      </div>
-      <div class="description-text">
-        私たちは並び歩む.
-        <br />
-        クライアントと本音で<span class="emphasis">向きあい</span>感性を<span class="emphasis"
-          >共有</span
-        >しながら.
-      </div>
-      <div class="description-text">私たちは<span class="emphasis">砕く</span>.</div>
     </div>
 
-    <div class="overlap-10">
-      <img class="frame-4" alt="Frame" :src="bg" />
-      <img class="element-7" alt="Element" :src="layer" />
+    <div class="content-wrapper">
+      <ScrollRevealDescription />
+      <div class="parallax">
+        <img class="element element_A" alt="Element" :src="x701" />
+        <img class="element-2 element_B" alt="Element" :src="x281" />
+        <img class="element-3 element_C" alt="Element" :src="x19" />
+      </div>
+      <img class="element-4" alt="Element" :src="x631" />
+      <img class="element-5" alt="Element" :src="x271" />
+      <img class="element-6" alt="Element" :src="x41" />
 
-      <p class="where-we-are-content">
-        <span class="where-we-are-text weight-400">
-          <span class="span">W</span>
-          <span class="where-we-are-text weight-400">here</span>
+      <div class="overlap-10">
+        <img class="frame-4" alt="Frame" :src="bg" />
+        <img class="element-7" alt="Element" :src="layer" />
+
+        <p class="where-we-are-content">
+          <span class="where-we-are-text weight-400">
+            <span class="span">W</span>
+            <span class="where-we-are-text weight-400">here</span>
+            <br />
+            <span class="where-we-are-text margin-we weight-400">we</span>
+            <br />
+            <span class="where-we-are-text lineHeight style-italic"> . A</span>
+            <span class="where-we-are-text weight-400">re</span>
+          </span>
+        </p>
+
+        <div class="text-wrapper-14">
+          砕区は、既存のやり方やルールに縛られない
           <br />
-          <span class="where-we-are-text margin-we weight-400">we</span>
+          クリエイティブ・エリア。
           <br />
-          <span class="where-we-are-text lineHeight style-italic"> . A</span>
-          <span class="where-we-are-text weight-400">re</span>
-        </span>
-      </p>
+          <br />
+          少数精鋭チームにより、
+          <br />
+          全体像を把握・共有しながら細部にこだわっていく。
+          <br />
+          無駄をカットし、然るべき部分にリソースを配分する。
+          <br />
+          <br />
+          プロデューサー、映像作家、アートディレクター、写真家、空間デザイナーなどが交わり
+          <br />
+          クライアントとの自由な発想とコラボレーションで
+          <br />
+          心と人を動かすアウトプットを産み、愛されるブランドを育む。
+        </div>
 
-      <div class="text-wrapper-14">
-        砕区は、既存のやり方やルールに縛られない
-        <br />
-        クリエイティブ・エリア。
-        <br />
-        <br />
-        少数精鋭チームにより、
-        <br />
-        全体像を把握・共有しながら細部にこだわっていく。
-        <br />
-        無駄をカットし、然るべき部分にリソースを配分する。
-        <br />
-        <br />
-        プロデューサー、映像作家、アートディレクター、写真家、空間デザイナーなどが交わり
-        <br />
-        クライアントとの自由な発想とコラボレーションで
-        <br />
-        心と人を動かすアウトプットを産み、愛されるブランドを育む。
+        <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
       </div>
 
-      <img class="group-7" alt="Group" :src="logo_top" />
-    </div>
+      <div class="frame-5">
+        <div class="overlap-11">
+          <img class="vector-2" alt="Vector" :src="vector" />
 
-    <div class="frame-5">
-      <div class="overlap-11">
-        <img class="vector-2" alt="Vector" :src="vector" />
-
-        <div class="group-8">
-          <div class="overlap-group-4">
-            <div class="letsTalk-content">
-              <span>L</span>
-              <span class="letsTalk-text style-normal spacing-0">e</span>
-              <span class="letsTalk-text style-normal spacing-lets">t</span>
-              <span class="letsTalk-text spacing-comma">’</span>
-              <span class="letsTalk-text style-normal spacing-0">s </span>
-              <span class="style-italic spacing-t">T</span>
-              <span class="letsTalk-text style-normal spacing-0">alk</span>
-              <div class="ellipse-2" />
+          <div class="group-8">
+            <div class="overlap-group-4">
+              <div class="letsTalk-content">
+                <span>L</span>
+                <span class="letsTalk-text style-normal spacing-0">e</span>
+                <span class="letsTalk-text style-normal spacing-lets">t</span>
+                <span class="letsTalk-text spacing-comma">’</span>
+                <span class="letsTalk-text style-normal spacing-0">s </span>
+                <span class="style-italic spacing-t">T</span>
+                <span class="letsTalk-text style-normal spacing-0">alk</span>
+                <div class="ellipse-2" />
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="element-KUDAKU">©2025&nbsp;&nbsp;KUDAKU</div>
       </div>
-
-      <div class="element-KUDAKU">©2025&nbsp;&nbsp;KUDAKU</div>
-    </div>
-
-    <div class="frame-6">
-      <div class="frame-6-text">Statement</div>
-
-      <div class="frame-6-text">Where We Are</div>
-
-      <div class="frame-7">
-        <div class="frame-6-text">Our Projects</div>
-      </div>
-
-      <div class="frame-6-text">Let’s Talk</div>
-
-      <div class="frame-6-text">Play Concept</div>
-
-      <div class="rectangle" />
     </div>
   </div>
 </template>
@@ -167,18 +147,31 @@ import vector from '@/assets/img/vector.png'
 
 .pc {
   /* background-image: url(./assets/img/noise.jpg); */
-  background-color: #232628;
   background-position: 50% 50%;
   background-size: cover;
   height: 6031px;
   position: relative;
-  width: 1440px;
+  width: 100vw;
 }
 
 .hero {
   height: 631px;
-  position: relative;
+}
+
+.hero-body {
+  position: fixed;
+  width: 100vw;
+  height: 631px;
   top: 165px;
+  z-index: 1;
+}
+
+.hero-play {
+  position: absolute; /* fixedから absoluteに変更 */
+  width: 100%;
+  height: 631px;
+  top: 165px;
+  z-index: 2;
 }
 
 .video-frame {
@@ -240,6 +233,28 @@ import vector from '@/assets/img/vector.png'
   margin: auto;
 }
 
+.content-wrapper {
+  position: relative;
+  margin-top: 150px;
+  z-index: 2;
+  overflow-x: hidden;
+  perspective: 50px;
+}
+
+.parallax {
+  transform-style: preserve-3d;
+}
+
+.element_A {
+  transform: translateZ(20px) translateX(-20%);
+  left: 120px;
+}
+.element_B {
+  transform: translateZ(0);
+}
+.element_C {
+  transform: translateZ(-30px) translateX(120%);
+}
 .element {
   height: 447px;
   left: 1017px;
@@ -325,9 +340,8 @@ import vector from '@/assets/img/vector.png'
   flex-direction: column;
   gap: 84px;
   left: 0;
-  position: absolute;
   top: 807px;
-  width: 100%;
+  width: 100vw;
 }
 
 .description-text {
@@ -374,15 +388,16 @@ import vector from '@/assets/img/vector.png'
   left: 0;
   position: absolute;
   top: 3341px;
-  width: 1440px;
+  width: 100vw;
 }
 
 .frame-4 {
-  height: 958px;
+  height: 2160px;
   left: 0;
   position: absolute;
   top: 0;
-  width: 1440px;
+  width: 100vw;
+  opacity: 0.9;
 }
 
 .element-7 {
@@ -444,6 +459,7 @@ import vector from '@/assets/img/vector.png'
 }
 
 .group-7 {
+  color: red;
   height: 162px;
   left: 1163px;
   position: absolute;
@@ -459,7 +475,7 @@ import vector from '@/assets/img/vector.png'
   left: 0;
   position: absolute;
   top: 5155px;
-  width: 1440px;
+  width: 100vw;
 }
 
 .overlap-11 {
@@ -576,12 +592,13 @@ import vector from '@/assets/img/vector.png'
   font-weight: 500;
   font-style: italic;
   font-size: 32px;
-  left: 593px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
   letter-spacing: 1.6px;
   line-height: 36.8px;
-  position: absolute;
   text-align: center;
-  bottom: 0;
   white-space: nowrap;
 }
 
@@ -595,6 +612,7 @@ import vector from '@/assets/img/vector.png'
   position: fixed;
   top: 56px;
   width: 227px;
+  z-index: 20;
 }
 
 .frame-6-text {
