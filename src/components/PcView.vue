@@ -19,6 +19,7 @@ import vector from '@/assets/img/vector.png'
 import MouseFollower from '@/components/MouseFollower.vue'
 // import TextRevealAnimation from '@/components/TextRevealAnimation.vue'
 import ScrollRevealDescription from '@/components/ScrollRevealDescription.vue'
+import ScrollRevealSection from '@/components/ScrollRevealSection.vue'
 import BlurLogo from '@/components/BlurLogo.vue'
 import RevealLogo from '@/components/RevealLogo.vue'
 </script>
@@ -64,16 +65,12 @@ import RevealLogo from '@/components/RevealLogo.vue'
     </div>
 
     <div class="content-wrapper">
-      <ScrollRevealDescription />
-      <div class="parallax">
-        <img class="element element_A" alt="Element" :src="x701" />
-        <img class="element-2 element_B" alt="Element" :src="x281" />
-        <img class="element-3 element_C" alt="Element" :src="x19" />
-      </div>
-      <img class="element-4" alt="Element" :src="x631" />
-      <img class="element-5" alt="Element" :src="x271" />
-      <img class="element-6" alt="Element" :src="x41" />
-
+      <ScrollRevealSection>
+        <template #text>
+          <!-- ここにテキストコンテンツを配置 -->
+          <ScrollRevealDescription />
+        </template>
+      </ScrollRevealSection>
       <div class="overlap-10">
         <img class="frame-4" alt="Frame" :src="bg" />
         <img class="element-7" alt="Element" :src="layer" />
@@ -167,7 +164,7 @@ import RevealLogo from '@/components/RevealLogo.vue'
 }
 
 .hero-play {
-  position: absolute; /* fixedから absoluteに変更 */
+  position: absolute;
   width: 100%;
   height: 631px;
   top: 165px;
@@ -237,24 +234,9 @@ import RevealLogo from '@/components/RevealLogo.vue'
   position: relative;
   margin-top: 150px;
   z-index: 2;
-  overflow-x: hidden;
-  perspective: 50px;
-}
-
-.parallax {
   transform-style: preserve-3d;
 }
 
-.element_A {
-  transform: translateZ(20px) translateX(-20%);
-  left: 120px;
-}
-.element_B {
-  transform: translateZ(0);
-}
-.element_C {
-  transform: translateZ(-30px) translateX(120%);
-}
 .element {
   height: 447px;
   left: 1017px;
@@ -332,37 +314,6 @@ import RevealLogo from '@/components/RevealLogo.vue'
   position: absolute;
   top: 1784px;
   width: 252px;
-}
-
-.description {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 84px;
-  left: 0;
-  top: 807px;
-  width: 100vw;
-}
-
-.description-text {
-  color: #ffffff;
-  font-family: 'Zen Kaku Gothic New', serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 46px;
-  letter-spacing: -4.6px;
-  line-height: 64.4px;
-}
-
-.emphasis {
-  color: #ff0000;
-  font-family: 'Zen Old Mincho', serif;
-  font-weight: 400;
-  font-style: normal;
-  transform: matrix(1, 0, -0.5, 0.87, 0, 0);
-  font-size: 78px;
-  display: inline-block;
-  vertical-align: top;
 }
 
 .element-5 {
