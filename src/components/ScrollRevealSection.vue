@@ -33,10 +33,11 @@ const updateParallax = () => {
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop
   const windowHeight = window.innerHeight
 
+  // biome-ignore lint/complexity/noForEach: <explanation>
   imageRefs.value.forEach((img) => {
     if (!img) return
 
-    const speed = parseFloat(img.dataset.speed)
+    const speed = Number.parseFloat(img.dataset.speed)
     const initialOffset = initialOffsets.value[img.dataset.index] || 0
     const rect = img.getBoundingClientRect()
 
@@ -108,54 +109,24 @@ onUnmounted(() => {
       </div>
 
       <!-- パララックス画像 -->
-      <img
-        class="parallax-image element"
-        ref="img1"
-        data-speed="0.15"
-        data-index="1"
-        alt="Element"
-        :src="x701"
-      />
-      <img
-        class="parallax-image element-2"
-        ref="img2"
-        data-speed="0.2"
-        data-index="2"
-        alt="Element"
-        :src="x281"
-      />
-      <img
-        class="parallax-image element-3"
-        ref="img3"
-        data-speed="0.25"
-        data-index="3"
-        alt="Element"
-        :src="x19"
-      />
-      <img
-        class="parallax-image element-4"
-        ref="img4"
-        data-speed="0.3"
-        data-index="4"
-        alt="Element"
-        :src="x631"
-      />
-      <img
-        class="parallax-image element-5"
-        ref="img5"
-        data-speed="0.3"
-        data-index="5"
-        alt="Element"
-        :src="x271"
-      />
-      <img
-        class="parallax-image element-6"
-        ref="img6"
-        data-speed="0.15"
-        data-index="6"
-        alt="Element"
-        :src="x41"
-      />
+      <div class="parallax-image element" ref="img1" data-speed="0.15" data-index="1">
+        <img alt="Element" :src="x701" />
+      </div>
+      <div class="parallax-image element-2" ref="img2" data-speed="0.2" data-index="2">
+        <img alt="Element" :src="x281" />
+      </div>
+      <div class="parallax-image element-3" ref="img3" data-speed="0.25" data-index="3">
+        <img alt="Element" :src="x19" />
+      </div>
+      <div class="parallax-image element-4" ref="img4" data-speed="0.3" data-index="4">
+        <img alt="Element" :src="x631" />
+      </div>
+      <div class="parallax-image element-5" ref="img5" data-speed="0.3" data-index="5">
+        <img alt="Element" :src="x271" />
+      </div>
+      <div class="parallax-image element-6" ref="img6" data-speed="0.15" data-index="6">
+        <img alt="Element" :src="x41" />
+      </div>
     </div>
   </section>
 </template>
@@ -198,56 +169,50 @@ onUnmounted(() => {
 
 /* 個別の画像スタイル */
 .element {
-  height: 447px;
-  left: 1017px;
+  right: 14%;
   object-fit: cover;
   top: 175px;
-  width: 295px;
+  width: 20%;
   z-index: 1;
 }
 
 .element-2 {
-  height: 331px;
-  left: 720px;
+  right: 14%;
   object-fit: cover;
   top: 1250px;
-  width: 510px;
+  width: 35%;
   z-index: 1;
 }
 
 .element-3 {
-  height: 225px;
-  left: 1138px;
+  right: 0;
   object-fit: cover;
   top: 1083px;
-  width: 302px;
+  width: 21%;
   z-index: 1;
 }
 
 .element-4 {
-  height: 299px;
-  left: 289px;
+  left: 20%;
   object-fit: cover;
   top: 584px;
-  width: 252px;
+  width: 18%;
   z-index: 1;
 }
 
 .element-5 {
-  height: 403px;
-  left: 176px;
+  left: 13%;
   object-fit: cover;
   top: 1530px;
-  width: 277px;
+  width: 19%;
   z-index: 1;
 }
 
 .element-6 {
-  height: 528px;
-  left: 555px;
+  right: 19%;
   object-fit: cover;
   top: 2000px;
-  width: 611px;
+  width: 42%;
   z-index: 1;
 }
 </style>

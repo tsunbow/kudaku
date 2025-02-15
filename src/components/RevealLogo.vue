@@ -30,17 +30,17 @@ const isIntersecting = ref(false)
 let observer = null
 
 const calculateBlur = (ratio) => {
-  // 要素が50%見えた時点から鮮明化を開始
-  const revealThreshold = 0.5
+  // 要素が70%見えた時点から鮮明化を開始
+  const revealThreshold = 0.7
   const progress = (ratio - revealThreshold) / (1 - revealThreshold)
 
   if (ratio >= revealThreshold) {
-    // 50%以上見えている場合、徐々に鮮明化
+    // 70%以上見えている場合、徐々に鮮明化
     const newBlur = Math.max(props.initialBlur * (1 - progress), 0)
     blurAmount.value = newBlur
     isRevealed.value = true
   } else {
-    // 50%未満の場合はぼやけた状態を維持
+    // 70%未満の場合はぼやけた状態を維持
     blurAmount.value = props.initialBlur
     isRevealed.value = false
   }
@@ -77,7 +77,7 @@ onUnmounted(() => {
 
 <style scoped>
 .reveal-logo {
-  transition: filter 0.4s ease-out;
+  transition: filter 1.5s ease-out;
   will-change: filter;
 }
 

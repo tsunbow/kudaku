@@ -1,11 +1,5 @@
 <script setup>
 import { ref, onBeforeUnmount } from 'vue'
-import x701 from '@/assets/img/70-1.png'
-import x281 from '@/assets/img/28-1.png'
-import x19 from '@/assets/img/1-9.png'
-import x631 from '@/assets/img/63-1.png'
-import x271 from '@/assets/img/27-1.png'
-import x41 from '@/assets/img/4-1.png'
 
 const descriptionItems = [
   {
@@ -78,7 +72,7 @@ const registerElement = (el, index) => {
       },
       {
         threshold: 0.5,
-        rootMargin: '0px 0px -10% 0px',
+        rootMargin: '0px 0px -30% 0px',
       },
     )
 
@@ -140,7 +134,7 @@ onBeforeUnmount(() => {
   flex-direction: column;
   gap: 84px;
   width: 100vw;
-  margin-top: 1000px;
+  margin-top: 260px;
   position: relative;
   z-index: 10;
 }
@@ -156,7 +150,7 @@ onBeforeUnmount(() => {
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 46px;
+  font-size: 3vw;
   letter-spacing: -4.6px;
   line-height: 64.4px;
   white-space: nowrap;
@@ -177,7 +171,7 @@ onBeforeUnmount(() => {
   font-weight: 400;
   font-style: normal;
   transform: matrix(1, 0, -0.5, 0.87, 0, 0);
-  font-size: 78px;
+  font-size: 4vw;
   display: inline-block;
   vertical-align: top;
 }
