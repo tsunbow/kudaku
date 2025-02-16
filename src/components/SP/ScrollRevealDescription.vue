@@ -134,7 +134,6 @@ onBeforeUnmount(() => {
   flex-direction: column;
   gap: 74px;
   width: 100vw;
-  margin-top: 260px;
   position: relative;
   z-index: 10;
 }

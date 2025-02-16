@@ -169,49 +169,49 @@ onUnmounted(() => {
 /* 個別の画像スタイル */
 .element {
   object-fit: cover;
-  top: 175px;
-  right: 14%;
-  width: 33%;
+  top: 119px;
+  right: 16%;
+  width: 31%;
   z-index: 1;
 }
 
 .element-2 {
   object-fit: cover;
-  top: 1250px;
-  right: 17%;
-  width: 47%;
+  top: 1054px;
+  right: 22%;
+  width: 49%;
   z-index: 1;
 }
 
 .element-3 {
   object-fit: cover;
-  top: 1083px;
+  top: 940px;
   right: 0;
-  width: 29%;
+  width: 33%;
   z-index: 1;
 }
 
 .element-4 {
   object-fit: cover;
-  top: 584px;
-  left: 20%;
-  width: 40%;
+  top: 507px;
+  left: 9%;
+  width: 44%;
   z-index: 1;
 }
 
 .element-5 {
   object-fit: cover;
-  top: 1530px;
+  top: 1310px;
   left: 0;
   width: 27%;
   z-index: 1;
 }
 
 .element-6 {
-  right: 19%;
   object-fit: cover;
-  top: 2000px;
-  width: 70%;
+  top: 1601px;
+  right: 0;
+  width: 87%;
   z-index: 1;
 }
 </style>

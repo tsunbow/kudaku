@@ -36,8 +36,21 @@ onMounted(() => {
 <template>
   <div class="sp">
     <div class="hero">
+      <BlurElement class="creative-area" :src="creativeArea" alt="Creative area" />
+      <div class="frame-6">
+        <div class="frame-6-text">Statement</div>
+        <div class="frame-6-text">Where We Are</div>
+        <div class="frame-7">
+          <div class="frame-6-text frame-6-text-gray">Our Projects</div>
+        </div>
+        <div class="frame-6-text">Let's Talk</div>
+        <div class="frame-6-text">Play Concept</div>
+      </div>
       <div class="hero-body">
         <div class="hero-content-wrapper">
+          <div class="logo_kudaku">
+            <BlurLogo class="group" :logoSrc="logo_top" />
+          </div>
           <div class="video-frame">
             <iframe
               v-if="isVideoLoaded"
@@ -48,37 +61,20 @@ onMounted(() => {
               loading="eager"
               importance="high"
             ></iframe>
-            <div class="logo_kudaku">
-              <BlurLogo class="group" :logoSrc="logo_top" />
-            </div>
           </div>
           <BlurElement class="KU" :src="KU" alt="Ku" />
           <BlurElement class="DA" :src="DA" alt="Da" />
           <BlurElement class="KU2" :src="KU2" alt="Ku" />
-          <BlurElement class="creative-area" :src="creativeArea" alt="Creative area" />
         </div>
       </div>
-      <div class="hero-play">
-        <div class="movie-play">
-          <div class="ellipse">
-            <img class="vector" alt="Vector" :src="vector" />
-          </div>
-          <div class="text-wrapper">Play Concept</div>
-        </div>
-      </div>
-      <div class="frame-6">
-        <div class="frame-6-text">Statement</div>
-
-        <div class="frame-6-text">Where We Are</div>
-
-        <div class="frame-7">
-          <div class="frame-6-text frame-6-text-gray">Our Projects</div>
-        </div>
-
-        <div class="frame-6-text">Let’s Talk</div>
-
-        <div class="frame-6-text">Play Concept</div>
-      </div>
+      <!--      <div class="hero-play">-->
+      <!--        <div class="movie-play">-->
+      <!--          <div class="ellipse">-->
+      <!--            <img class="vector" alt="Vector" :src="vector" />-->
+      <!--            <div class="text-wrapper">Play Concept</div>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--      </div>-->
     </div>
 
     <div class="content-wrapper1">
@@ -176,7 +172,7 @@ onMounted(() => {
 }
 
 .hero {
-  height: 631px;
+  height: 813px;
 }
 
 .hero-body {
@@ -189,21 +185,19 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  margin-top: 10vw;
 }
 
-/* コンテンツを包むラッパーを追加 */
 .hero-content-wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
   margin: 0 auto;
 }
+
 .video-frame {
   position: relative;
   width: 46vw;
   height: 0;
-  padding-bottom: 34.5vw; /* アスペクト比を維持するための調整 */
+  padding-bottom: 34.5vw;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -220,7 +214,7 @@ onMounted(() => {
 }
 
 .KU {
-  width: 36vw; /* 517pxを相対値に */
+  width: 36vw;
   height: auto;
   aspect-ratio: 517 / 379;
   position: absolute;
@@ -254,13 +248,15 @@ onMounted(() => {
   right: 20%;
   top: 5vw;
 }
+
 .logo_kudaku {
-  width: 4.5vw;
+  width: 11vw;
   height: auto;
   position: absolute;
-  top: 50%;
-  left: 52%;
+  top: 30px;
+  left: 88%;
   transform: translate(-50%, -50%);
+  z-index: 1;
 }
 
 .content-wrapper1 {
@@ -268,14 +264,14 @@ onMounted(() => {
   z-index: 2;
   transform-style: preserve-3d;
   margin-top: 150px;
-  height: 3000px;
+  height: 2110px;
 }
 
 .content-wrapper2 {
   position: relative;
   z-index: 2;
   transform-style: preserve-3d;
-  height: 1814px;
+  height: 1267px;
 }
 
 .content-wrapper3 {
@@ -284,51 +280,8 @@ onMounted(() => {
   transform-style: preserve-3d;
 }
 
-.movie-play {
-  width: 92px;
-  height: 108px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 330px;
-  margin: auto;
-}
-
-.ellipse {
-  width: 90px;
-  height: 90px;
-  border: 1px solid #d9d9d9;
-  border-radius: 45px;
-  position: relative;
-}
-
-.vector {
-  width: 25px;
-  height: 22px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-
-.text-wrapper {
-  color: #ffffff;
-  font-family: ivyora-display, sans-serif;
-  font-weight: 400;
-  font-style: italic;
-  font-size: 14px;
-  letter-spacing: 0.42px;
-  line-height: 16.1px;
-  position: absolute;
-  left: 5px;
-  top: 98px;
-}
-
 .overlap-10 {
-  height: 1440px;
+  height: 1267px;
   width: 100vw;
 }
 
@@ -336,7 +289,6 @@ onMounted(() => {
   height: 1247px;
   left: 0;
   position: absolute;
-  top: 0;
   width: 100vw;
   opacity: 0.9;
 }
@@ -345,7 +297,6 @@ onMounted(() => {
   height: 151px;
   right: 0;
   position: absolute;
-  top: 47%;
   width: 97vw;
 }
 
@@ -355,7 +306,6 @@ onMounted(() => {
   right: -3%;
   line-height: 0;
   position: absolute;
-  top: 597px;
 }
 
 .span {
@@ -394,14 +344,12 @@ onMounted(() => {
   letter-spacing: -3px;
   line-height: 140%;
   position: absolute;
-  top: 48%;
   width: 96vw;
 }
 .logo_red {
   color: red;
   right: 20%;
   position: absolute;
-  top: 780px;
   width: 8vw;
 }
 
@@ -508,11 +456,11 @@ onMounted(() => {
 }
 
 .ellipse-2 {
-  width: 406px;
-  height: 150px;
+  width: 27vw;
+  height: 16vh;
   border: 1px solid #ff0000;
-  border-radius: 203px / 89px;
-  transform: matrix(1, 0, -0.7, 0.87, 0, 0);
+  border-radius: 48% / 55%;
+  transform: matrix(1, 0, -0.4, 0.87, 0, 0);
   position: absolute;
   top: 65px;
   right: 0;
@@ -526,13 +474,13 @@ onMounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 500;
   font-style: italic;
-  font-size: 2vw;
+  font-size: 6vw;
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  letter-spacing: 1.6px;
-  line-height: 36.8px;
+  letter-spacing: 1px;
+  line-height: 24px;
   text-align: center;
   white-space: nowrap;
 }
@@ -575,5 +523,51 @@ onMounted(() => {
   flex-direction: column;
   gap: 5px;
   position: relative;
+}
+
+/* SP用に追加した要素のスタイル */
+@media screen and (max-width: 768px) {
+  .video-frame {
+    width: 72vw;
+    padding-bottom: 60vw;
+  }
+
+  .KU {
+    width: 86vw;
+    top: -69%;
+  }
+
+  .DA {
+    width: 39vw;
+    top: calc(53vw + 14px);
+  }
+
+  .KU2 {
+    width: 62vw;
+    top: calc(48vw + 21px);
+  }
+
+  .creative-area {
+    width: 17vw;
+    left: 14%;
+    top: 33vw;
+  }
+
+  .logo_kudaku {
+    width: 11vw;
+  }
+
+  .frame-6 {
+    width: 180px;
+  }
+
+  .frame-6-text {
+    font-size: max(calc(4vw - 12px), 12px);
+  }
+
+  .movie-play {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 </style>
