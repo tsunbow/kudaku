@@ -1,5 +1,5 @@
 <script setup>
-import video from '@/assets/img/main_img.png'
+import { onMounted, ref } from 'vue'
 import KU from '@/assets/img/KU1.svg'
 import DA from '@/assets/img/DA.svg'
 import KU2 from '@/assets/img/KU2.svg'
@@ -10,13 +10,28 @@ import logo_red from '@/assets/img/logo_red.svg'
 import layer from '@/assets/img/layer.png'
 import vector from '@/assets/img/vector.png'
 
-import MouseFollower from '@/components/MouseFollower.vue'
-// import TextRevealAnimation from '@/components/TextRevealAnimation.vue'
-import BlurElement from '@/components/BlurElement.vue'
-import ScrollRevealDescription from '@/components/ScrollRevealDescription.vue'
-import ScrollRevealSection from '@/components/ScrollRevealSection.vue'
-import BlurLogo from '@/components/BlurLogo.vue'
-import RevealLogo from '@/components/RevealLogo.vue'
+import MouseFollower from '@/components/PC/MouseFollower.vue'
+import BlurElement from '@/components/PC/BlurElement.vue'
+import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue'
+import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
+import BlurLogo from '@/components/PC/BlurLogo.vue'
+import RevealLogo from '@/components/PC/RevealLogo.vue'
+
+const videoUrl =
+  'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1'
+const isVideoLoaded = ref(false)
+
+onMounted(() => {
+  // ページ読み込み直後にiframeを表示
+  isVideoLoaded.value = true
+
+  // プリフェッチを追加
+  const link = document.createElement('link')
+  link.rel = 'preload'
+  link.as = 'iframe'
+  link.href = videoUrl
+  document.head.appendChild(link)
+})
 </script>
 
 <template>
@@ -26,7 +41,15 @@ import RevealLogo from '@/components/RevealLogo.vue'
       <div class="hero-body">
         <div class="hero-content-wrapper">
           <div class="video-frame">
-            <img class="trim" :src="video" alt="Trim" />
+            <iframe
+              v-if="isVideoLoaded"
+              class="trim"
+              :src="videoUrl"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowfullscreen
+              loading="eager"
+              importance="high"
+            ></iframe>
             <div class="logo_kudaku">
               <BlurLogo class="group" :logoSrc="logo_top" />
             </div>
@@ -41,8 +64,8 @@ import RevealLogo from '@/components/RevealLogo.vue'
         <div class="movie-play">
           <div class="ellipse">
             <img class="vector" alt="Vector" :src="vector" />
+            <div class="text-wrapper">Play Concept</div>
           </div>
-          <div class="text-wrapper">Play Concept</div>
         </div>
       </div>
       <div class="frame-6">
@@ -60,13 +83,15 @@ import RevealLogo from '@/components/RevealLogo.vue'
       </div>
     </div>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper1">
       <ScrollRevealSection>
         <template #text>
           <!-- ここにテキストコンテンツを配置 -->
           <ScrollRevealDescription />
         </template>
       </ScrollRevealSection>
+    </div>
+    <div class="content-wrapper2">
       <div class="overlap-10">
         <img class="frame-4" alt="Frame" :src="bg" />
         <img class="element-7" alt="Element" :src="layer" />
@@ -98,22 +123,22 @@ import RevealLogo from '@/components/RevealLogo.vue'
           <br />
           プロデューサー／映像作家／アートディレクター／写真家／空間デザイナーなどが交わり
           <br />
-          クライアントとの自由な発想とコラボレーションで心と人を動かすアウトプットを産み、
+          クライアントとの自由な発想とコラボレーションで
           <br />
-          愛されるブランドを育む。
+          心と人を動かすアウトプットを産み、愛されるブランドを育む。
         </div>
 
         <div class="logo_red">
           <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
         </div>
       </div>
-
+    </div>
+    <div class="content-wrapper3">
       <div class="frame-5">
         <div class="overlap-11">
-          <img class="vector-2" alt="Vector" :src="vector" />
-
           <div class="group-8">
             <div class="overlap-group-4">
+              <img class="vector-2" alt="Vector" :src="vector" />
               <div class="letsTalk-content">
                 <span>L</span>
                 <span class="letsTalk-text style-normal spacing-0">e</span>
@@ -134,7 +159,7 @@ import RevealLogo from '@/components/RevealLogo.vue'
   </div>
 </template>
 
-<style>
+<style scoped>
 @import url('https://use.typekit.net/jnv8yhd.css');
 @import url('https://use.typekit.net/azb1dqq.css');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&display=swap');
@@ -143,7 +168,6 @@ import RevealLogo from '@/components/RevealLogo.vue'
 .pc {
   background-position: 50% 50%;
   background-size: cover;
-  height: 6031px;
   position: relative;
   width: 100vw;
 }
@@ -172,18 +196,24 @@ import RevealLogo from '@/components/RevealLogo.vue'
   height: 100%;
   margin: 0 auto;
 }
-
 .video-frame {
   position: relative;
-  width: 46vw; /* 664pxを画面幅に対する割合に変更 */
+  width: 46vw;
+  height: 0;
+  padding-bottom: 34.5vw; /* アスペクト比を維持するための調整 */
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .trim {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 664 / 498; /* 元の縦横比を維持 */
+  width: 134%;
+  height: 105%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   object-fit: cover;
+  border: none;
 }
 
 .KU {
@@ -205,7 +235,7 @@ import RevealLogo from '@/components/RevealLogo.vue'
 }
 
 .KU2 {
-  width: 31.2vw; /* 449pxを相対値に */
+  width: 31.2vw;
   height: auto;
   aspect-ratio: 449 / 360;
   position: absolute;
@@ -214,7 +244,7 @@ import RevealLogo from '@/components/RevealLogo.vue'
 }
 
 .creative-area {
-  width: 8vw; /* 116pxを相対値に */
+  width: 8vw;
   height: auto;
   aspect-ratio: 116 / 56;
   position: absolute;
@@ -222,19 +252,31 @@ import RevealLogo from '@/components/RevealLogo.vue'
   top: 5vw;
 }
 .logo_kudaku {
-  width: 4.5vw; /* 132pxを相対値に */
+  width: 4.5vw;
   height: auto;
   position: absolute;
   top: 50%;
   left: 52%;
   transform: translate(-50%, -50%);
 }
-.group {
+
+.content-wrapper1 {
+  position: relative;
+  z-index: 2;
+  transform-style: preserve-3d;
+  margin-top: 150px;
+  height: 3000px;
 }
 
-.content-wrapper {
+.content-wrapper2 {
   position: relative;
-  margin-top: 150px;
+  z-index: 2;
+  transform-style: preserve-3d;
+  height: 1814px;
+}
+
+.content-wrapper3 {
+  position: relative;
   z-index: 2;
   transform-style: preserve-3d;
 }
@@ -242,7 +284,7 @@ import RevealLogo from '@/components/RevealLogo.vue'
 .movie-play {
   width: 92px;
   height: 108px;
-  position: absolute;
+  /*position: absolute;*/
   top: 0;
   right: 0;
   bottom: 0;
@@ -284,14 +326,11 @@ import RevealLogo from '@/components/RevealLogo.vue'
 
 .overlap-10 {
   height: 1440px;
-  left: 0;
-  position: absolute;
-  top: 2800px;
   width: 100vw;
 }
 
 .frame-4 {
-  height: 1800px;
+  height: 1814px;
   left: 0;
   position: absolute;
   top: 0;
@@ -303,8 +342,8 @@ import RevealLogo from '@/components/RevealLogo.vue'
   height: 400px;
   right: 0;
   position: absolute;
-  top: 70%;
-  width: 70vw;
+  top: 56%;
+  width: 74vw;
 }
 
 .where-we-are-content {
@@ -318,17 +357,16 @@ import RevealLogo from '@/components/RevealLogo.vue'
 
 .span {
   font-family: nautica, sans-serif;
-  font-size: 26vw;
+  font-size: 17vw;
   font-style: normal;
   font-weight: 500;
-  letter-spacing: -50px;
 }
 
 .where-we-are-text {
   font-family: ivyora-display, sans-serif;
   font-style: normal;
-  font-size: 220px;
-  letter-spacing: 14.52px;
+  font-size: 15vw;
+  letter-spacing: 13px;
   line-height: 210px;
 }
 .weight-400 {
@@ -348,12 +386,12 @@ import RevealLogo from '@/components/RevealLogo.vue'
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 16px;
+  font-size: calc(5vw - 48px);
   left: 16%;
   letter-spacing: -1.6px;
-  line-height: 30.4px;
+  line-height: 30px;
   position: absolute;
-  top: 59%;
+  top: 48%;
   width: 50vw;
 }
 .logo_red {
@@ -369,9 +407,6 @@ import RevealLogo from '@/components/RevealLogo.vue'
   background-position: 50% 50%;
   background-size: cover;
   height: 876px;
-  left: 0;
-  position: absolute;
-  top: 5155px;
   width: 100vw;
 }
 
@@ -387,10 +422,10 @@ import RevealLogo from '@/components/RevealLogo.vue'
 }
 
 .vector-2 {
-  width: 249px;
-  height: 180px;
+  width: 17vw;
+  height: 12vw;
   position: absolute;
-  top: 0;
+  top: 40%;
   right: 0;
   bottom: 0;
   left: 0;
@@ -438,7 +473,7 @@ import RevealLogo from '@/components/RevealLogo.vue'
 
 .letsTalk-text {
   font-size: 8vw;
-  line-height: 131.4px;
+  line-height: 131px;
 }
 
 .style-normal {
@@ -458,7 +493,7 @@ import RevealLogo from '@/components/RevealLogo.vue'
 }
 
 .spacing-comma {
-  letter-spacing: 13.05px;
+  letter-spacing: 13px;
 }
 
 .spacing-lets {
@@ -470,11 +505,11 @@ import RevealLogo from '@/components/RevealLogo.vue'
 }
 
 .ellipse-2 {
-  width: 406px;
-  height: 150px;
+  width: 27vw;
+  height: 16vh;
   border: 1px solid #ff0000;
-  border-radius: 203px / 89px;
-  transform: matrix(1, 0, -0.7, 0.87, 0, 0);
+  border-radius: 48% / 55%;
+  transform: matrix(1, 0, -0.4, 0.87, 0, 0);
   position: absolute;
   top: 65px;
   right: 0;
@@ -537,14 +572,5 @@ import RevealLogo from '@/components/RevealLogo.vue'
   flex-direction: column;
   gap: 5px;
   position: relative;
-}
-
-.rectangle {
-  background-color: #ff0000;
-  height: 3px;
-  left: 145px;
-  position: absolute;
-  top: 99px;
-  width: 75px;
 }
 </style>

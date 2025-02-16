@@ -135,7 +135,6 @@ onUnmounted(() => {
 .scroll-reveal-section {
   position: relative;
   width: 100%;
-  min-height: 4000px;
   overflow: visible;
 }
 
@@ -169,42 +168,42 @@ onUnmounted(() => {
 
 /* 個別の画像スタイル */
 .element {
-  right: 14%;
   object-fit: cover;
   top: 175px;
-  width: 20%;
+  right: 14%;
+  width: 33%;
   z-index: 1;
 }
 
 .element-2 {
-  right: 14%;
   object-fit: cover;
   top: 1250px;
-  width: 35%;
+  right: 17%;
+  width: 47%;
   z-index: 1;
 }
 
 .element-3 {
-  right: 0;
   object-fit: cover;
   top: 1083px;
-  width: 21%;
+  right: 0;
+  width: 29%;
   z-index: 1;
 }
 
 .element-4 {
-  left: 20%;
   object-fit: cover;
   top: 584px;
-  width: 18%;
+  left: 20%;
+  width: 40%;
   z-index: 1;
 }
 
 .element-5 {
-  left: 13%;
   object-fit: cover;
   top: 1530px;
-  width: 19%;
+  left: 0;
+  width: 27%;
   z-index: 1;
 }
 
@@ -212,7 +211,7 @@ onUnmounted(() => {
   right: 19%;
   object-fit: cover;
   top: 2000px;
-  width: 42%;
+  width: 70%;
   z-index: 1;
 }
 </style>

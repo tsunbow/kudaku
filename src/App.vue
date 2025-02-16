@@ -1,7 +1,7 @@
 <script setup>
-import ResponsiveContainer from './components/ResponsiveContainer.vue'
-import PcView from './components/PcView.vue'
-import SpView from './components/SpView.vue'
+import ResponsiveContainer from './components/PC/ResponsiveContainer.vue'
+import PcView from './components/PC/PcView.vue'
+import SpView from './components/SP/SpView.vue'
 </script>
 
 <template>
