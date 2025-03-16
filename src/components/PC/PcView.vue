@@ -47,14 +47,6 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
           <BlurElement type="image" class="creative-area" :src="creativeArea" alt="Creative area" />
         </div>
       </div>
-      <div class="hero-play">
-        <div class="movie-play">
-          <div class="ellipse">
-            <img class="vector" alt="Vector" :src="vector" />
-            <div class="text-wrapper">Play Concept</div>
-          </div>
-        </div>
-      </div>
       <div class="frame-6">
         <div class="frame-6-text">Statement</div>
         <div class="frame-6-text">Where We Are</div>
@@ -274,49 +266,6 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
   position: relative;
   z-index: 2;
   transform-style: preserve-3d;
-}
-
-.movie-play {
-  width: 92px;
-  height: 108px;
-  /*position: absolute;*/
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 330px;
-  margin: auto;
-}
-
-.ellipse {
-  width: 90px;
-  height: 90px;
-  border: 1px solid #d9d9d9;
-  border-radius: 45px;
-  position: relative;
-}
-
-.vector {
-  width: 25px;
-  height: 22px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-
-.text-wrapper {
-  color: #ffffff;
-  font-family: ivyora-display, sans-serif;
-  font-weight: 400;
-  font-style: italic;
-  font-size: 14px;
-  letter-spacing: 0.42px;
-  line-height: 16.1px;
-  position: absolute;
-  left: 5px;
-  top: 98px;
 }
 
 .overlap-10 {
