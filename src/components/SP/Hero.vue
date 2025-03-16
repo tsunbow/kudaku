@@ -85,8 +85,8 @@ onUnmounted(() => {
   align-items: center;
   box-sizing: border-box;
   margin-top: 10vw;
-  will-change: transform; /* パフォーマンス最適化 */
-  transition: transform 0.1s ease-out; /* スムーズな動き */
+  will-change: transform;
+  transition: transform 0.1s ease-out;
 }
 
 /* 既存のスタイルは維持 */

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import trim from '@/assets/video/trim2.mp4'
 import KU from '@/assets/img/KU1.svg'
 import DA from '@/assets/img/DA.svg'
 import KU2 from '@/assets/img/KU2.svg'
@@ -14,24 +14,9 @@ import MouseFollower from '@/components/PC/MouseFollower.vue'
 import BlurElement from '@/components/PC/BlurElement.vue'
 import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue'
 import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
+import SmoothScroll from '@/components/PC/SmoothScroll.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
-
-const videoUrl =
-  'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1'
-const isVideoLoaded = ref(false)
-
-onMounted(() => {
-  // ページ読み込み直後にiframeを表示
-  isVideoLoaded.value = true
-
-  // プリフェッチを追加
-  const link = document.createElement('link')
-  link.rel = 'preload'
-  link.as = 'iframe'
-  link.href = videoUrl
-  document.head.appendChild(link)
-})
 </script>
 
 <template>
@@ -41,23 +26,25 @@ onMounted(() => {
       <div class="hero-body">
         <div class="hero-content-wrapper">
           <div class="video-frame">
-            <iframe
-              v-if="isVideoLoaded"
+            <BlurElement
+              type="video"
               class="trim"
-              :src="videoUrl"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowfullscreen
-              loading="eager"
-              importance="high"
-            ></iframe>
+              :src="trim"
+              alt="trim"
+              loop
+              muted
+              autoplay
+              playsinline
+              false
+            />
             <div class="logo_kudaku">
               <BlurLogo class="group" :logoSrc="logo_top" />
             </div>
           </div>
-          <BlurElement class="KU" :src="KU" alt="Ku" />
-          <BlurElement class="DA" :src="DA" alt="Da" />
-          <BlurElement class="KU2" :src="KU2" alt="Ku" />
-          <BlurElement class="creative-area" :src="creativeArea" alt="Creative area" />
+          <BlurElement type="image" class="KU" :src="KU" alt="Ku" />
+          <BlurElement type="image" class="DA" :src="DA" alt="Da" />
+          <BlurElement type="image" class="KU2" :src="KU2" alt="Ku" />
+          <BlurElement type="image" class="creative-area" :src="creativeArea" alt="Creative area" />
         </div>
       </div>
       <div class="hero-play">
@@ -70,16 +57,18 @@ onMounted(() => {
       </div>
       <div class="frame-6">
         <div class="frame-6-text">Statement</div>
-
         <div class="frame-6-text">Where We Are</div>
-
         <div class="frame-7">
           <div class="frame-6-text frame-6-text-gray">Our Projects</div>
         </div>
-
         <div class="frame-6-text">Let’s Talk</div>
-
-        <div class="frame-6-text">Play Concept</div>
+        <a
+          class="frame-6-text-italic"
+          href="https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1"
+          target="_blank"
+          rel="noopener"
+          >Play Concept</a
+        >
       </div>
     </div>
 
@@ -92,46 +81,53 @@ onMounted(() => {
       </ScrollRevealSection>
     </div>
     <div class="content-wrapper2">
-      <div class="overlap-10">
-        <img class="frame-4" alt="Frame" :src="bg" />
-        <img class="element-7" alt="Element" :src="layer" />
+      <SmoothScroll SmoothScroll :threshold="0.1">
+        <div class="overlap-10">
+          <img class="frame-4" alt="Frame" :src="bg" />
+          <img class="element-7" alt="Element" :src="layer" />
 
-        <p class="where-we-are-content">
-          <span class="where-we-are-text weight-400">
-            <span class="span">W</span>
-            <span class="where-we-are-text weight-400">here</span>
+          <p class="where-we-are-content">
+            <span class="where-we-are-text weight-400">
+              <span class="span">W</span>
+              <span class="where-we-are-text weight-400">here</span>
+              <br />
+              <span class="where-we-are-text margin-we weight-400">we</span>
+              <br />
+              <span class="where-we-are-text lineHeight style-italic"> . A</span>
+              <span class="where-we-are-text weight-400">re</span>
+            </span>
+          </p>
+
+          <div class="text-wrapper-14">
+            砕区は、既存のやり方やルールに縛られない
             <br />
-            <span class="where-we-are-text margin-we weight-400">we</span>
+            クリエイティブ・エリア。
             <br />
-            <span class="where-we-are-text lineHeight style-italic"> . A</span>
-            <span class="where-we-are-text weight-400">re</span>
-          </span>
-        </p>
+            <br />
+            少数精鋭チームにより、
+            <br />
+            全体像を把握・共有しながら細部にこだわっていく。
+            <br />
+            無駄をカットし、然るべき部分にリソースを配分する。
+            <br />
+            <br />
+            プロデューサー／映像作家／アートディレクター／写真家／空間デザイナーなどが交わり
+            <br />
+            クライアントとの自由な発想とコラボレーションで
+            <br />
+            心と人を動かすアウトプットを産み、愛されるブランドを育む。
+          </div>
 
-        <div class="text-wrapper-14">
-          砕区は、既存のやり方やルールに縛られない
-          <br />
-          クリエイティブ・エリア。
-          <br />
-          <br />
-          少数精鋭チームにより、
-          <br />
-          全体像を把握・共有しながら細部にこだわっていく。
-          <br />
-          無駄をカットし、然るべき部分にリソースを配分する。
-          <br />
-          <br />
-          プロデューサー／映像作家／アートディレクター／写真家／空間デザイナーなどが交わり
-          <br />
-          クライアントとの自由な発想とコラボレーションで
-          <br />
-          心と人を動かすアウトプットを産み、愛されるブランドを育む。
+          <div class="logo_red">
+            <RevealLogo
+              class="group-7"
+              :logoSrc="logo_red"
+              :initialBlur="10"
+              :triggerOffset="3000"
+            />
+          </div>
         </div>
-
-        <div class="logo_red">
-          <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
-        </div>
-      </div>
+      </SmoothScroll>
     </div>
     <div class="content-wrapper3">
       <div class="frame-5">
@@ -186,7 +182,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  margin-top: 10vw;
+  margin-top: 20vw;
 }
 
 /* コンテンツを包むラッパーを追加 */
@@ -198,11 +194,10 @@ onMounted(() => {
 }
 .video-frame {
   position: relative;
-  width: 46vw;
+  width: 34vw;
   height: 0;
   padding-bottom: 34.5vw; /* アスペクト比を維持するための調整 */
   margin: 0 auto;
-  overflow: hidden;
 }
 
 .trim {
@@ -337,7 +332,12 @@ onMounted(() => {
   width: 100vw;
   opacity: 0.9;
 }
-
+.overlap-10::after {
+  background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+.overlap-10::before {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
 .element-7 {
   height: 400px;
   right: 0;
@@ -352,7 +352,7 @@ onMounted(() => {
   right: 4%;
   line-height: 0;
   position: absolute;
-  top: 597px;
+  top: 30%;
 }
 
 .span {
@@ -398,7 +398,7 @@ onMounted(() => {
   color: red;
   right: 11%;
   position: absolute;
-  top: 927px;
+  top: 51%;
   width: 4.5vw;
 }
 
@@ -406,7 +406,7 @@ onMounted(() => {
   background-image: url(@/assets/img/2-9.png);
   background-position: 50% 50%;
   background-size: cover;
-  height: 876px;
+  height: 100vh;
   width: 100vw;
 }
 
@@ -552,6 +552,20 @@ onMounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
   font-style: normal;
+  font-size: max(calc(5vw - 54px), 14px);
+  letter-spacing: 0.54px;
+  line-height: 20.7px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.frame-6-text-italic {
+  color: #ffffff;
+  font-family: ivyora-display, sans-serif;
+  font-weight: 400;
+  font-style: italic;
   font-size: max(calc(5vw - 54px), 14px);
   letter-spacing: 0.54px;
   line-height: 20.7px;

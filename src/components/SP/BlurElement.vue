@@ -1,22 +1,16 @@
 <!-- BlurElement.vue -->
-<template>
-  <div :class="{ 'blur-active': isBlurred }">
-    <img
-      class="blur-transition"
-      :class="additionalClass"
-      :alt="alt"
-      :src="src"
-      :style="{ filter: `blur(${blurAmount}px)` }"
-    />
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 defineProps({
   src: {
     type: String,
-    required: true,
+    required: false,
+    default: '',
+  },
+  type: {
+    type: String,
+    default: '',
+    validator: (value) => ['image', 'video', ''].includes(value),
   },
   alt: {
     type: String,
@@ -26,13 +20,35 @@ defineProps({
     type: String,
     default: '',
   },
+  // Video specific props
+  controls: {
+    type: Boolean,
+    default: true,
+  },
+  autoplay: {
+    type: Boolean,
+    default: false,
+  },
+  loop: {
+    type: Boolean,
+    default: false,
+  },
+  muted: {
+    type: Boolean,
+    default: false,
+  },
+  videoType: {
+    type: String,
+    default: 'video/mp4',
+  },
 })
+
 const isBlurred = ref(false)
 const blurAmount = ref(0)
 
 const handleScroll = () => {
   const scrollPosition = window.scrollY
-  const threshold = 100
+  const threshold = 50
   const maxBlur = 10
 
   if (scrollPosition > threshold) {
@@ -54,12 +70,60 @@ onUnmounted(() => {
 })
 </script>
 
+<template>
+  <div :class="[{ 'blur-active': isBlurred }, additionalClass]" class="blur-container">
+    <!-- 画像の場合 -->
+    <img
+      v-if="type === 'image'"
+      class="blur-transition media-content"
+      :alt="alt"
+      :src="src"
+      :style="{ filter: `blur(${blurAmount}px)` }"
+    />
+    <!-- 動画の場合 -->
+    <video
+      v-else-if="type === 'video'"
+      class="blur-transition media-content"
+      :style="{ filter: `blur(${blurAmount}px)` }"
+      :controls="false"
+      :autoplay="autoplay"
+      :loop="loop"
+      :muted="muted"
+    >
+      <source :src="src" :type="videoType" />
+      Your browser does not support the video tag.
+    </video>
+    <!-- その他のコンテンツの場合 -->
+    <div
+      v-else
+      class="blur-transition content-wrapper"
+      :style="{ filter: `blur(${blurAmount}px)` }"
+    >
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
 <style scoped>
+.blur-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .blur-transition {
   transition: filter 0.3s ease;
+  width: 100%;
+  height: 100%;
 }
 
 .blur-active {
   will-change: filter;
+}
+
+.content-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>
