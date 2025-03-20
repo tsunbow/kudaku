@@ -9,6 +9,12 @@ import logo_top from '@/assets/img/logo_top.svg'
 import logo_red from '@/assets/img/logo_red.svg'
 import layer from '@/assets/img/layer.png'
 import vector from '@/assets/img/vector.png'
+import lets_talk from '@/assets/img/letstalk_pc.svg'
+import circle from '@/assets/img/letstalk_circle.svg'
+import circle_hover from '@/assets/img/letstalk_circle_hover.svg'
+import email_text from '@/assets/img/email_text.svg'
+import copy_button from '@/assets/img/copy_button.svg'
+import close_btn from '@/assets/img/close_button.svg'
 
 import MouseFollower from '@/components/PC/MouseFollower.vue'
 import BlurElement from '@/components/PC/BlurElement.vue'
@@ -17,6 +23,33 @@ import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
 import SmoothScroll from '@/components/PC/SmoothScroll.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
+
+import { ref } from 'vue'
+const isHovered = ref(false)
+const isModalOpen = ref(false)
+const isCopied = ref(false)
+const emailAddress = 'info@kudaku.tokyo'
+
+// モーダルを開く関数
+const openModal = () => {
+  isModalOpen.value = true
+  document.body.style.overflow = 'hidden' // スクロールを無効化
+}
+
+// モーダルを閉じる関数
+const closeModal = () => {
+  isModalOpen.value = false
+  document.body.style.overflow = '' // スクロールを有効化
+}
+
+// メールアドレスをクリップボードにコピーする関数
+const copyEmailToClipboard = () => {
+  navigator.clipboard.writeText(emailAddress)
+  isCopied.value = true
+  setTimeout(() => {
+    isCopied.value = false
+  }, 2000)
+}
 </script>
 
 <template>
@@ -130,25 +163,39 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
     <div class="content-wrapper3">
       <div class="frame-5">
         <div class="overlap-11">
-          <div class="group-8">
+          <div class="group-8" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
             <div class="overlap-group-4">
               <img class="vector-2" alt="Vector" :src="vector" />
-              <div class="letsTalk-content">
-                <span>L</span>
-                <span class="letsTalk-text style-normal spacing-0">e</span>
-                <span class="letsTalk-text style-normal spacing-lets">t</span>
-                <span class="letsTalk-text spacing-comma">’</span>
-                <span class="letsTalk-text style-normal spacing-0">s </span>
-                <span class="style-italic spacing-t">T</span>
-                <span class="letsTalk-text style-normal spacing-0">alk</span>
-                <div class="ellipse-2" />
-              </div>
+              <img class="letsTalk-text" alt="letsTalk" :src="lets_talk" @click="openModal" />
+              <img
+                :class="['letsTalk-circle', { 'letsTalk-circle-hover': isHovered }]"
+                alt=""
+                :src="isHovered ? circle_hover : circle"
+              />
             </div>
           </div>
         </div>
 
         <div class="element-KUDAKU">©2025&nbsp;&nbsp;KUDAKU</div>
       </div>
+    </div>
+  </div>
+
+  <!-- モーダル -->
+  <div v-if="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <img :src="email_text" alt="info@kudaku.tokyo" class="email-text" />
+      <div class="copy-button-wrapper">
+        <img
+          :src="copy_button"
+          class="copy-button"
+          alt="copy"
+          @click="copyEmailToClipboard"
+          :class="{ 'button-clicked': isCopied }"
+        />
+        <span v-if="isCopied" class="copied-message">Copied!</span>
+      </div>
+      <img :src="close_btn" alt="閉じる" class="modal-close" @click="closeModal" />
     </div>
   </div>
 </template>
@@ -183,7 +230,6 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
   margin-top: 20vw;
 }
 
-/* コンテンツを包むラッパーを追加 */
 .hero-content-wrapper {
   position: relative;
   width: 100%;
@@ -194,7 +240,7 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
   position: relative;
   width: 34vw;
   height: 0;
-  padding-bottom: 34.5vw; /* アスペクト比を維持するための調整 */
+  padding-bottom: 34.5vw;
   margin: 0 auto;
 }
 
@@ -210,7 +256,7 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
 }
 
 .KU {
-  width: 36vw; /* 517pxを相対値に */
+  width: 36vw;
   height: auto;
   aspect-ratio: 517 / 379;
   position: absolute;
@@ -349,6 +395,7 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
   top: 48%;
   width: 50vw;
 }
+
 .logo_red {
   color: red;
   right: 11%;
@@ -380,16 +427,14 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
   width: 17vw;
   height: 12vw;
   position: absolute;
-  top: 40%;
   right: 0;
-  bottom: 0;
   left: 0;
   margin: auto;
 }
 
 .group-8 {
-  width: 510px;
-  height: 162px;
+  width: 35vw;
+  height: 11vw;
   position: absolute;
   top: 0;
   right: 0;
@@ -399,78 +444,41 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
 }
 
 .overlap-group-4 {
-  width: 503px;
-  height: 178px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-
-.letsTalk-content {
-  color: #ff0000;
-  font-family: nautica, sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 11vw;
-  line-height: 185px;
-  text-align: center;
-  white-space: nowrap;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
+  position: relative;
 }
 
 .letsTalk-text {
-  font-size: 8vw;
-  line-height: 131px;
+  position: absolute;
+  width: 35vw;
+  height: 11vw;
+  cursor: pointer;
+  z-index: 10;
 }
 
-.style-normal {
-  font-family: ivyora-display, sans-serif;
-  font-weight: 400;
-  font-style: normal;
+.letsTalk-circle {
+  position: absolute;
+  width: 28vw;
+  height: 12vw;
+  left: 10%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.letsTalk-circle-hover {
+  position: absolute;
+  width: 66vw;
+  height: 48vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-45%, -38%);
+  z-index: 5;
+  pointer-events: none;
 }
 
 .style-italic {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
   font-style: italic;
-}
-
-.spacing-0 {
-  letter-spacing: 0;
-}
-
-.spacing-comma {
-  letter-spacing: 13px;
-}
-
-.spacing-lets {
-  letter-spacing: -37.86px;
-}
-
-.spacing-t {
-  letter-spacing: -44px;
-}
-
-.ellipse-2 {
-  width: 27vw;
-  height: 16vh;
-  border: 1px solid #ff0000;
-  border-radius: 48% / 55%;
-  transform: matrix(1, 0, -0.4, 0.87, 0, 0);
-  position: absolute;
-  top: 65px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
 }
 
 .element-KUDAKU {
@@ -541,5 +549,82 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
   flex-direction: column;
   gap: 5px;
   position: relative;
+}
+
+/* モーダル関連のスタイル */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(@/assets/img/bg_color.png);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.email-text {
+  width: 20vw;
+  height: 4vw;
+  margin-bottom: 1vw;
+}
+.copy-button-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.copy-button {
+  width: 7vw;
+  height: 8vw;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.copy-button:hover {
+  transform: scale(1.05);
+}
+
+.button-clicked {
+  transform: scale(0.95);
+}
+
+.copied-message {
+  position: absolute;
+  bottom: -30px;
+  color: white;
+  font-family: ivyora-display, sans-serif;
+  font-size: 16px;
+  font-style: italic;
+  opacity: 0;
+  animation: fadeInOut 2s forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  width: 4vw;
+  height: 4vw;
 }
 </style>
