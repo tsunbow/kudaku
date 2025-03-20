@@ -1,9 +1,9 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import trim from '@/assets/video/trim2.mp4'
-import KU from '@/assets/img/KU1.svg'
-import DA from '@/assets/img/DA.svg'
-import KU2 from '@/assets/img/KU2.svg'
+import trim from '@/assets/video/trim.mp4'
+import KU_JSON from '@/assets/lottie/KU1.json'
+import DA_JSON from '@/assets/lottie/DA.json'
+import KU2_JSON from '@/assets/lottie/KU2.json'
 import creativeArea from '@/assets/img/creative-area.svg'
 import bg from '@/assets/img/bg.png'
 import logo_top from '@/assets/img/logo_top.svg'
@@ -71,9 +71,15 @@ onMounted(() => {
               false
             />
           </div>
-          <BlurElement type="image" class="KU" :src="KU" alt="Ku" />
-          <BlurElement type="image" class="DA" :src="DA" alt="Da" />
-          <BlurElement type="image" class="KU2" :src="KU2" alt="Ku" />
+          <BlurElement type="lottie" :jsonSrc="KU_JSON" :loop="false" :autoplay="true" class="KU" />
+          <BlurElement type="lottie" :jsonSrc="DA_JSON" :loop="false" :autoplay="true" class="DA" />
+          <BlurElement
+            type="lottie"
+            :jsonSrc="KU2_JSON"
+            :loop="false"
+            :autoplay="true"
+            class="KU2"
+          />
         </div>
       </div>
     </div>
