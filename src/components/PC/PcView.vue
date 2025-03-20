@@ -1,5 +1,6 @@
 <script setup>
 import trim from '@/assets/video/trim.mp4'
+import noise from '@/assets/video/noise.mp4'
 import KU_JSON from '@/assets/lottie/KU1.json'
 import DA_JSON from '@/assets/lottie/DA.json'
 import KU2_JSON from '@/assets/lottie/KU2.json'
@@ -114,7 +115,9 @@ const copyEmailToClipboard = () => {
     <div class="content-wrapper2">
       <SmoothScroll SmoothScroll :threshold="0.1">
         <div class="overlap-10">
-          <img class="frame-4" alt="Frame" :src="bg" />
+          <video class="frame-4" autoplay loop muted playsinline>
+            <source :src="noise" type="video/mp4" />
+          </video>
           <img class="element-7" alt="Element" :src="layer" />
 
           <p class="where-we-are-content">
@@ -332,6 +335,7 @@ const copyEmailToClipboard = () => {
   top: 0;
   width: 100vw;
   opacity: 0.9;
+  object-fit: cover;
 }
 .overlap-10::after {
   background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
