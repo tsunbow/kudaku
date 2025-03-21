@@ -1,15 +1,20 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import trim from '@/assets/video/trim.mp4'
+import noise from '@/assets/video/noise.mp4'
 import KU_JSON from '@/assets/lottie/KU1.json'
 import DA_JSON from '@/assets/lottie/DA.json'
 import KU2_JSON from '@/assets/lottie/KU2.json'
 import creativeArea from '@/assets/img/creative-area.svg'
-import bg from '@/assets/img/bg.png'
+import play_concept from '@/assets/img/play_concept_sp.svg'
 import logo_top from '@/assets/img/logo_top.svg'
 import logo_red from '@/assets/img/logo_red.svg'
 import layer from '@/assets/img/layer.png'
 import vector from '@/assets/img/vector.png'
+import lets_talk from '@/assets/img/letstalk_sp.svg'
+import email_text from '@/assets/img/email_text.svg'
+import copy_button from '@/assets/img/copy_button.svg'
+import close_btn from '@/assets/img/close_button.svg'
 
 import BlurElement from '@/components/SP/BlurElement.vue'
 import ScrollRevealDescription from '@/components/SP/ScrollRevealDescription.vue'
@@ -32,6 +37,36 @@ onMounted(() => {
   link.href = videoUrl
   document.head.appendChild(link)
 })
+
+// Vimeo動画を開く関数
+const openVimeoVideo = () => {
+  window.open(videoUrl, '_blank')
+}
+
+const isModalOpen = ref(false)
+const isCopied = ref(false)
+const emailAddress = 'info@kudaku.tokyo'
+
+// モーダルを開く関数
+const openModal = () => {
+  isModalOpen.value = true
+  document.body.style.overflow = 'hidden' // スクロールを無効化
+}
+
+// モーダルを閉じる関数
+const closeModal = () => {
+  isModalOpen.value = false
+  document.body.style.overflow = '' // スクロールを有効化
+}
+
+// メールアドレスをクリップボードにコピーする関数
+const copyEmailToClipboard = () => {
+  navigator.clipboard.writeText(emailAddress)
+  isCopied.value = true
+  setTimeout(() => {
+    isCopied.value = false
+  }, 2000)
+}
 </script>
 
 <template>
@@ -80,6 +115,13 @@ onMounted(() => {
             :autoplay="true"
             class="KU2"
           />
+          <BlurElement
+            type="image"
+            :src="play_concept"
+            alt="play_concept"
+            class="play-concept"
+            @click="openVimeoVideo"
+          />
         </div>
       </div>
     </div>
@@ -94,7 +136,9 @@ onMounted(() => {
     </div>
     <div class="content-wrapper2">
       <div class="overlap-10">
-        <img class="frame-4" alt="Frame" :src="bg" />
+        <video class="frame-4" autoplay loop muted playsinline>
+          <source :src="noise" type="video/mp4" />
+        </video>
         <img class="element-7" alt="Element" :src="layer" />
 
         <p class="where-we-are-content">
@@ -141,26 +185,34 @@ onMounted(() => {
     <div class="content-wrapper3">
       <div class="frame-5">
         <div class="overlap-11">
-          <img class="vector-2" alt="Vector" :src="vector" />
-
           <div class="group-8">
             <div class="overlap-group-4">
-              <div class="letsTalk-content">
-                <span>L</span>
-                <span class="letsTalk-text style-normal spacing-0">e</span>
-                <span class="letsTalk-text style-normal spacing-lets">t</span>
-                <span class="letsTalk-text spacing-comma">’</span>
-                <span class="letsTalk-text style-normal spacing-0">s </span>
-                <span class="style-italic spacing-t">T</span>
-                <span class="letsTalk-text style-normal spacing-0">alk</span>
-                <div class="ellipse-2" />
-              </div>
+              <img class="vector-2" alt="Vector" :src="vector" />
+              <img class="letsTalk-text" alt="letsTalk" :src="lets_talk" @click="openModal" />
             </div>
           </div>
         </div>
 
         <div class="element-KUDAKU">©2025&nbsp;&nbsp;KUDAKU</div>
       </div>
+    </div>
+  </div>
+
+  <!-- モーダル -->
+  <div v-if="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <img :src="email_text" alt="info@kudaku.tokyo" class="email-text" />
+      <div class="copy-button-wrapper">
+        <img
+          :src="copy_button"
+          class="copy-button"
+          alt="copy"
+          @click="copyEmailToClipboard"
+          :class="{ 'button-clicked': isCopied }"
+        />
+        <span v-if="isCopied" class="copied-message">Copied!</span>
+      </div>
+      <img :src="close_btn" alt="閉じる" class="modal-close" @click="closeModal" />
     </div>
   </div>
 </template>
@@ -253,7 +305,7 @@ onMounted(() => {
   aspect-ratio: 116 / 56;
   position: absolute;
   left: 14%;
-  top: 35vw;
+  top: 30vw;
 }
 
 .logo_kudaku {
@@ -264,6 +316,14 @@ onMounted(() => {
   left: 88%;
   transform: translate(-50%, -50%);
   z-index: 1;
+}
+
+.play-concept {
+  position: absolute;
+  bottom: 3%;
+  left: 9%;
+  width: 121px;
+  height: 43px;
 }
 
 .content-wrapper1 {
@@ -298,6 +358,7 @@ onMounted(() => {
   position: absolute;
   width: 100vw;
   opacity: 0.9;
+  object-fit: cover;
 }
 
 .element-7 {
@@ -365,7 +426,7 @@ onMounted(() => {
 }
 
 .frame-5 {
-  background-image: url(@/assets/img/2-9.png);
+  background-image: url(@/assets/img/letstalk_bg_sp.png);
   background-position: 50% 50%;
   background-size: cover;
   height: 100vh;
@@ -409,68 +470,21 @@ onMounted(() => {
   margin: auto;
 }
 
-.letsTalk-content {
-  color: #ff0000;
-  font-family: nautica, sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  font-size: 11vw;
-  line-height: 185px;
-  text-align: center;
-  white-space: nowrap;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-
 .letsTalk-text {
-  font-size: 8vw;
-  line-height: 131.4px;
-}
-
-.style-normal {
-  font-family: ivyora-display, sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  position: absolute;
+  width: 360.497px;
+  height: 512.714px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  cursor: pointer;
 }
 
 .style-italic {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
   font-style: italic;
-}
-
-.spacing-0 {
-  letter-spacing: 0;
-}
-
-.spacing-comma {
-  letter-spacing: 13.05px;
-}
-
-.spacing-lets {
-  letter-spacing: -37.86px;
-}
-
-.spacing-t {
-  letter-spacing: -44px;
-}
-
-.ellipse-2 {
-  width: 27vw;
-  height: 16vh;
-  border: 1px solid #ff0000;
-  border-radius: 48% / 55%;
-  transform: matrix(1, 0, -0.4, 0.87, 0, 0);
-  position: absolute;
-  top: 65px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
 }
 
 .element-KUDAKU {
@@ -547,21 +561,94 @@ onMounted(() => {
 @media screen and (max-width: 768px) {
   .KU {
     width: 86vw;
-    top: -68%;
+    top: -75%;
   }
 
   .DA {
     width: 39vw;
-    top: calc(53vw + 14px);
+    top: calc(58vw + 14px);
   }
 
   .KU2 {
     width: 63vw;
-    top: calc(48vw + 17px);
+    top: calc(53vw + 17px);
   }
 
   .logo_kudaku {
     width: 11vw;
   }
+}
+
+/* モーダル関連のスタイル */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(@/assets/img/bg_color.png);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.email-text {
+  width: 60vw;
+  height: 20vw;
+  margin-bottom: 1vw;
+}
+.copy-button-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.copy-button {
+  width: 95.867px;
+  height: 108.33px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.button-clicked {
+  transform: scale(0.95);
+}
+
+.copied-message {
+  position: absolute;
+  bottom: -30px;
+  color: white;
+  font-family: ivyora-display, sans-serif;
+  font-size: 16px;
+  font-style: italic;
+  opacity: 0;
+  animation: fadeInOut 2s forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  width: 18vw;
+  height: 18vw;
 }
 </style>
