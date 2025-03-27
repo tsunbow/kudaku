@@ -1,11 +1,16 @@
-<!-- MouseFollower.vue - スクロール対応バージョン -->
+<!-- MouseFollower.vue - スクロール対応＋遅延効果バージョン -->
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 
 // 基本的なマウス位置の追跡
-const position = ref({ x: 0, y: 0 })
+const mousePosition = ref({ x: 0, y: 0 }) // 実際のマウス位置
+const followerPosition = ref({ x: 0, y: 0 }) // 遅延を適用したフォロワーの位置
 const hoveredText = ref('')
 const textWidth = ref(0)
+
+// 遅延アニメーションの設定
+const delay = ref(0.9) // 遅延の強さ (0〜1の値、大きいほど遅延が大きい)
+let animationFrameId = null
 
 // 対象となる要素のDOM要素とその位置情報を保存
 const targetRect = ref(null)
@@ -92,10 +97,10 @@ const handleScroll = () => {
   isAtTopSection.value = scrollY.value < topSectionHeight.value
 }
 
-// マウス移動ハンドラー - 遅延を最小限に
+// マウス移動ハンドラー
 const handleMouseMove = (e) => {
-  // アニメーションフレームでの更新を避け、直接更新して応答性を向上
-  position.value = { x: e.clientX, y: e.clientY }
+  // 実際のマウス位置を更新
+  mousePosition.value = { x: e.clientX, y: e.clientY }
 
   // トップセクションにいる場合のみターゲットエリアをチェック
   if (isAtTopSection.value && targetRect.value) {
@@ -125,6 +130,20 @@ const handleMouseMove = (e) => {
   }
 }
 
+// 遅延アニメーションを更新する関数
+const updateFollowerPosition = () => {
+  // 現在のフォロワー位置と目標（マウス）位置の差分を計算
+  const dx = mousePosition.value.x - followerPosition.value.x
+  const dy = mousePosition.value.y - followerPosition.value.y
+
+  // イージングを適用して新しい位置を計算
+  followerPosition.value.x += dx * (1 - delay.value)
+  followerPosition.value.y += dy * (1 - delay.value)
+
+  // 次のフレームでも更新
+  animationFrameId = requestAnimationFrame(updateFollowerPosition)
+}
+
 // 動画を再生する関数
 const playVideo = () => {
   if (isInTargetArea.value && isAtTopSection.value) {
@@ -148,10 +167,16 @@ onMounted(() => {
   // 初期スクロール位置の設定
   handleScroll()
 
+  // 初期フォロワー位置をマウス位置に設定
+  followerPosition.value = { ...mousePosition.value }
+
   // イベントリスナーを設定
   window.addEventListener('mousemove', handleMouseMove, { passive: true })
   window.addEventListener('resize', handleResize)
   window.addEventListener('scroll', handleScroll, { passive: true })
+
+  // 遅延アニメーションを開始
+  animationFrameId = requestAnimationFrame(updateFollowerPosition)
 
   // 対象エリアの位置を定期的に更新
   const intervalId = setInterval(() => {
@@ -165,31 +190,36 @@ onMounted(() => {
     window.removeEventListener('resize', handleResize)
     window.removeEventListener('scroll', handleScroll)
     clearInterval(intervalId)
+
+    // アニメーションフレームをキャンセル
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId)
+    }
   })
 })
 </script>
 
 <template>
   <div class="mouse-follower">
-    <!-- 通常の赤い円のフォロワー -->
+    <!-- 通常の赤い円のフォロワー（遅延あり） -->
     <div
       v-show="showDefaultFollower"
       class="follower"
       :style="{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
+        left: `${followerPosition.x}px`,
+        top: `${followerPosition.y}px`,
         width: '24px',
         height: '24px',
       }"
     ></div>
 
-    <!-- テキストホバー時のフォロワー -->
+    <!-- テキストホバー時のフォロワー（遅延あり） -->
     <div
       v-show="showTextFollower"
       class="follower text-follower"
       :style="{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
+        left: `${followerPosition.x}px`,
+        top: `${followerPosition.y}px`,
         width: `${circleSize.width}px`,
         height: `${circleSize.height}px`,
       }"
@@ -197,13 +227,13 @@ onMounted(() => {
       <span class="follower-text">{{ hoveredText }}</span>
     </div>
 
-    <!-- 対象エリア上でのフォロワー - トランジションを削除して即時反応 -->
+    <!-- 対象エリア上でのフォロワー（遅延あり） -->
     <div
       v-show="showVideoFollower"
-      class="movie-play-follower no-transition"
+      class="movie-play-follower"
       :style="{
-        left: `${position.x}px`,
-        top: `${position.y}px`,
+        left: `${followerPosition.x}px`,
+        top: `${followerPosition.y}px`,
       }"
       @click.stop="playVideo"
     >
@@ -234,6 +264,7 @@ onMounted(() => {
   transition:
     width 0.2s ease,
     height 0.2s ease;
+  /* 位置のトランジションは削除（アニメーションフレームで処理） */
 }
 
 .text-follower {
@@ -256,11 +287,7 @@ onMounted(() => {
   z-index: 50;
   pointer-events: auto; /* クリックを可能にする */
   cursor: pointer;
-}
-
-/* トランジションを削除して即時反応させる */
-.no-transition {
-  transition: none !important;
+  /* 位置のトランジションは削除（アニメーションフレームで処理） */
 }
 
 .movie-play-follower .ellipse {
