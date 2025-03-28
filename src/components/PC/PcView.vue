@@ -24,7 +24,7 @@ import SmoothScroll from '@/components/PC/SmoothScroll.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
 
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 const isHovered = ref(false)
 const isModalOpen = ref(false)
 const isCopied = ref(false)
@@ -50,6 +50,81 @@ const copyEmailToClipboard = () => {
     isCopied.value = false
   }, 2000)
 }
+
+// 背景ムービーのアニメーション用
+const videoElement = ref(null)
+let lastScrollY = 0
+let ticking = false
+let animationStarted = false
+
+// スクロール処理
+const handleScroll = () => {
+  lastScrollY = window.scrollY
+
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      updateVideoPosition()
+      ticking = false
+    })
+    ticking = true
+  }
+}
+
+// ビデオ位置の更新
+const updateVideoPosition = () => {
+  if (!videoElement.value) return
+
+  // content-wrapper2の位置を取得
+  const wrapper = document.querySelector('.content-wrapper2')
+  if (!wrapper) return
+
+  const rect = wrapper.getBoundingClientRect()
+  const viewportHeight = window.innerHeight
+
+  // スクロール進行度に基づいてアニメーションを制御
+  if (rect.top <= viewportHeight * 1.0 && rect.bottom >= 0) {
+    // アニメーションが始まったフラグを立てる
+    animationStarted = true
+
+    // 進行度を計算（0〜1の値）
+    const progress = Math.min(1, Math.max(0, 1 - rect.top / (viewportHeight * 0.6)))
+
+    // 一度でもアニメーションが50%以上進んだら、完全に表示する
+    if (progress >= 0.9) {
+      videoElement.value.style.transform = 'translateY(0)'
+      videoElement.value.style.filter = 'blur(0)'
+    } else {
+      // 通常のスクロールベースのアニメーション
+      videoElement.value.style.transform = `translateY(${100 - progress * 100}%)`
+      videoElement.value.style.filter = `blur(${100 - progress * 100}px)`
+    }
+  } else if (!animationStarted) {
+    // エリア外かつアニメーションが始まっていない場合は初期状態にする
+    videoElement.value.style.transform = 'translateY(100%)'
+    videoElement.value.style.filter = 'blur(100px)'
+  }
+}
+
+onMounted(() => {
+  // 初期状態でビデオを下に配置し、非常に強いブラー効果を適用
+  if (videoElement.value) {
+    videoElement.value.style.transform = 'translateY(100%)'
+    videoElement.value.style.filter = 'blur(100px)'
+  }
+
+  // スクロールイベントリスナーを設定
+  window.addEventListener('scroll', handleScroll, { passive: true })
+
+  // 初回実行
+  setTimeout(() => {
+    updateVideoPosition()
+  }, 100)
+})
+
+onUnmounted(() => {
+  // イベントリスナーのクリーンアップ
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
@@ -92,7 +167,7 @@ const copyEmailToClipboard = () => {
         <div class="frame-7">
           <div class="frame-6-text frame-6-text-gray">Our Projects</div>
         </div>
-        <div class="frame-6-text">Let’s Talk</div>
+        <div class="frame-6-text">Let's Talk</div>
         <a
           class="frame-6-text-italic"
           href="https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1"
@@ -111,57 +186,55 @@ const copyEmailToClipboard = () => {
         </template>
       </ScrollRevealSection>
     </div>
+
+    <!-- 修正したcontent-wrapper2部分 -->
     <div class="content-wrapper2">
-      <SmoothScroll SmoothScroll :threshold="0.1">
-        <div class="overlap-10">
-          <video class="frame-4" autoplay loop muted playsinline>
-            <source :src="noise" type="video/mp4" />
-          </video>
-          <img class="element-7" alt="Element" :src="layer" />
+      <div class="overlap-10">
+        <!-- ビデオ要素にrefを追加 -->
+        <video class="frame-4" ref="videoElement" autoplay loop muted playsinline>
+          <source :src="noise" type="video/mp4" />
+        </video>
 
-          <p class="where-we-are-content">
-            <span class="where-we-are-text weight-400">
-              <span class="span">W</span>
-              <span class="where-we-are-text weight-400">here</span>
-              <br />
-              <span class="where-we-are-text margin-we weight-400">we</span>
-              <br />
-              <span class="where-we-are-text lineHeight style-italic"> . A</span>
-              <span class="where-we-are-text weight-400">re</span>
-            </span>
-          </p>
+        <img class="element-7" alt="Element" :src="layer" />
 
-          <div class="text-wrapper-14">
-            砕区は、既存のやり方やルールに縛られない
+        <p class="where-we-are-content">
+          <span class="where-we-are-text weight-400">
+            <span class="span">W</span>
+            <span class="where-we-are-text weight-400">here</span>
             <br />
-            クリエイティブ・エリア。
+            <span class="where-we-are-text margin-we weight-400">we</span>
             <br />
-            <br />
-            少数精鋭チームにより、
-            <br />
-            全体像を把握・共有しながら細部にこだわっていく。
-            <br />
-            無駄をカットし、然るべき部分にリソースを配分する。
-            <br />
-            <br />
-            プロデューサー／映像作家／アートディレクター／写真家／空間デザイナーなどが交わり
-            <br />
-            クライアントとの自由な発想とコラボレーションで
-            <br />
-            心と人を動かすアウトプットを産み、愛されるブランドを育む。
-          </div>
+            <span class="where-we-are-text lineHeight style-italic"> . A</span>
+            <span class="where-we-are-text weight-400">re</span>
+          </span>
+        </p>
 
-          <div class="logo_red">
-            <RevealLogo
-              class="group-7"
-              :logoSrc="logo_red"
-              :initialBlur="10"
-              :triggerOffset="3000"
-            />
-          </div>
+        <div class="text-wrapper-14">
+          砕区は、既存のやり方やルールに縛られない
+          <br />
+          クリエイティブ・エリア。
+          <br />
+          <br />
+          少数精鋭チームにより、
+          <br />
+          全体像を把握・共有しながら細部にこだわっていく。
+          <br />
+          無駄をカットし、然るべき部分にリソースを配分する。
+          <br />
+          <br />
+          プロデューサー／映像作家／アートディレクター／写真家／空間デザイナーなどが交わり
+          <br />
+          クライアントとの自由な発想とコラボレーションで
+          <br />
+          心と人を動かすアウトプットを産み、愛されるブランドを育む。
         </div>
-      </SmoothScroll>
+
+        <div class="logo_red">
+          <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
+        </div>
+      </div>
     </div>
+
     <div class="content-wrapper3">
       <div class="frame-5">
         <div class="overlap-11">
@@ -313,7 +386,7 @@ const copyEmailToClipboard = () => {
   position: relative;
   z-index: 2;
   transform-style: preserve-3d;
-  height: 1814px;
+  height: 2400px;
 }
 
 .content-wrapper3 {
@@ -323,19 +396,26 @@ const copyEmailToClipboard = () => {
 }
 
 .overlap-10 {
-  height: 1440px;
+  height: 2400px;
   width: 100vw;
+  position: relative;
+  overflow: hidden;
 }
 
 .frame-4 {
-  height: 1814px;
+  height: 2400px;
   left: 0;
   position: absolute;
   top: 0;
   width: 100vw;
   opacity: 0.9;
   object-fit: cover;
+  transition:
+    transform 0.6s ease-out,
+    filter 0.8s ease-out;
+  will-change: transform, filter;
 }
+
 .overlap-10::after {
   background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
