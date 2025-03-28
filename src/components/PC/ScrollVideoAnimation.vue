@@ -55,8 +55,14 @@ const updateVideoPosition = () => {
   const rect = wrapper.getBoundingClientRect()
   const viewportHeight = window.innerHeight
 
+  // セクションが見え始めるよりも前（上方向へのスクロール時）の判定を追加
+  // scrollDirection変数を追加して、スクロール方向を判定
+  const currentScrollY = window.scrollY
+  const scrollingUp = currentScrollY < lastScrollY
+  lastScrollY = currentScrollY
+
   // スクロール進行度に基づいてアニメーションを制御
-  if (rect.top <= viewportHeight * 1.0 && rect.bottom >= 0) {
+  if (rect.top <= viewportHeight && rect.bottom >= 0) {
     // アニメーションが始まったフラグを立てる
     animationStarted = true
 
@@ -75,6 +81,12 @@ const updateVideoPosition = () => {
       videoElement.value.style.transform = `translateY(${100 - progress * 100}%)`
       videoElement.value.style.filter = `blur(${props.maxBlur - progress * props.maxBlur}px)`
     }
+  } else if (animationStarted && scrollingUp && rect.top > viewportHeight) {
+    // ここを変更: スクロールアップ時に、より早く判定
+    // セクションが画面の半分より上に出たらアニメーションをリセット
+    videoElement.value.style.transform = 'translateY(100%)'
+    videoElement.value.style.filter = `blur(${props.maxBlur}px)`
+    animationStarted = false
   } else if (!animationStarted) {
     // エリア外かつアニメーションが始まっていない場合は初期状態にする
     videoElement.value.style.transform = 'translateY(100%)'
@@ -135,8 +147,8 @@ onUnmounted(() => {
   opacity: 0.9;
   object-fit: cover;
   transition:
-    transform 0.6s ease-out,
-    filter 0.8s ease-out;
+    transform 0.2s ease-out,
+    filter 0.2s ease-out;
   will-change: transform, filter;
 }
 
