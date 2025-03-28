@@ -20,11 +20,12 @@ import MouseFollower from '@/components/PC/MouseFollower.vue'
 import BlurElement from '@/components/PC/BlurElement.vue'
 import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue'
 import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
-import SmoothScroll from '@/components/PC/SmoothScroll.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
+// スクロールアニメーションコンポーネントをインポート
+import ScrollVideoAnimation from '@/components/PC/ScrollVideoAnimation.vue'
 
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 const isHovered = ref(false)
 const isModalOpen = ref(false)
 const isCopied = ref(false)
@@ -50,81 +51,6 @@ const copyEmailToClipboard = () => {
     isCopied.value = false
   }, 2000)
 }
-
-// 背景ムービーのアニメーション用
-const videoElement = ref(null)
-let lastScrollY = 0
-let ticking = false
-let animationStarted = false
-
-// スクロール処理
-const handleScroll = () => {
-  lastScrollY = window.scrollY
-
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      updateVideoPosition()
-      ticking = false
-    })
-    ticking = true
-  }
-}
-
-// ビデオ位置の更新
-const updateVideoPosition = () => {
-  if (!videoElement.value) return
-
-  // content-wrapper2の位置を取得
-  const wrapper = document.querySelector('.content-wrapper2')
-  if (!wrapper) return
-
-  const rect = wrapper.getBoundingClientRect()
-  const viewportHeight = window.innerHeight
-
-  // スクロール進行度に基づいてアニメーションを制御
-  if (rect.top <= viewportHeight * 1.0 && rect.bottom >= 0) {
-    // アニメーションが始まったフラグを立てる
-    animationStarted = true
-
-    // 進行度を計算（0〜1の値）
-    const progress = Math.min(1, Math.max(0, 1 - rect.top / (viewportHeight * 0.6)))
-
-    // 一度でもアニメーションが50%以上進んだら、完全に表示する
-    if (progress >= 0.9) {
-      videoElement.value.style.transform = 'translateY(0)'
-      videoElement.value.style.filter = 'blur(0)'
-    } else {
-      // 通常のスクロールベースのアニメーション
-      videoElement.value.style.transform = `translateY(${100 - progress * 100}%)`
-      videoElement.value.style.filter = `blur(${100 - progress * 100}px)`
-    }
-  } else if (!animationStarted) {
-    // エリア外かつアニメーションが始まっていない場合は初期状態にする
-    videoElement.value.style.transform = 'translateY(100%)'
-    videoElement.value.style.filter = 'blur(100px)'
-  }
-}
-
-onMounted(() => {
-  // 初期状態でビデオを下に配置し、非常に強いブラー効果を適用
-  if (videoElement.value) {
-    videoElement.value.style.transform = 'translateY(100%)'
-    videoElement.value.style.filter = 'blur(100px)'
-  }
-
-  // スクロールイベントリスナーを設定
-  window.addEventListener('scroll', handleScroll, { passive: true })
-
-  // 初回実行
-  setTimeout(() => {
-    updateVideoPosition()
-  }, 100)
-})
-
-onUnmounted(() => {
-  // イベントリスナーのクリーンアップ
-  window.removeEventListener('scroll', handleScroll)
-})
 </script>
 
 <template>
@@ -189,12 +115,14 @@ onUnmounted(() => {
 
     <!-- 修正したcontent-wrapper2部分 -->
     <div class="content-wrapper2">
-      <div class="overlap-10">
-        <!-- ビデオ要素にrefを追加 -->
-        <video class="frame-4" ref="videoElement" autoplay loop muted playsinline>
-          <source :src="noise" type="video/mp4" />
-        </video>
-
+      <!-- ScrollVideoAnimationコンポーネントの使用 -->
+      <ScrollVideoAnimation
+        :videoSrc="noise"
+        :completeThreshold="0.9"
+        :scrollSensitivity="0.6"
+        :maxBlur="100"
+        class="overlap-10"
+      >
         <img class="element-7" alt="Element" :src="layer" />
 
         <p class="where-we-are-content">
@@ -232,7 +160,7 @@ onUnmounted(() => {
         <div class="logo_red">
           <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
         </div>
-      </div>
+      </ScrollVideoAnimation>
     </div>
 
     <div class="content-wrapper3">
@@ -399,21 +327,6 @@ onUnmounted(() => {
   height: 2400px;
   width: 100vw;
   position: relative;
-  overflow: hidden;
-}
-
-.frame-4 {
-  height: 2400px;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100vw;
-  opacity: 0.9;
-  object-fit: cover;
-  transition:
-    transform 0.6s ease-out,
-    filter 0.8s ease-out;
-  will-change: transform, filter;
 }
 
 .overlap-10::after {
