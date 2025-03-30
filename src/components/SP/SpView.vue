@@ -21,6 +21,7 @@ import ScrollRevealDescription from '@/components/SP/ScrollRevealDescription.vue
 import ScrollRevealSection from '@/components/SP/ScrollRevealSection.vue'
 import BlurLogo from '@/components/SP/BlurLogo.vue'
 import RevealLogo from '@/components/SP/RevealLogo.vue'
+import ScrollVideoAnimation from '@/components/SP/ScrollVideoAnimation.vue'
 
 const videoUrl =
   'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1'
@@ -135,10 +136,13 @@ const copyEmailToClipboard = () => {
       </ScrollRevealSection>
     </div>
     <div class="content-wrapper2">
-      <div class="overlap-10">
-        <video class="frame-4" autoplay loop muted playsinline>
-          <source :src="noise" type="video/mp4" />
-        </video>
+      <ScrollVideoAnimation
+        :videoSrc="noise"
+        :completeThreshold="0.9"
+        :scrollSensitivity="0.6"
+        :maxBlur="300"
+        class="overlap-10"
+      >
         <img class="element-7" alt="Element" :src="layer" />
 
         <p class="where-we-are-content">
@@ -180,7 +184,7 @@ const copyEmailToClipboard = () => {
         <div class="logo_red">
           <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
         </div>
-      </div>
+      </ScrollVideoAnimation>
     </div>
     <div class="content-wrapper3">
       <div class="frame-5">
@@ -338,7 +342,7 @@ const copyEmailToClipboard = () => {
   position: relative;
   z-index: 2;
   transform-style: preserve-3d;
-  height: 1247px;
+  height: 1400px;
 }
 
 .content-wrapper3 {
@@ -348,7 +352,7 @@ const copyEmailToClipboard = () => {
 }
 
 .overlap-10 {
-  height: 1247px;
+  height: 1700px;
   width: 100vw;
 }
 
