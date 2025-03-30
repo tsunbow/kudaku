@@ -69,7 +69,10 @@ const updateVideoPosition = () => {
     // 進行度を計算（0〜1の値）
     const progress = Math.min(
       1,
-      Math.max(0, 1 - rect.top / (viewportHeight * props.scrollSensitivity)),
+      Math.max(
+        0,
+        1 - (rect.top + viewportHeight * 0.3) / (viewportHeight * props.scrollSensitivity),
+      ),
     )
 
     // 指定された閾値以上進んだら、完全に表示する
