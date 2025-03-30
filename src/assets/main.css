@@ -3,8 +3,8 @@
 #app {
   margin: 0 auto;
   font-weight: normal;
-  width: 100%; /* 固定幅から100%に変更 */
-  background-image: url(src/assets/img/bg_color.png);
+  width: 100%;
+  background-image: url('@/assets/img/bg_color.png');
 }
 a,
 .green {

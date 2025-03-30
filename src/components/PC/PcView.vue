@@ -120,7 +120,7 @@ const copyEmailToClipboard = () => {
         :videoSrc="noise"
         :completeThreshold="0.9"
         :scrollSensitivity="0.6"
-        :maxBlur="100"
+        :maxBlur="300"
         class="overlap-10"
       >
         <img class="element-7" alt="Element" :src="layer" />
@@ -491,6 +491,7 @@ const copyEmailToClipboard = () => {
   line-height: 36.8px;
   text-align: center;
   white-space: nowrap;
+  margin-bottom: 2px;
 }
 
 .frame-6 {

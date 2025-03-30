@@ -501,6 +501,7 @@ const copyEmailToClipboard = () => {
   line-height: 24px;
   text-align: center;
   white-space: nowrap;
+  margin-bottom: 5px;
 }
 
 .frame-6 {
