@@ -78,22 +78,63 @@ const updateVideoPosition = () => {
     // 指定された閾値以上進んだら、完全に表示する
     if (progress >= props.completeThreshold) {
       videoElement.value.style.transform = 'translateY(0)'
-      videoElement.value.style.filter = 'blur(0)'
+      videoElement.value.style.filter = 'none'
     } else {
       // 通常のスクロールベースのアニメーション
       videoElement.value.style.transform = `translateY(${100 - progress * 100}%)`
-      videoElement.value.style.filter = `blur(${props.maxBlur - progress * props.maxBlur}px)`
+      // 縦方向のみのブラー効果を適用（SVGフィルター経由）
+      const blurValue = Math.floor(props.maxBlur - progress * props.maxBlur)
+      videoElement.value.style.filter = `url('#vertical-blur-${blurValue}')`
     }
   } else if (animationStarted && scrollingUp && rect.top > viewportHeight) {
     // ここを変更: スクロールアップ時に、より早く判定
     // セクションが画面の半分より上に出たらアニメーションをリセット
     videoElement.value.style.transform = 'translateY(100%)'
-    videoElement.value.style.filter = `blur(${props.maxBlur}px)`
+    videoElement.value.style.filter = `url('#vertical-blur-${props.maxBlur}')`
     animationStarted = false
   } else if (!animationStarted) {
     // エリア外かつアニメーションが始まっていない場合は初期状態にする
     videoElement.value.style.transform = 'translateY(100%)'
-    videoElement.value.style.filter = `blur(${props.maxBlur}px)`
+    videoElement.value.style.filter = `url('#vertical-blur-${props.maxBlur}')`
+  }
+}
+
+// SVGブラーフィルターを動的に生成する関数
+const createBlurFilters = () => {
+  // すでに存在する場合は作成しない
+  if (document.getElementById('vertical-blur-filters')) return
+
+  // SVG要素を作成
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+  svg.setAttribute('id', 'vertical-blur-filters')
+  svg.setAttribute('width', '0')
+  svg.setAttribute('height', '0')
+  svg.style.position = 'absolute'
+  svg.style.visibility = 'hidden'
+
+  // 0からmaxBlurまでのフィルターを生成
+  for (let i = 0; i <= props.maxBlur; i += 1) {
+    const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter')
+    filter.setAttribute('id', `vertical-blur-${i}`)
+
+    // 縦方向のみのブラー効果を実現するフィルター設定
+    const feGaussianBlur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur')
+    feGaussianBlur.setAttribute('in', 'SourceGraphic')
+    feGaussianBlur.setAttribute('stdDeviation', `0,${i * 0.5}`) // x方向は0、y方向のみブラー
+
+    filter.appendChild(feGaussianBlur)
+    svg.appendChild(filter)
+  }
+
+  // ドキュメントに追加
+  document.body.appendChild(svg)
+}
+
+// フィルター要素を削除する関数
+const removeBlurFilters = () => {
+  const filtersElement = document.getElementById('vertical-blur-filters')
+  if (filtersElement) {
+    filtersElement.remove()
   }
 }
 
@@ -101,7 +142,9 @@ onMounted(() => {
   // 初期状態でビデオを下に配置し、ブラー効果を適用
   if (videoElement.value) {
     videoElement.value.style.transform = 'translateY(100%)'
-    videoElement.value.style.filter = `blur(${props.maxBlur}px)`
+    // SVGフィルターを生成
+    createBlurFilters()
+    videoElement.value.style.filter = `url('#vertical-blur-${props.maxBlur}')`
   }
 
   // スクロールイベントリスナーを設定
@@ -116,6 +159,9 @@ onMounted(() => {
 onUnmounted(() => {
   // イベントリスナーのクリーンアップ
   window.removeEventListener('scroll', handleScroll)
+
+  // フィルター要素の削除
+  removeBlurFilters()
 })
 </script>
 

@@ -138,8 +138,8 @@ const copyEmailToClipboard = () => {
     <div class="content-wrapper2">
       <ScrollVideoAnimation
         :videoSrc="noise"
-        :completeThreshold="0.9"
-        :scrollSensitivity="0.6"
+        :completeThreshold="0.6"
+        :scrollSensitivity="0.8"
         :maxBlur="300"
         class="overlap-10"
       >
