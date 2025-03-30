@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import trim from '@/assets/video/trim.mp4'
 import noise from '@/assets/video/noise.mp4'
 import KU_JSON from '@/assets/lottie/KU1.json'
@@ -21,11 +21,7 @@ import ScrollRevealDescription from '@/components/SP/ScrollRevealDescription.vue
 import ScrollRevealSection from '@/components/SP/ScrollRevealSection.vue'
 import BlurLogo from '@/components/SP/BlurLogo.vue'
 import RevealLogo from '@/components/SP/RevealLogo.vue'
-// ScrollVideoAnimationコンポーネントの使用を止めて直接実装
-
-const videoUrl =
-  'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1'
-const isVideoLoaded = ref(false)
+// ScrollVideoAnimationコンポーネントの使用はやめて直接実装
 
 // スクロールアニメーション関連の状態
 const contentContainer = ref(null)
@@ -35,6 +31,11 @@ const isElement7Visible = ref(false)
 const isTextVisible = ref(false)
 const isDescriptionVisible = ref(false)
 const isLogoVisible = ref(false)
+const isModalOpen = ref(false)
+const isCopied = ref(false)
+const emailAddress = 'info@kudaku.tokyo'
+const videoUrl =
+  'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1'
 
 // スクロール位置を監視する関数
 const handleScroll = () => {
@@ -82,36 +83,10 @@ const handleScroll = () => {
   }
 }
 
-onMounted(() => {
-  // ページ読み込み直後にiframeを表示
-  isVideoLoaded.value = true
-
-  // プリフェッチを追加
-  const link = document.createElement('link')
-  link.rel = 'preload'
-  link.as = 'iframe'
-  link.href = videoUrl
-  document.head.appendChild(link)
-
-  // スクロールイベントリスナーを追加
-  window.addEventListener('scroll', handleScroll, { passive: true })
-  // 初回ロード時にもチェック
-  setTimeout(handleScroll, 500)
-})
-
-onUnmounted(() => {
-  // イベントリスナーをクリーンアップ
-  window.removeEventListener('scroll', handleScroll)
-})
-
 // Vimeo動画を開く関数
 const openVimeoVideo = () => {
   window.open(videoUrl, '_blank')
 }
-
-const isModalOpen = ref(false)
-const isCopied = ref(false)
-const emailAddress = 'info@kudaku.tokyo'
 
 // モーダルを開く関数
 const openModal = () => {
@@ -133,6 +108,18 @@ const copyEmailToClipboard = () => {
     isCopied.value = false
   }, 2000)
 }
+
+onMounted(() => {
+  // スクロールイベントリスナーを追加
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  // 初回ロード時にもチェック
+  setTimeout(handleScroll, 500)
+})
+
+onUnmounted(() => {
+  // イベントリスナーをクリーンアップ
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
