@@ -59,45 +59,53 @@ const copyEmailToClipboard = () => {
   }, 2000)
 }
 
+// content-wrapper1の参照を追加
+const contentWrapper1 = ref(null)
+
 // スクロール位置を監視する関数
 const handleScroll = () => {
-  if (!contentContainer.value) return
+  if (!contentContainer.value || !contentWrapper1.value) return
 
-  const rect = contentContainer.value.getBoundingClientRect()
+  const containerRect = contentContainer.value.getBoundingClientRect()
+  const wrapper1Rect = contentWrapper1.value.getBoundingClientRect()
   const windowHeight = window.innerHeight
 
-  // 要素がビューポート内に入ったかどうかを確認
-  const isVisible =
-    rect.top < windowHeight * 0.3 && // 要素の上部が画面の80%以内に入った
-    rect.bottom > windowHeight * 0.2 // 要素の下部が画面の20%以上に残っている
+  // content-wrapper1が完全に見えなくなったかどうかを確認
+  // wrapper1Rectの下端（bottom）が画面の上端（0）より上になった場合
+  const isWrapper1Hidden = wrapper1Rect.bottom <= 0
 
-  // 画面中央に近いほど1に近づくスコア（0〜1）を計算
-  const elementCenter = rect.top + rect.height / 2
-  const viewportCenter = windowHeight / 2
-  const distanceFromCenter = Math.abs(elementCenter - viewportCenter)
-  const maxDistance = windowHeight / 2 + rect.height / 2
-  const centerScore = 1 - Math.min(1, distanceFromCenter / maxDistance)
+  // content-wrapper2が表示領域内に入ったかどうかを確認
+  const isContainer2Visible = containerRect.top < windowHeight && containerRect.bottom > 0
 
-  // 一定のスコア（0.3）を超えたら要素を表示し始める
-  // 順番に表示するために少しずつ遅延を入れる
-  isVideoVisible.value = centerScore > 0.3
+  // content-wrapper1が見えなくなり、かつcontent-wrapper2が表示領域内に入っている場合
+  if (isWrapper1Hidden && isContainer2Visible) {
+    // ビデオの表示
+    isVideoVisible.value = true
 
-  // 少し遅れて他の要素も表示
-  setTimeout(() => {
-    isElement7Visible.value = centerScore > 0.3
-  }, 100)
+    // 少し遅れて他の要素も表示（順次表示）
+    setTimeout(() => {
+      isElement7Visible.value = true
+    }, 200)
 
-  setTimeout(() => {
-    isTextVisible.value = centerScore > 0.3
-  }, 200)
+    setTimeout(() => {
+      isTextVisible.value = true
+    }, 400)
 
-  setTimeout(() => {
-    isDescriptionVisible.value = centerScore > 0.3
-  }, 300)
+    setTimeout(() => {
+      isDescriptionVisible.value = true
+    }, 600)
 
-  setTimeout(() => {
-    isLogoVisible.value = centerScore > 0.3
-  }, 400)
+    setTimeout(() => {
+      isLogoVisible.value = true
+    }, 800)
+  } else if (!isContainer2Visible || !isWrapper1Hidden) {
+    // content-wrapper2が画面外に出たり、content-wrapper1が再度表示されたら要素を非表示に戻す
+    isVideoVisible.value = false
+    isElement7Visible.value = false
+    isTextVisible.value = false
+    isDescriptionVisible.value = false
+    isLogoVisible.value = false
+  }
 }
 
 onMounted(() => {
@@ -164,7 +172,7 @@ onUnmounted(() => {
       </div>
     </div>
 
-    <div class="content-wrapper1">
+    <div class="content-wrapper1" ref="contentWrapper1">
       <ScrollRevealSection>
         <template #text>
           <!-- ここにテキストコンテンツを配置 -->
@@ -268,7 +276,7 @@ onUnmounted(() => {
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&family=Zen+Old+Mincho&display=swap');
 
-/* アニメーション関連のスタイル - 修正部分 */
+/* アニメーション関連のスタイル - ブラー効果追加 */
 .frame-4,
 .element-7,
 .where-we-are-content,
@@ -276,16 +284,46 @@ onUnmounted(() => {
 .logo_red {
   opacity: 0;
   transform: translateY(50px);
+  filter: blur(10px);
   transition:
     opacity 0.6s ease-out,
-    transform 0.8s ease-out;
-  will-change: opacity, transform;
+    transform 0.8s ease-out,
+    filter 0.6s ease-out;
+  will-change: opacity, transform, filter;
 }
 
 /* 表示状態のスタイル */
 .visible {
   opacity: 1 !important;
   transform: translateY(0) !important;
+  filter: blur(0) !important;
+}
+
+/* 各要素ごとの個別ブラー効果 */
+.frame-4 {
+  filter: blur(15px);
+  height: 2400px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  object-fit: cover;
+}
+
+.element-7 {
+  filter: blur(8px);
+}
+
+.where-we-are-content {
+  filter: blur(12px);
+}
+
+.text-wrapper-14 {
+  filter: blur(5px);
+}
+
+.logo_red {
+  filter: blur(10px);
 }
 
 /* 以下は既存のスタイル */
@@ -394,7 +432,7 @@ onUnmounted(() => {
   position: relative;
   z-index: 2;
   transform-style: preserve-3d;
-  height: 2400px;
+  height: 2160px;
 }
 
 .content-wrapper3 {
