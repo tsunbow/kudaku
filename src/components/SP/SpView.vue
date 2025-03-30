@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUnmounted } from 'vue'
 import trim from '@/assets/video/trim.mp4'
 import noise from '@/assets/video/noise.mp4'
 import KU_JSON from '@/assets/lottie/KU1.json'
@@ -21,11 +21,66 @@ import ScrollRevealDescription from '@/components/SP/ScrollRevealDescription.vue
 import ScrollRevealSection from '@/components/SP/ScrollRevealSection.vue'
 import BlurLogo from '@/components/SP/BlurLogo.vue'
 import RevealLogo from '@/components/SP/RevealLogo.vue'
-import ScrollVideoAnimation from '@/components/SP/ScrollVideoAnimation.vue'
+// ScrollVideoAnimationコンポーネントの使用を止めて直接実装
 
 const videoUrl =
   'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1'
 const isVideoLoaded = ref(false)
+
+// スクロールアニメーション関連の状態
+const contentContainer = ref(null)
+const contentWrapper1 = ref(null)
+const isVideoVisible = ref(false)
+const isElement7Visible = ref(false)
+const isTextVisible = ref(false)
+const isDescriptionVisible = ref(false)
+const isLogoVisible = ref(false)
+
+// スクロール位置を監視する関数
+const handleScroll = () => {
+  if (!contentContainer.value || !contentWrapper1.value) return
+
+  const containerRect = contentContainer.value.getBoundingClientRect()
+  const wrapper1Rect = contentWrapper1.value.getBoundingClientRect()
+  const windowHeight = window.innerHeight
+
+  // content-wrapper1が完全に見えなくなったかどうかを確認
+  // wrapper1Rectの下端（bottom）が画面の上端（0）より上になった場合
+  const isWrapper1Hidden = wrapper1Rect.bottom <= 0
+
+  // content-wrapper2が表示領域内に入ったかどうかを確認
+  const isContainer2Visible = containerRect.top < windowHeight && containerRect.bottom > 0
+
+  // content-wrapper1が見えなくなり、かつcontent-wrapper2が表示領域内に入っている場合
+  if (isWrapper1Hidden && isContainer2Visible) {
+    // ビデオの表示
+    isVideoVisible.value = true
+
+    // 少し遅れて他の要素も表示（順次表示）
+    setTimeout(() => {
+      isElement7Visible.value = true
+    }, 200)
+
+    setTimeout(() => {
+      isTextVisible.value = true
+    }, 400)
+
+    setTimeout(() => {
+      isDescriptionVisible.value = true
+    }, 600)
+
+    setTimeout(() => {
+      isLogoVisible.value = true
+    }, 800)
+  } else if (!isContainer2Visible || !isWrapper1Hidden) {
+    // content-wrapper2が画面外に出たり、content-wrapper1が再度表示されたら要素を非表示に戻す
+    isVideoVisible.value = false
+    isElement7Visible.value = false
+    isTextVisible.value = false
+    isDescriptionVisible.value = false
+    isLogoVisible.value = false
+  }
+}
 
 onMounted(() => {
   // ページ読み込み直後にiframeを表示
@@ -37,6 +92,16 @@ onMounted(() => {
   link.as = 'iframe'
   link.href = videoUrl
   document.head.appendChild(link)
+
+  // スクロールイベントリスナーを追加
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  // 初回ロード時にもチェック
+  setTimeout(handleScroll, 500)
+})
+
+onUnmounted(() => {
+  // イベントリスナーをクリーンアップ
+  window.removeEventListener('scroll', handleScroll)
 })
 
 // Vimeo動画を開く関数
@@ -127,7 +192,7 @@ const copyEmailToClipboard = () => {
       </div>
     </div>
 
-    <div class="content-wrapper1">
+    <div class="content-wrapper1" ref="contentWrapper1">
       <ScrollRevealSection>
         <template #text>
           <!-- ここにテキストコンテンツを配置 -->
@@ -135,17 +200,18 @@ const copyEmailToClipboard = () => {
         </template>
       </ScrollRevealSection>
     </div>
-    <div class="content-wrapper2">
-      <ScrollVideoAnimation
-        :videoSrc="noise"
-        :completeThreshold="0.6"
-        :scrollSensitivity="0.8"
-        :maxBlur="300"
-        class="overlap-10"
-      >
-        <img class="element-7" alt="Element" :src="layer" />
 
-        <p class="where-we-are-content">
+    <div class="content-wrapper2" ref="contentContainer">
+      <div class="overlap-10">
+        <!-- ビデオ要素 - クラスバインディングで表示/非表示を制御 -->
+        <video class="frame-4" :class="{ visible: isVideoVisible }" autoplay loop muted playsinline>
+          <source :src="noise" type="video/mp4" />
+        </video>
+
+        <!-- 他の要素 - クラスバインディングで表示/非表示を制御 -->
+        <img class="element-7" :class="{ visible: isElement7Visible }" alt="Element" :src="layer" />
+
+        <p class="where-we-are-content" :class="{ visible: isTextVisible }">
           <span class="where-we-are-text weight-400">
             <span class="span">W</span>
             <span class="where-we-are-text weight-400">here</span>
@@ -157,7 +223,7 @@ const copyEmailToClipboard = () => {
           </span>
         </p>
 
-        <div class="text-wrapper-14">
+        <div class="text-wrapper-14" :class="{ visible: isDescriptionVisible }">
           少数精鋭チームにより、
           <br />
           全体像を把握・共有しながら細部にこだわっていく。
@@ -181,11 +247,12 @@ const copyEmailToClipboard = () => {
           クリエイティブ・エリア。
         </div>
 
-        <div class="logo_red">
+        <div class="logo_red" :class="{ visible: isLogoVisible }">
           <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
         </div>
-      </ScrollVideoAnimation>
+      </div>
     </div>
+
     <div class="content-wrapper3">
       <div class="frame-5">
         <div class="overlap-11">
@@ -226,6 +293,50 @@ const copyEmailToClipboard = () => {
 @import url('https://use.typekit.net/azb1dqq.css');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&family=Zen+Old+Mincho&display=swap');
+
+/* アニメーション関連のスタイル - ブラー効果追加 */
+.frame-4,
+.element-7,
+.where-we-are-content,
+.text-wrapper-14,
+.logo_red {
+  opacity: 0;
+  transform: translateY(50px);
+  filter: blur(10px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.8s ease-out,
+    filter 0.6s ease-out;
+  will-change: opacity, transform, filter;
+}
+
+/* 表示状態のスタイル */
+.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  filter: blur(0) !important;
+}
+
+/* 各要素ごとの個別ブラー効果 */
+.frame-4 {
+  filter: blur(15px);
+}
+
+.element-7 {
+  filter: blur(8px);
+}
+
+.where-we-are-content {
+  filter: blur(12px);
+}
+
+.text-wrapper-14 {
+  filter: blur(5px);
+}
+
+.logo_red {
+  filter: blur(10px);
+}
 
 .sp {
   background-position: 50% 50%;
@@ -354,14 +465,14 @@ const copyEmailToClipboard = () => {
 .overlap-10 {
   height: 1700px;
   width: 100vw;
+  position: relative;
 }
 
 .frame-4 {
-  height: 1247px;
+  height: 1700px;
   left: 0;
   position: absolute;
   width: 100vw;
-  opacity: 0.9;
   object-fit: cover;
 }
 
