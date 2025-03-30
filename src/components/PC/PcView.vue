@@ -609,7 +609,7 @@ onUnmounted(() => {
   line-height: 36.8px;
   text-align: center;
   white-space: nowrap;
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 }
 
 .frame-6 {
