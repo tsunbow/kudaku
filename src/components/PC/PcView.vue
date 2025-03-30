@@ -22,14 +22,21 @@ import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue
 import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
-// スクロールアニメーションコンポーネントをインポート
-import ScrollVideoAnimation from '@/components/PC/ScrollVideoAnimation.vue'
+// ScrollVideoAnimationコンポーネントの使用はやめて直接実装
 
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 const isHovered = ref(false)
 const isModalOpen = ref(false)
 const isCopied = ref(false)
 const emailAddress = 'info@kudaku.tokyo'
+
+// スクロールアニメーション関連の状態
+const contentContainer = ref(null)
+const isVideoVisible = ref(false)
+const isElement7Visible = ref(false)
+const isTextVisible = ref(false)
+const isDescriptionVisible = ref(false)
+const isLogoVisible = ref(false)
 
 // モーダルを開く関数
 const openModal = () => {
@@ -51,6 +58,59 @@ const copyEmailToClipboard = () => {
     isCopied.value = false
   }, 2000)
 }
+
+// スクロール位置を監視する関数
+const handleScroll = () => {
+  if (!contentContainer.value) return
+
+  const rect = contentContainer.value.getBoundingClientRect()
+  const windowHeight = window.innerHeight
+
+  // 要素がビューポート内に入ったかどうかを確認
+  const isVisible =
+    rect.top < windowHeight * 0.3 && // 要素の上部が画面の80%以内に入った
+    rect.bottom > windowHeight * 0.2 // 要素の下部が画面の20%以上に残っている
+
+  // 画面中央に近いほど1に近づくスコア（0〜1）を計算
+  const elementCenter = rect.top + rect.height / 2
+  const viewportCenter = windowHeight / 2
+  const distanceFromCenter = Math.abs(elementCenter - viewportCenter)
+  const maxDistance = windowHeight / 2 + rect.height / 2
+  const centerScore = 1 - Math.min(1, distanceFromCenter / maxDistance)
+
+  // 一定のスコア（0.3）を超えたら要素を表示し始める
+  // 順番に表示するために少しずつ遅延を入れる
+  isVideoVisible.value = centerScore > 0.3
+
+  // 少し遅れて他の要素も表示
+  setTimeout(() => {
+    isElement7Visible.value = centerScore > 0.3
+  }, 100)
+
+  setTimeout(() => {
+    isTextVisible.value = centerScore > 0.3
+  }, 200)
+
+  setTimeout(() => {
+    isDescriptionVisible.value = centerScore > 0.3
+  }, 300)
+
+  setTimeout(() => {
+    isLogoVisible.value = centerScore > 0.3
+  }, 400)
+}
+
+onMounted(() => {
+  // スクロールイベントリスナーを追加
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  // 初回ロード時にもチェック
+  setTimeout(handleScroll, 500)
+})
+
+onUnmounted(() => {
+  // イベントリスナーをクリーンアップ
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
@@ -114,18 +174,17 @@ const copyEmailToClipboard = () => {
     </div>
 
     <!-- 修正したcontent-wrapper2部分 -->
-    <div class="content-wrapper2">
-      <!-- ScrollVideoAnimationコンポーネントの使用 -->
-      <ScrollVideoAnimation
-        :videoSrc="noise"
-        :completeThreshold="0.9"
-        :scrollSensitivity="0.6"
-        :maxBlur="300"
-        class="overlap-10"
-      >
-        <img class="element-7" alt="Element" :src="layer" />
+    <div class="content-wrapper2" ref="contentContainer">
+      <div class="overlap-10">
+        <!-- ビデオ要素 - クラスバインディングで表示/非表示を制御 -->
+        <video class="frame-4" :class="{ visible: isVideoVisible }" autoplay loop muted playsinline>
+          <source :src="noise" type="video/mp4" />
+        </video>
 
-        <p class="where-we-are-content">
+        <!-- 他の要素 - クラスバインディングで表示/非表示を制御 -->
+        <img class="element-7" :class="{ visible: isElement7Visible }" alt="Element" :src="layer" />
+
+        <p class="where-we-are-content" :class="{ visible: isTextVisible }">
           <span class="where-we-are-text weight-400">
             <span class="span">W</span>
             <span class="where-we-are-text weight-400">here</span>
@@ -137,7 +196,7 @@ const copyEmailToClipboard = () => {
           </span>
         </p>
 
-        <div class="text-wrapper-14">
+        <div class="text-wrapper-14" :class="{ visible: isDescriptionVisible }">
           砕区は、既存のやり方やルールに縛られない
           <br />
           クリエイティブ・エリア。
@@ -157,10 +216,10 @@ const copyEmailToClipboard = () => {
           心と人を動かすアウトプットを産み、愛されるブランドを育む。
         </div>
 
-        <div class="logo_red">
+        <div class="logo_red" :class="{ visible: isLogoVisible }">
           <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
         </div>
-      </ScrollVideoAnimation>
+      </div>
     </div>
 
     <div class="content-wrapper3">
@@ -209,6 +268,27 @@ const copyEmailToClipboard = () => {
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500&family=Zen+Old+Mincho&display=swap');
 
+/* アニメーション関連のスタイル - 修正部分 */
+.frame-4,
+.element-7,
+.where-we-are-content,
+.text-wrapper-14,
+.logo_red {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+/* 表示状態のスタイル */
+.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* 以下は既存のスタイル */
 .pc {
   background-position: 50% 50%;
   background-size: cover;
