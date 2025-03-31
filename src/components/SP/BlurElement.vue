@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import lottie from 'lottie-web'
 
 const props = defineProps({
@@ -61,8 +61,7 @@ const handleScroll = () => {
 
   if (scrollPosition > threshold) {
     isBlurred.value = true
-    const blur = Math.min(((scrollPosition - threshold) / 200) * maxBlur, maxBlur)
-    blurAmount.value = blur
+    blurAmount.value = Math.min(((scrollPosition - threshold) / 200) * maxBlur, maxBlur)
   } else {
     isBlurred.value = false
     blurAmount.value = 0
