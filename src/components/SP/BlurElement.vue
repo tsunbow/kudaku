@@ -133,7 +133,7 @@ const loadLottieAnimation = () => {
       v-else-if="type === 'video'"
       class="blur-transition media-content"
       :style="{ filter: `blur(${blurAmount}px)` }"
-      :controls="controls"
+      :controls="false"
       :autoplay="autoplay"
       :loop="loop"
       :muted="muted"
