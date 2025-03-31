@@ -1,28 +1,12 @@
 <script setup>
-import trim from '@/assets/video/trim.mp4'
-import noise from '@/assets/video/noise.mp4'
-import KU_JSON from '@/assets/lottie/KU1.json'
-import DA_JSON from '@/assets/lottie/DA.json'
-import KU2_JSON from '@/assets/lottie/KU2.json'
-import creativeArea from '@/assets/img/creative-area.svg'
-import logo_top from '@/assets/img/logo_top.svg'
-import logo_red from '@/assets/img/logo_red.svg'
-import layer from '@/assets/img/layer.png'
-import vector from '@/assets/img/vector.png'
-import lets_talk from '@/assets/img/letstalk_pc.svg'
-import circle from '@/assets/img/letstalk_circle.svg'
-import circle_hover from '@/assets/img/letstalk_circle_hover.svg'
-import email_text from '@/assets/img/email_text.svg'
-import copy_button from '@/assets/img/copy_button.svg'
-import close_btn from '@/assets/img/close_button.svg'
-
 import MouseFollower from '@/components/PC/MouseFollower.vue'
 import BlurElement from '@/components/PC/BlurElement.vue'
 import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue'
 import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
-// ScrollVideoAnimationコンポーネントの使用はやめて直接実装
+
+import { CommonAssets, PCAssets } from '@/assets/assets.js'
 
 import { ref, onMounted, onUnmounted } from 'vue'
 const isHovered = ref(false)
@@ -131,7 +115,7 @@ onUnmounted(() => {
             <BlurElement
               type="video"
               class="trim"
-              :src="trim"
+              :src="CommonAssets.trim"
               alt="trim"
               loop
               muted
@@ -140,19 +124,36 @@ onUnmounted(() => {
               false
             />
             <div class="logo_kudaku">
-              <BlurLogo class="group" :logoSrc="logo_top" />
+              <BlurLogo class="group" :logoSrc="CommonAssets.logo_top" />
             </div>
           </div>
-          <BlurElement type="lottie" :jsonSrc="KU_JSON" :loop="false" :autoplay="true" class="KU" />
-          <BlurElement type="lottie" :jsonSrc="DA_JSON" :loop="false" :autoplay="true" class="DA" />
           <BlurElement
             type="lottie"
-            :jsonSrc="KU2_JSON"
+            :jsonSrc="CommonAssets.KU_JSON"
+            :loop="false"
+            :autoplay="true"
+            class="KU"
+          />
+          <BlurElement
+            type="lottie"
+            :jsonSrc="CommonAssets.DA_JSON"
+            :loop="false"
+            :autoplay="true"
+            class="DA"
+          />
+          <BlurElement
+            type="lottie"
+            :jsonSrc="CommonAssets.KU2_JSON"
             :loop="false"
             :autoplay="true"
             class="KU2"
           />
-          <BlurElement type="image" class="creative-area" :src="creativeArea" alt="Creative area" />
+          <BlurElement
+            type="image"
+            class="creative-area"
+            :src="CommonAssets.creativeArea"
+            alt="Creative area"
+          />
         </div>
       </div>
       <div class="frame-6">
@@ -186,11 +187,16 @@ onUnmounted(() => {
       <div class="overlap-10">
         <!-- ビデオ要素 - クラスバインディングで表示/非表示を制御 -->
         <video class="frame-4" :class="{ visible: isVideoVisible }" autoplay loop muted playsinline>
-          <source :src="noise" type="video/mp4" />
+          <source :src="CommonAssets.noise" type="video/mp4" />
         </video>
 
         <!-- 他の要素 - クラスバインディングで表示/非表示を制御 -->
-        <img class="element-7" :class="{ visible: isElement7Visible }" alt="Element" :src="layer" />
+        <img
+          class="element-7"
+          :class="{ visible: isElement7Visible }"
+          alt="Element"
+          :src="CommonAssets.layer"
+        />
 
         <p class="where-we-are-content" :class="{ visible: isTextVisible }">
           <span class="where-we-are-text weight-400">
@@ -225,7 +231,12 @@ onUnmounted(() => {
         </div>
 
         <div class="logo_red" :class="{ visible: isLogoVisible }">
-          <RevealLogo class="group-7" :logoSrc="logo_red" :initialBlur="10" :triggerOffset="3000" />
+          <RevealLogo
+            class="group-7"
+            :logoSrc="CommonAssets.logo_red"
+            :initialBlur="10"
+            :triggerOffset="3000"
+          />
         </div>
       </div>
     </div>
@@ -235,12 +246,17 @@ onUnmounted(() => {
         <div class="overlap-11">
           <div class="group-8" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
             <div class="overlap-group-4">
-              <img class="vector-2" alt="Vector" :src="vector" />
-              <img class="letsTalk-text" alt="letsTalk" :src="lets_talk" @click="openModal" />
+              <img class="vector-2" alt="Vector" :src="CommonAssets.vector" />
+              <img
+                class="letsTalk-text"
+                alt="letsTalk"
+                :src="PCAssets.lets_talk"
+                @click="openModal"
+              />
               <img
                 :class="['letsTalk-circle', { 'letsTalk-circle-hover': isHovered }]"
                 alt=""
-                :src="isHovered ? circle_hover : circle"
+                :src="isHovered ? PCAssets.circle_hover : PCAssets.circle"
               />
             </div>
           </div>
@@ -254,10 +270,10 @@ onUnmounted(() => {
   <!-- モーダル -->
   <div v-if="isModalOpen" class="modal-overlay">
     <div class="modal-content">
-      <img :src="email_text" alt="info@kudaku.tokyo" class="email-text" />
+      <img :src="CommonAssets.email_text" alt="info@kudaku.tokyo" class="email-text" />
       <div class="copy-button-wrapper">
         <img
-          :src="copy_button"
+          :src="CommonAssets.copy_button"
           class="copy-button"
           alt="copy"
           @click="copyEmailToClipboard"
@@ -265,7 +281,7 @@ onUnmounted(() => {
         />
         <span v-if="isCopied" class="copied-message">Copied!</span>
       </div>
-      <img :src="close_btn" alt="閉じる" class="modal-close" @click="closeModal" />
+      <img :src="CommonAssets.close_btn" alt="閉じる" class="modal-close" @click="closeModal" />
     </div>
   </div>
 </template>
