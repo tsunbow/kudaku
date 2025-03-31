@@ -1,28 +1,31 @@
-<script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-
-const isLargeScreen = ref(window.innerWidth >= 395)
-
-const handleResize = () => {
-  isLargeScreen.value = window.innerWidth >= 395
-}
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
-</script>
-
+<!-- ResponsiveContainer.vue -->
 <template>
   <div class="responsive-container">
-    <div v-if="!isLargeScreen">
+    <div class="small-screen-content">
       <slot name="small"></slot>
     </div>
-    <div v-if="isLargeScreen">
+    <div class="large-screen-content">
       <slot name="large"></slot>
     </div>
   </div>
 </template>
+
+<style scoped>
+.small-screen-content {
+  display: block;
+}
+
+.large-screen-content {
+  display: none;
+}
+
+@media screen and (min-width: 391px) {
+  .small-screen-content {
+    display: none;
+  }
+
+  .large-screen-content {
+    display: block;
+  }
+}
+</style>
