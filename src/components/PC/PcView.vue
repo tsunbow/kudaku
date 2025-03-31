@@ -1,4 +1,7 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+import { CommonAssets, PCAssets } from '@/assets/assets.js'
+
 import MouseFollower from '@/components/PC/MouseFollower.vue'
 import BlurElement from '@/components/PC/BlurElement.vue'
 import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue'
@@ -6,9 +9,6 @@ import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
 
-import { CommonAssets, PCAssets } from '@/assets/assets.js'
-
-import { ref, onMounted, onUnmounted } from 'vue'
 const isHovered = ref(false)
 const isModalOpen = ref(false)
 const isCopied = ref(false)

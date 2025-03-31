@@ -1,30 +1,12 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import trim from '@/assets/video/trim.mp4'
-import noise from '@/assets/video/noise.mp4'
-import KU_JSON from '@/assets/lottie/KU1.json'
-import DA_JSON from '@/assets/lottie/DA.json'
-import KU2_JSON from '@/assets/lottie/KU2.json'
-import creativeArea from '@/assets/img/creative-area.svg'
-import logo_top from '@/assets/img/logo_top.svg'
-import logo_red from '@/assets/img/logo_red.svg'
-import layer from '@/assets/img/layer.png'
-import vector from '@/assets/img/vector.png'
-import email_text from '@/assets/img/email_text.svg'
-import copy_button from '@/assets/img/copy_button.svg'
-import close_btn from '@/assets/img/close_button.svg'
-
-import lets_talk from '@/assets/img/letstalk_sp.svg'
-import play_concept from '@/assets/img/play_concept_sp.svg'
+import { CommonAssets, SPAssets } from '@/assets/assets.js'
 
 import BlurElement from '@/components/SP/BlurElement.vue'
 import ScrollRevealDescription from '@/components/SP/ScrollRevealDescription.vue'
 import ScrollRevealSection from '@/components/SP/ScrollRevealSection.vue'
 import BlurLogo from '@/components/SP/BlurLogo.vue'
 import RevealLogo from '@/components/SP/RevealLogo.vue'
-// ScrollVideoAnimationコンポーネントの使用はやめて直接実装
-
-import { CommonAssets, SPAssets } from '@/assets/assets.js'
 
 // スクロールアニメーション関連の状態
 const contentContainer = ref(null)
