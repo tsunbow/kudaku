@@ -133,10 +133,11 @@ const loadLottieAnimation = () => {
       v-else-if="type === 'video'"
       class="blur-transition media-content"
       :style="{ filter: `blur(${blurAmount}px)` }"
-      :controls="false"
+      :controls="controls"
       :autoplay="autoplay"
       :loop="loop"
       :muted="muted"
+      playsinline
     >
       <source :src="src" :type="videoType" />
       Your browser does not support the video tag.
