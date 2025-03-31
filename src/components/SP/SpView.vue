@@ -156,7 +156,6 @@ onUnmounted(() => {
               muted
               autoplay
               playsinline
-              false
             />
           </div>
           <BlurElement type="lottie" :jsonSrc="KU_JSON" :loop="false" :autoplay="true" class="KU" />
