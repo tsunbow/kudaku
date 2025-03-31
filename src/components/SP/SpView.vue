@@ -407,7 +407,7 @@ onUnmounted(() => {
   aspect-ratio: 116 / 56;
   position: absolute;
   left: 14%;
-  top: 30vw;
+  top: 21vw;
 }
 
 .logo_kudaku {
@@ -511,7 +511,7 @@ onUnmounted(() => {
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: calc(10vw - 23px);
+  font-size: 4.1vw;
   left: 0;
   letter-spacing: -3px;
   line-height: 140%;

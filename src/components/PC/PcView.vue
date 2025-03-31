@@ -219,9 +219,9 @@ onUnmounted(() => {
           <br />
           プロデューサー／映像作家／アートディレクター／写真家／空間デザイナーなどが交わり
           <br />
-          クライアントとの自由な発想とコラボレーションで
+          クライアントとの自由な発想とコラボレーションで心と人を動かすアウトプットを産み、
           <br />
-          心と人を動かすアウトプットを産み、愛されるブランドを育む。
+          愛されるブランドを育む。
         </div>
 
         <div class="logo_red" :class="{ visible: isLogoVisible }">
@@ -501,12 +501,12 @@ onUnmounted(() => {
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: calc(5vw - 48px);
-  left: 16%;
+  font-size: 1.1vw;
+  left: 22%;
   letter-spacing: -1.6px;
   line-height: 30px;
   position: absolute;
-  top: 48%;
+  top: 40%;
   width: 50vw;
 }
 

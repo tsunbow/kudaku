@@ -19,7 +19,7 @@
   display: none;
 }
 
-@media screen and (min-width: 391px) {
+@media screen and (min-width: 441px) {
   .small-screen-content {
     display: none;
   }
