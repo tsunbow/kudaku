@@ -33,9 +33,8 @@ const updateParallax = () => {
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop
   const windowHeight = window.innerHeight
 
-  // biome-ignore lint/complexity/noForEach: <explanation>
-  imageRefs.value.forEach((img) => {
-    if (!img) return
+  for (const img of imageRefs.value) {
+    if (!img) continue
 
     const speed = Number.parseFloat(img.dataset.speed)
     const initialOffset = initialOffsets.value[img.dataset.index] || 0
@@ -45,24 +44,24 @@ const updateParallax = () => {
       const yPos = (scrollTop - initialOffset) * speed
       img.style.transform = `translate3d(0, ${yPos}px, 0)`
     }
-  })
+  }
 }
 
 const initializeOffsets = () => {
-  imageRefs.value.forEach((img) => {
-    if (!img) return
+  for (const img of imageRefs.value) {
+    if (!img) continue
     initialOffsets.value[img.dataset.index] = img.offsetTop
-  })
+  }
 }
 
 const observerCallback = (entries) => {
-  entries.forEach((entry) => {
+  for (const entry of entries) {
     if (entry.isIntersecting) {
       isVisible.value = true
       initializeOffsets()
       updateParallax()
     }
-  })
+  }
 }
 
 onMounted(() => {
@@ -166,7 +165,6 @@ onUnmounted(() => {
   object-fit: cover;
 }
 
-/* 個別の画像スタイル */
 .element {
   object-fit: cover;
   top: 119px;

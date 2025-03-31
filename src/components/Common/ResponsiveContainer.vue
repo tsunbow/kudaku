@@ -1,4 +1,3 @@
-<!-- ResponsiveContainer.vue -->
 <template>
   <div class="responsive-container">
     <div class="small-screen-content">
