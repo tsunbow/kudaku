@@ -1,10 +1,10 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const isLargeScreen = ref(window.innerWidth >= 391)
+const isLargeScreen = ref(window.innerWidth >= 395)
 
 const handleResize = () => {
-  isLargeScreen.value = window.innerWidth >= 391
+  isLargeScreen.value = window.innerWidth >= 395
 }
 
 onMounted(() => {
