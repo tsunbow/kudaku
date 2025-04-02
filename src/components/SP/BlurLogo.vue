@@ -1,14 +1,3 @@
-<!-- BlurLogo.vue -->
-<template>
-  <img
-    class="group blur-transition"
-    :class="{ 'blur-active': isBlurred }"
-    alt="Group"
-    :src="logoSrc"
-    :style="{ filter: `blur(${blurAmount}px)` }"
-  />
-</template>
-
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
@@ -46,6 +35,16 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 </script>
+
+<template>
+  <img
+    class="group blur-transition"
+    :class="{ 'blur-active': isBlurred }"
+    alt="Group"
+    :src="logoSrc"
+    :style="{ filter: `blur(${blurAmount}px)` }"
+  />
+</template>
 
 <style scoped>
 .blur-transition {

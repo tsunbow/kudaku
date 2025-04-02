@@ -1,4 +1,3 @@
-<!-- MouseFollower.vue - スクロール対応＋遅延効果バージョン -->
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 

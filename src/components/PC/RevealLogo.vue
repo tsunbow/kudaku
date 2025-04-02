@@ -1,17 +1,3 @@
-<!-- RevealLogo.vue -->
-<template>
-  <img
-    ref="logoRef"
-    :class="['reveal-logo', { 'reveal-active': isRevealed }]"
-    alt="Group"
-    :src="logoSrc"
-    :style="{
-      filter: `blur(${blurAmount}px)`,
-      opacity: getOpacity,
-    }"
-  />
-</template>
-
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 
@@ -87,6 +73,19 @@ onUnmounted(() => {
   }
 })
 </script>
+
+<template>
+  <img
+    ref="logoRef"
+    :class="['reveal-logo', { 'reveal-active': isRevealed }]"
+    alt="Group"
+    :src="logoSrc"
+    :style="{
+      filter: `blur(${blurAmount}px)`,
+      opacity: getOpacity,
+    }"
+  />
+</template>
 
 <style scoped>
 .reveal-logo {

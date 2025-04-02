@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onBeforeUnmount } from 'vue'
 
-// データ構造はそのまま使用
 const descriptionSections = [
   {
     id: 0,
