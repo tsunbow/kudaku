@@ -490,7 +490,7 @@ onUnmounted(() => {
 
 .span {
   font-family: nautica, sans-serif;
-  font-size: max(17vw, 244px);
+  font-size: min(17vw, 244px);
   font-style: normal;
   font-weight: 500;
 }
@@ -498,7 +498,7 @@ onUnmounted(() => {
 .where-we-are-text {
   font-family: ivyora-display, sans-serif;
   font-style: normal;
-  font-size: max(15vw, 215px);
+  font-size: min(15vw, 215px);
   letter-spacing: 13px;
   line-height: 210px;
 }
@@ -619,7 +619,7 @@ onUnmounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 500;
   font-style: italic;
-  font-size: max(2vw, 28px);
+  font-size: min(2vw, 28px);
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -650,7 +650,7 @@ onUnmounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: max(1.3vw, 18px);
+  font-size: min(1.3vw, 18px);
   letter-spacing: 0.54px;
   line-height: 20.7px;
   position: relative;
@@ -664,7 +664,7 @@ onUnmounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
   font-style: italic;
-  font-size: max(1.3vw, 18px);
+  font-size: min(1.3vw, 18px);
   letter-spacing: 0.54px;
   line-height: 20.7px;
   position: relative;
