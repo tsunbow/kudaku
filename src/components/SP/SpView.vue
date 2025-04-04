@@ -457,7 +457,7 @@ onUnmounted(() => {
   position: relative;
   z-index: 2;
   transform-style: preserve-3d;
-  height: 1400px;
+  height: 1150px;
 }
 
 .content-wrapper3 {
@@ -484,7 +484,7 @@ onUnmounted(() => {
   position: absolute;
   height: 151px;
   width: 97vw;
-  top: 38%;
+  top: 31%;
   right: 0;
 }
 
@@ -509,7 +509,7 @@ onUnmounted(() => {
   font-style: normal;
   font-size: 100px;
   letter-spacing: 6px;
-  line-height: 115%;
+  line-height: 81%;
 }
 .weight-400 {
   font-weight: 400;
@@ -528,20 +528,20 @@ onUnmounted(() => {
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 4.1vw;
+  font-size: 4vw;
   left: 0;
-  letter-spacing: -3px;
+  letter-spacing: -2px;
   line-height: 140%;
   position: absolute;
   width: 96vw;
-  top: 55%;
+  top: 42%;
 }
 .logo_red {
   color: red;
-  right: 20%;
+  right: 22%;
   position: absolute;
-  width: 8vw;
-  top: 34%;
+  width: 7vw;
+  top: 28%;
 }
 
 .frame-5 {
