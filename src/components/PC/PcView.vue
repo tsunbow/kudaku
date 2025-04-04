@@ -364,7 +364,7 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  margin-top: 20vw;
+  margin-top: 20vh;
 }
 
 .hero-content-wrapper {
