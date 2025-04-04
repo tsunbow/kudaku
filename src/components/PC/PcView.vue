@@ -441,7 +441,7 @@ onUnmounted(() => {
   z-index: 2;
   transform-style: preserve-3d;
   margin-top: 150px;
-  height: 3000px;
+  height: 3500px;
 }
 
 .content-wrapper2 {
@@ -532,6 +532,7 @@ onUnmounted(() => {
   position: absolute;
   top: 51%;
   width: 4.5vw;
+  max-width: 64px;
 }
 
 .frame-5 {
