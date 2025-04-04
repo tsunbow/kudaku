@@ -268,7 +268,7 @@ onBeforeUnmount(() => {
   left: 0;
   color: #ffffff;
   overflow: hidden;
-  transition: width 0.8s ease;
+  transition: width 1.4s ease;
 }
 
 .emphasis {
