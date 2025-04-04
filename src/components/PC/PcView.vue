@@ -519,7 +519,7 @@ onUnmounted(() => {
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: max(1.1vw, 16px);
+  font-size: min(1.1vw, 16px);
   left: 22%;
   letter-spacing: -1.6px;
   line-height: 30px;
