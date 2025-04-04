@@ -113,16 +113,16 @@ onUnmounted(() => {
       <div class="parallax-image element-2" ref="img2" data-speed="0.2" data-index="2">
         <img alt="Element" :src="x281" />
       </div>
-      <div class="parallax-image element-3" ref="img3" data-speed="0.25" data-index="3">
+      <div class="parallax-image element-3" ref="img3" data-speed="0.1" data-index="3">
         <img alt="Element" :src="x19" />
       </div>
       <div class="parallax-image element-4" ref="img4" data-speed="0.3" data-index="4">
         <img alt="Element" :src="x631" />
       </div>
-      <div class="parallax-image element-5" ref="img5" data-speed="0.3" data-index="5">
+      <div class="parallax-image element-5" ref="img5" data-speed="0.1" data-index="5">
         <img alt="Element" :src="x271" />
       </div>
-      <div class="parallax-image element-6" ref="img6" data-speed="0.15" data-index="6">
+      <div class="parallax-image element-6" ref="img6" data-speed="0.5" data-index="6">
         <img alt="Element" :src="x41" />
       </div>
     </div>
@@ -174,7 +174,7 @@ onUnmounted(() => {
 
 .element-2 {
   object-fit: cover;
-  top: 1054px;
+  top: 1154px;
   right: 22%;
   width: 49%;
   z-index: 1;
@@ -182,7 +182,7 @@ onUnmounted(() => {
 
 .element-3 {
   object-fit: cover;
-  top: 940px;
+  top: 1080px;
   right: 0;
   width: 33%;
   z-index: 1;
@@ -198,7 +198,7 @@ onUnmounted(() => {
 
 .element-5 {
   object-fit: cover;
-  top: 1310px;
+  top: 1570px;
   left: 0;
   width: 27%;
   z-index: 1;
