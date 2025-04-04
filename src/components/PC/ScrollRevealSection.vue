@@ -110,10 +110,10 @@ onUnmounted(() => {
       <div class="parallax-image element" ref="img1" data-speed="0.15" data-index="1">
         <img alt="Element" :src="x701" />
       </div>
-      <div class="parallax-image element-2" ref="img2" data-speed="0.2" data-index="2">
+      <div class="parallax-image element-2" ref="img2" data-speed="0.3" data-index="2">
         <img alt="Element" :src="x281" />
       </div>
-      <div class="parallax-image element-3" ref="img3" data-speed="0.25" data-index="3">
+      <div class="parallax-image element-3" ref="img3" data-speed="0.1" data-index="3">
         <img alt="Element" :src="x19" />
       </div>
       <div class="parallax-image element-4" ref="img4" data-speed="0.3" data-index="4">
@@ -122,7 +122,7 @@ onUnmounted(() => {
       <div class="parallax-image element-5" ref="img5" data-speed="0.3" data-index="5">
         <img alt="Element" :src="x271" />
       </div>
-      <div class="parallax-image element-6" ref="img6" data-speed="0.15" data-index="6">
+      <div class="parallax-image element-6" ref="img6" data-speed="0.5" data-index="6">
         <img alt="Element" :src="x41" />
       </div>
     </div>
@@ -165,7 +165,7 @@ onUnmounted(() => {
 }
 
 .element {
-  right: 14%;
+  right: 23%;
   object-fit: cover;
   top: 175px;
   width: 20%;
@@ -175,7 +175,7 @@ onUnmounted(() => {
 .element-2 {
   right: 14%;
   object-fit: cover;
-  top: 1250px;
+  top: 1970px;
   width: 35%;
   z-index: 1;
 }
@@ -183,7 +183,7 @@ onUnmounted(() => {
 .element-3 {
   right: 0;
   object-fit: cover;
-  top: 1083px;
+  top: 1828px;
   width: 21%;
   z-index: 1;
 }
@@ -191,15 +191,15 @@ onUnmounted(() => {
 .element-4 {
   left: 20%;
   object-fit: cover;
-  top: 584px;
-  width: 18%;
+  top: 920px;
+  width: 23%;
   z-index: 1;
 }
 
 .element-5 {
   left: 13%;
   object-fit: cover;
-  top: 1530px;
+  top: 2530px;
   width: 19%;
   z-index: 1;
 }
@@ -207,7 +207,7 @@ onUnmounted(() => {
 .element-6 {
   right: 19%;
   object-fit: cover;
-  top: 2000px;
+  top: 3000px;
   width: 42%;
   z-index: 1;
 }
