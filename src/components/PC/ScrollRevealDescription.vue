@@ -255,7 +255,7 @@ onBeforeUnmount(() => {
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 3vw;
+  font-size: max(3vw, 46px);
   letter-spacing: -4.6px;
   line-height: 64.4px;
   white-space: nowrap;
@@ -277,7 +277,7 @@ onBeforeUnmount(() => {
   font-weight: 400;
   font-style: normal;
   transform: matrix(1, 0, -0.5, 0.87, 0, 0);
-  font-size: 4vw;
+  font-size: max(4vw, 46px);
   display: inline-block;
   vertical-align: top;
 }

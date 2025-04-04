@@ -429,6 +429,7 @@ onUnmounted(() => {
 }
 .logo_kudaku {
   width: 4.5vw;
+  max-width: 64px;
   height: auto;
   position: absolute;
   top: 50%;
