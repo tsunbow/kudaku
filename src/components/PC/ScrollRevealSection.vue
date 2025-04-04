@@ -169,6 +169,7 @@ onUnmounted(() => {
   object-fit: cover;
   top: 175px;
   width: 20%;
+  max-width: 288px;
   z-index: 1;
 }
 
@@ -177,6 +178,7 @@ onUnmounted(() => {
   object-fit: cover;
   top: 1970px;
   width: 35%;
+  max-width: 502px;
   z-index: 1;
 }
 
@@ -185,6 +187,7 @@ onUnmounted(() => {
   object-fit: cover;
   top: 1828px;
   width: 21%;
+  max-width: 300px;
   z-index: 1;
 }
 
@@ -193,6 +196,7 @@ onUnmounted(() => {
   object-fit: cover;
   top: 920px;
   width: 23%;
+  max-width: 330px;
   z-index: 1;
 }
 
@@ -201,6 +205,7 @@ onUnmounted(() => {
   object-fit: cover;
   top: 2530px;
   width: 19%;
+  max-width: 280px;
   z-index: 1;
 }
 
@@ -209,6 +214,7 @@ onUnmounted(() => {
   object-fit: cover;
   top: 3000px;
   width: 42%;
+  max-width: 620px;
   z-index: 1;
 }
 </style>

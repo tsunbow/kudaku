@@ -476,6 +476,7 @@ onUnmounted(() => {
   position: absolute;
   top: 56%;
   width: 74vw;
+  max-width: 1064px;
 }
 
 .where-we-are-content {
@@ -489,7 +490,7 @@ onUnmounted(() => {
 
 .span {
   font-family: nautica, sans-serif;
-  font-size: 17vw;
+  font-size: max(17vw, 244px);
   font-style: normal;
   font-weight: 500;
 }
@@ -497,7 +498,7 @@ onUnmounted(() => {
 .where-we-are-text {
   font-family: ivyora-display, sans-serif;
   font-style: normal;
-  font-size: 15vw;
+  font-size: max(15vw, 215px);
   letter-spacing: 13px;
   line-height: 210px;
 }
@@ -518,7 +519,7 @@ onUnmounted(() => {
   font-family: 'Zen Kaku Gothic New', serif;
   font-weight: 500;
   font-style: normal;
-  font-size: 1.1vw;
+  font-size: max(1.1vw, 16px);
   left: 22%;
   letter-spacing: -1.6px;
   line-height: 30px;
@@ -618,7 +619,7 @@ onUnmounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 500;
   font-style: italic;
-  font-size: 2vw;
+  font-size: max(2vw, 28px);
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -639,7 +640,8 @@ onUnmounted(() => {
   padding: 0 7px;
   position: fixed;
   top: 56px;
-  width: 227px;
+  width: 16vw;
+  max-width: 112px;
   z-index: 20;
 }
 
@@ -648,7 +650,7 @@ onUnmounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: max(calc(5vw - 54px), 14px);
+  font-size: max(1.3vw, 18px);
   letter-spacing: 0.54px;
   line-height: 20.7px;
   position: relative;
@@ -662,7 +664,7 @@ onUnmounted(() => {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
   font-style: italic;
-  font-size: max(calc(5vw - 54px), 14px);
+  font-size: max(1.3vw, 18px);
   letter-spacing: 0.54px;
   line-height: 20.7px;
   position: relative;
