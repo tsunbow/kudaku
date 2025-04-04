@@ -112,16 +112,20 @@ onUnmounted(() => {
       <div class="hero-body">
         <div class="hero-content-wrapper">
           <div class="video-frame">
+            <!-- 修正：initialBlurプロパティを追加 -->
             <BlurElement
               type="video"
               class="trim"
               :src="CommonAssets.trim"
               alt="trim"
-              loop
-              muted
-              autoplay
-              playsinline
-              false
+              :loop="true"
+              :muted="true"
+              :autoplay="true"
+              :playsinline="true"
+              :false="false"
+              :initialBlur="true"
+              :initialBlurAmount="20"
+              :initialOpacity="0"
             />
             <div class="logo_kudaku">
               <BlurLogo class="group" :logoSrc="CommonAssets.logo_top" />

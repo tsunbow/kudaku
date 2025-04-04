@@ -137,16 +137,19 @@ onUnmounted(() => {
             <BlurLogo class="group" :logoSrc="CommonAssets.logo_top" />
           </div>
           <div class="video-frame">
+            <!-- 修正：initialBlurプロパティを追加 -->
             <BlurElement
               type="video"
               class="trim"
               :src="CommonAssets.trim"
               alt="trim"
-              loop
-              muted
-              autoplay
-              playsinline
-              false
+              :loop="true"
+              :muted="true"
+              :autoplay="true"
+              :playsinline="true"
+              :initialBlur="true"
+              :initialBlurAmount="20"
+              :initialOpacity="0"
             />
           </div>
           <BlurElement
@@ -713,6 +716,13 @@ onUnmounted(() => {
   z-index: 100;
 }
 
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
 .email-text {
   width: 60vw;
   height: 20vw;
@@ -764,7 +774,7 @@ onUnmounted(() => {
 
 .modal-close {
   position: absolute;
-  bottom: 0;
+  bottom: -100px;
   left: 50%;
   transform: translateX(-50%);
   cursor: pointer;
