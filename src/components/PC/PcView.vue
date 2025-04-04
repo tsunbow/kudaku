@@ -530,11 +530,11 @@ onUnmounted(() => {
 
 .logo_red {
   color: red;
-  right: 11%;
+  right: 14%;
   position: absolute;
-  top: 51%;
-  width: 4.5vw;
-  max-width: 64px;
+  top: 53%;
+  width: 3.4vw;
+  max-width: 48px;
 }
 
 .frame-5 {
