@@ -7,6 +7,7 @@ import noise from '@/assets/video/noise.mp4'
 import KU_JSON from '@/assets/lottie/KU1.json'
 import DA_JSON from '@/assets/lottie/DA.json'
 import KU2_JSON from '@/assets/lottie/KU2.json'
+import LINE_JSON from '@/assets/lottie/line.json'
 
 // 共通画像アセット
 import logo_top from '@/assets/img/logo_top.svg'
@@ -34,6 +35,7 @@ export const CommonAssets = {
   KU_JSON,
   DA_JSON,
   KU2_JSON,
+  LINE_JSON,
   logo_top,
   logo_red,
   layer,

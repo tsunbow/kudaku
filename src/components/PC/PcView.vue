@@ -8,6 +8,7 @@ import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue
 import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
+import LottieAnimation from '@/components/Common/LottieAnimation.vue'
 
 const isHovered = ref(false)
 const isModalOpen = ref(false)
@@ -194,12 +195,11 @@ onUnmounted(() => {
           <source :src="CommonAssets.noise" type="video/mp4" />
         </video>
 
-        <!-- 他の要素 - クラスバインディングで表示/非表示を制御 -->
-        <img
-          class="element-7"
-          :class="{ visible: isElement7Visible }"
-          alt="Element"
-          :src="CommonAssets.layer"
+        <LottieAnimation
+          :jsonSrc="CommonAssets.LINE_JSON"
+          :loop="false"
+          :isVisible="isElement7Visible"
+          additionalClass="element-7"
         />
 
         <p class="where-we-are-content" :class="{ visible: isTextVisible }">

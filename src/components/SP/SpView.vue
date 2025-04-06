@@ -7,6 +7,7 @@ import ScrollRevealDescription from '@/components/SP/ScrollRevealDescription.vue
 import ScrollRevealSection from '@/components/SP/ScrollRevealSection.vue'
 import BlurLogo from '@/components/SP/BlurLogo.vue'
 import RevealLogo from '@/components/SP/RevealLogo.vue'
+import LottieAnimation from '@/components/Common/LottieAnimation.vue'
 
 // スクロールアニメーション関連の状態
 const contentContainer = ref(null)
@@ -200,12 +201,12 @@ onUnmounted(() => {
           <source :src="CommonAssets.noise" type="video/mp4" />
         </video>
 
-        <!-- 他の要素 - クラスバインディングで表示/非表示を制御 -->
-        <img
-          class="element-7"
-          :class="{ visible: isElement7Visible }"
-          alt="Element"
-          :src="CommonAssets.layer"
+        <LottieAnimation
+          :jsonSrc="CommonAssets.LINE_JSON"
+          :loop="false"
+          :isVisible="isElement7Visible"
+          additionalClass="element-7"
+          :delay="2000"
         />
 
         <p class="where-we-are-content" :class="{ visible: isTextVisible }">
