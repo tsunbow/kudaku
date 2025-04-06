@@ -445,7 +445,7 @@ onUnmounted(() => {
   position: absolute;
   bottom: 3%;
   left: 9%;
-  width: 121px;
+  width: 122px;
   height: 43px;
 }
 
