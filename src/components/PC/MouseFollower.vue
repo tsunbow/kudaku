@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { PCAssets } from '@/assets/assets.js'
 
 // 基本的なマウス位置の追跡
 const mousePosition = ref({ x: 0, y: 0 }) // 実際のマウス位置
@@ -236,10 +237,7 @@ onMounted(() => {
       }"
       @click.stop="playVideo"
     >
-      <div class="ellipse">
-        <img class="vector" alt="Vector" src="@/assets/img/vector.png" />
-        <div class="text-wrapper">Play Concept</div>
-      </div>
+      <img alt="play_concept" :src="PCAssets.play_concept" />
     </div>
   </div>
 </template>
@@ -284,40 +282,7 @@ onMounted(() => {
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 50;
-  pointer-events: auto; /* クリックを可能にする */
+  pointer-events: auto;
   cursor: pointer;
-  /* 位置のトランジションは削除（アニメーションフレームで処理） */
-}
-
-.movie-play-follower .ellipse {
-  width: 90px;
-  height: 90px;
-  border: 1px solid #d9d9d9;
-  border-radius: 45px;
-  position: relative;
-}
-
-.movie-play-follower .vector {
-  width: 25px;
-  height: 22px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-}
-
-.movie-play-follower .text-wrapper {
-  color: #ffffff;
-  font-family: ivyora-display, sans-serif;
-  font-weight: 400;
-  font-style: italic;
-  font-size: 14px;
-  letter-spacing: 0.42px;
-  line-height: 16.1px;
-  position: absolute;
-  left: 5px;
-  top: 98px;
 }
 </style>
