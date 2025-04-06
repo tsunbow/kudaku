@@ -12,7 +12,6 @@ import LINE_JSON from '@/assets/lottie/line.json'
 // 共通画像アセット
 import logo_top from '@/assets/img/logo_top.svg'
 import logo_red from '@/assets/img/logo_red.svg'
-import layer from '@/assets/img/layer.png'
 import vector from '@/assets/img/vector.png'
 import email_text from '@/assets/img/email_text.svg'
 import copy_button from '@/assets/img/copy_button.svg'
@@ -38,7 +37,6 @@ export const CommonAssets = {
   LINE_JSON,
   logo_top,
   logo_red,
-  layer,
   vector,
   email_text,
   copy_button,
