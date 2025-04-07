@@ -9,7 +9,7 @@ import BlurLogo from '@/components/SP/BlurLogo.vue'
 import RevealLogo from '@/components/SP/RevealLogo.vue'
 import LottieAnimation from '@/components/Common/LottieAnimation.vue'
 // YouTube動画モーダルコンポーネントをインポート
-import YouTubeModal from '@/components/SP/YouTubeModal.vue'
+import YouTubeModal from '@/components/SP/SPYouTubeModal.vue'
 
 // スクロールアニメーション関連の状態
 const contentContainer = ref(null)
