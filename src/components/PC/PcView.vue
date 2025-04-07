@@ -578,8 +578,6 @@ onUnmounted(() => {
 }
 
 .overlap-11 {
-  width: 510px;
-  height: 180px;
   position: absolute;
   top: 0;
   right: 0;
