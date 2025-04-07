@@ -188,7 +188,7 @@ const loadLottieAnimation = () => {
         filter: `blur(${blurAmount}px)`,
         opacity: opacity,
       }"
-      :controls="controls"
+      :controls="false"
       :autoplay="autoplay"
       :loop="loop"
       :muted="muted"
