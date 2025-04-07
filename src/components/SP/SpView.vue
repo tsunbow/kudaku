@@ -8,6 +8,8 @@ import ScrollRevealSection from '@/components/SP/ScrollRevealSection.vue'
 import BlurLogo from '@/components/SP/BlurLogo.vue'
 import RevealLogo from '@/components/SP/RevealLogo.vue'
 import LottieAnimation from '@/components/Common/LottieAnimation.vue'
+// YouTube動画モーダルコンポーネントをインポート
+import YouTubeModal from '@/components/SP/YouTubeModal.vue'
 
 // スクロールアニメーション関連の状態
 const contentContainer = ref(null)
@@ -20,8 +22,10 @@ const isLogoVisible = ref(false)
 const isModalOpen = ref(false)
 const isCopied = ref(false)
 const emailAddress = 'info@kudaku.tokyo'
-const videoUrl =
-  'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1'
+
+// YouTubeモーダル用の状態
+const isYoutubeModalOpen = ref(false)
+const youtubeVideoId = ref('HswPW0qeEkE') // YouTube動画ID
 
 // スクロール位置を監視する関数
 const handleScroll = () => {
@@ -69,9 +73,14 @@ const handleScroll = () => {
   }
 }
 
-// Vimeo動画を開く関数
-const openVimeoVideo = () => {
-  window.open(videoUrl, '_blank')
+// YouTube動画モーダルを開く関数
+const openYoutubeModal = () => {
+  isYoutubeModalOpen.value = true
+}
+
+// YouTube動画モーダルを閉じる関数
+const closeYoutubeModal = () => {
+  isYoutubeModalOpen.value = false
 }
 
 // モーダルを開く関数
@@ -118,13 +127,9 @@ onUnmounted(() => {
           <div class="frame-6-text frame-6-text-gray">Our Projects</div>
         </div>
         <div class="frame-6-text">Let's Talk</div>
-        <a
-          class="frame-6-text-italic"
-          href="https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1"
-          target="_blank"
-          rel="noopener"
-          >Play Concept</a
-        >
+        <div class="frame-6-text-italic youtube-modal-trigger" @click="openYoutubeModal">
+          Play Concept
+        </div>
       </div>
       <div class="hero-body">
         <BlurElement
@@ -148,6 +153,7 @@ onUnmounted(() => {
               :muted="true"
               :autoplay="true"
               :playsinline="true"
+              :false="false"
               :initialBlur="true"
               :initialBlurAmount="20"
               :initialOpacity="0"
@@ -179,7 +185,7 @@ onUnmounted(() => {
             :src="SPAssets.play_concept"
             alt="play_concept"
             class="play-concept"
-            @click="openVimeoVideo"
+            @click="openYoutubeModal"
           />
         </div>
       </div>
@@ -277,7 +283,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <!-- モーダル -->
+  <!-- メールモーダル -->
   <div v-if="isModalOpen" class="modal-overlay">
     <div class="modal-content">
       <img :src="CommonAssets.email_text" alt="info@kudaku.tokyo" class="email-text" />
@@ -294,6 +300,13 @@ onUnmounted(() => {
       <img :src="CommonAssets.close_btn" alt="閉じる" class="modal-close" @click="closeModal" />
     </div>
   </div>
+
+  <!-- YouTube動画モーダル -->
+  <YouTubeModal
+    :isOpen="isYoutubeModalOpen"
+    :youtubeId="youtubeVideoId"
+    @close="closeYoutubeModal"
+  />
 </template>
 
 <style scoped>
@@ -344,6 +357,16 @@ onUnmounted(() => {
 
 .logo_red {
   filter: blur(10px);
+}
+
+/* YouTubeモーダルトリガー用スタイル */
+.youtube-modal-trigger {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.youtube-modal-trigger:hover {
+  color: #ff0000;
 }
 
 .sp {
@@ -447,6 +470,7 @@ onUnmounted(() => {
   left: 9%;
   width: 122px;
   height: 43px;
+  cursor: pointer;
 }
 
 .content-wrapper1 {

@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { CommonAssets, PCAssets } from '@/assets/assets.js'
 
+// 既存のコンポーネントをインポート
 import MouseFollower from '@/components/PC/MouseFollower.vue'
 import BlurElement from '@/components/PC/BlurElement.vue'
 import ScrollRevealDescription from '@/components/PC/ScrollRevealDescription.vue'
@@ -9,11 +10,18 @@ import ScrollRevealSection from '@/components/PC/ScrollRevealSection.vue'
 import BlurLogo from '@/components/PC/BlurLogo.vue'
 import RevealLogo from '@/components/PC/RevealLogo.vue'
 import LottieAnimation from '@/components/Common/LottieAnimation.vue'
+import HoverLottieAnimation from '@/components/PC/HoverLottieAnimation.vue'
+// 新しいYouTubeモーダルコンポーネントをインポート
+import YouTubeModal from '@/components/PC/YoutubeModal.vue'
 
 const isHovered = ref(false)
 const isModalOpen = ref(false)
 const isCopied = ref(false)
 const emailAddress = 'info@kudaku.tokyo'
+
+// YouTubeモーダル用の状態
+const isYoutubeModalOpen = ref(false)
+const youtubeVideoId = ref('HswPW0qeEkE') // YouTube動画ID
 
 // スクロールアニメーション関連の状態
 const contentContainer = ref(null)
@@ -33,6 +41,16 @@ const openModal = () => {
 const closeModal = () => {
   isModalOpen.value = false
   document.body.style.overflow = '' // スクロールを有効化
+}
+
+// YouTube動画モーダルを開く関数
+const openYoutubeModal = () => {
+  isYoutubeModalOpen.value = true
+}
+
+// YouTube動画モーダルを閉じる関数
+const closeYoutubeModal = () => {
+  isYoutubeModalOpen.value = false
 }
 
 // メールアドレスをクリップボードにコピーする関数
@@ -107,7 +125,8 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <MouseFollower />
+  <!-- MouseFollowerコンポーネントにYouTubeモーダルを開くイベントハンドラを追加 -->
+  <MouseFollower @openYoutubeModal="openYoutubeModal" />
   <div class="pc">
     <div class="hero">
       <div class="hero-body">
@@ -168,13 +187,9 @@ onUnmounted(() => {
           <div class="frame-6-text frame-6-text-gray">Our Projects</div>
         </div>
         <div class="frame-6-text">Let's Talk</div>
-        <a
-          class="frame-6-text-italic"
-          href="https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1&background=1"
-          target="_blank"
-          rel="noopener"
-          >Play Concept</a
-        >
+        <div class="frame-6-text-italic youtube-modal-trigger" @click="openYoutubeModal">
+          Play Concept
+        </div>
       </div>
     </div>
 
@@ -251,16 +266,11 @@ onUnmounted(() => {
           <div class="group-8" @mouseenter="isHovered = true" @mouseleave="isHovered = false">
             <div class="overlap-group-4">
               <img class="vector-2" alt="Vector" :src="CommonAssets.vector" />
-              <img
+              <HoverLottieAnimation
+                :animationData="PCAssets.circle_hover"
+                :speed="1.0"
                 class="letsTalk-text"
-                alt="letsTalk"
-                :src="PCAssets.lets_talk"
                 @click="openModal"
-              />
-              <img
-                :class="['letsTalk-circle', { 'letsTalk-circle-hover': isHovered }]"
-                alt=""
-                :src="isHovered ? PCAssets.circle_hover : PCAssets.circle"
               />
             </div>
           </div>
@@ -271,7 +281,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <!-- モーダル -->
+  <!-- 既存のモーダル -->
   <div v-if="isModalOpen" class="modal-overlay">
     <div class="modal-content">
       <img :src="CommonAssets.email_text" alt="info@kudaku.tokyo" class="email-text" />
@@ -288,6 +298,13 @@ onUnmounted(() => {
       <img :src="CommonAssets.close_btn" alt="閉じる" class="modal-close" @click="closeModal" />
     </div>
   </div>
+
+  <!-- YouTube動画モーダル -->
+  <YouTubeModal
+    :isOpen="isYoutubeModalOpen"
+    :youtubeId="youtubeVideoId"
+    @close="closeYoutubeModal"
+  />
 </template>
 
 <style scoped>
@@ -344,6 +361,16 @@ onUnmounted(() => {
 
 .logo_red {
   filter: blur(10px);
+}
+
+/* YouTubeモーダルトリガー用スタイル */
+.youtube-modal-trigger {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.youtube-modal-trigger:hover {
+  color: #ff0000;
 }
 
 /* 以下は既存のスタイル */
@@ -586,30 +613,17 @@ onUnmounted(() => {
 
 .letsTalk-text {
   position: absolute;
-  width: 35vw;
-  height: 11vw;
+  width: 36vw;
+  height: auto;
   cursor: pointer;
   z-index: 10;
+  top: 10px;
 }
 
 .letsTalk-circle {
-  position: absolute;
-  width: 28vw;
-  height: 12vw;
-  left: 10%;
-  z-index: 5;
-  pointer-events: none;
 }
 
 .letsTalk-circle-hover {
-  position: absolute;
-  width: 66vw;
-  height: 48vw;
-  top: 50%;
-  left: 50%;
-  transform: translate(-45%, -38%);
-  z-index: 5;
-  pointer-events: none;
 }
 
 .style-italic {

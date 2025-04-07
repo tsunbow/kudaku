@@ -23,6 +23,9 @@ const isAtTopSection = ref(true) // ページ上部にいるかどうか
 // テキスト要素のホバー状態
 const textHoverState = ref(false)
 
+// YouTubeモーダル用の状態
+const emit = defineEmits(['openYoutubeModal'])
+
 // フォロワーの表示状態 - トップセクションにいる場合のみvideo-frame機能を有効化
 const showDefaultFollower = computed(
   () => (!isInTargetArea.value || !isAtTopSection.value) && !textHoverState.value,
@@ -147,10 +150,8 @@ const updateFollowerPosition = () => {
 // 動画を再生する関数
 const playVideo = () => {
   if (isInTargetArea.value && isAtTopSection.value) {
-    window.open(
-      'https://player.vimeo.com/video/1054903432?h=dc95ee2a5f&autoplay=1&loop=1',
-      '_blank',
-    )
+    // 親コンポーネントにYouTubeモーダルを開くイベントを発行
+    emit('openYoutubeModal')
   }
 }
 
