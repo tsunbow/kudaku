@@ -614,11 +614,12 @@ onUnmounted(() => {
 
 .letsTalk-text {
   position: absolute;
-  width: 36vw;
+  width: 62vw;
   height: auto;
   cursor: pointer;
   z-index: 10;
-  top: 10px;
+  top: -17vw;
+  left: -10vw;
 }
 
 .letsTalk-circle {
