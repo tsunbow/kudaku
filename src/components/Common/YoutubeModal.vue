@@ -10,6 +10,12 @@ const props = defineProps({
     type: String,
     default: 'HswPW0qeEkE',
   },
+  // PC/SPモード判定用のプロパティ（指定しない場合はレスポンシブ対応）
+  deviceMode: {
+    type: String,
+    default: 'responsive', // 'pc', 'sp', 'responsive'のいずれか
+    validator: (value) => ['pc', 'sp', 'responsive'].includes(value),
+  },
 })
 
 const emit = defineEmits(['close'])
@@ -45,12 +51,40 @@ watch(
   },
 )
 
+// 現在のビューポート幅によるデバイスモードの判定
+const isMobileView = ref(false)
+
+// ビューポートサイズの変更を監視
+const updateViewportSize = () => {
+  // deviceModeが'responsive'の場合のみ、ビューポート幅に基づいてモバイルビューを判定
+  if (props.deviceMode === 'responsive') {
+    isMobileView.value = window.innerWidth <= 768
+  } else {
+    // deviceModeが明示的に設定されている場合は、その値を使用
+    isMobileView.value = props.deviceMode === 'sp'
+  }
+}
+
 onMounted(() => {
   window.addEventListener('keydown', handleKeyDown)
+
+  // 初期表示時にビューポートサイズをチェック
+  updateViewportSize()
+
+  // ウィンドウのリサイズを監視（deviceModeが'responsive'の場合のみ）
+  if (props.deviceMode === 'responsive') {
+    window.addEventListener('resize', updateViewportSize)
+  }
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown)
+
+  // レスポンシブモードの場合、リサイズイベントリスナーを削除
+  if (props.deviceMode === 'responsive') {
+    window.removeEventListener('resize', updateViewportSize)
+  }
+
   // コンポーネントがアンマウントされる時にスクロールを元に戻す
   document.body.style.overflow = ''
 })
@@ -58,7 +92,7 @@ onUnmounted(() => {
 
 <template>
   <div v-if="isOpen" class="youtube-modal-overlay" ref="modalOverlay" @click="handleOverlayClick">
-    <div class="youtube-modal-content">
+    <div class="youtube-modal-content" :class="{ 'mobile-view': isMobileView }">
       <div class="youtube-modal-header">
         <button class="youtube-modal-close" @click="closeModal">×</button>
       </div>
@@ -111,11 +145,10 @@ onUnmounted(() => {
   background: transparent;
   border: none;
   color: white;
-  font-size: 36px; /* SP用に大きめのフォントサイズ */
+  font-size: 24px;
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.2s;
-  padding: 10px 15px; /* タップしやすいようにパディングを増やす */
 }
 
 .youtube-modal-close:hover {
@@ -142,15 +175,33 @@ onUnmounted(() => {
   border: none;
 }
 
-/* モバイル対応の追加スタイル */
+/* モバイルビュー用のスタイル */
+.mobile-view .youtube-modal-content {
+  width: 95%;
+}
+
+.mobile-view .youtube-modal-close {
+  font-size: 36px;
+  padding: 10px 15px; /* タップしやすいようにパディングを増やす */
+}
+
+/* スマホ向けの追加スタイル - deviceModeがresponsiveの場合に適用 */
 @media screen and (max-width: 768px) {
   .youtube-modal-content {
     width: 95%;
   }
 
   .youtube-modal-close {
-    font-size: 40px;
-    padding: 12px 18px;
+    font-size: 36px;
+    padding: 10px 15px;
+  }
+
+  /* さらに小さい画面サイズの場合 */
+  @media screen and (max-width: 480px) {
+    .youtube-modal-close {
+      font-size: 40px;
+      padding: 12px 18px;
+    }
   }
 }
 </style>

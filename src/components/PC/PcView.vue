@@ -12,7 +12,7 @@ import RevealLogo from '@/components/PC/RevealLogo.vue'
 import LottieAnimation from '@/components/Common/LottieAnimation.vue'
 import HoverLottieAnimation from '@/components/PC/HoverLottieAnimation.vue'
 // 新しいYouTubeモーダルコンポーネントをインポート
-import YouTubeModal from '@/components/PC/YoutubeModal.vue'
+import YouTubeModal from '@/components/Common/YoutubeModal.vue'
 
 const isHovered = ref(false)
 const isModalOpen = ref(false)
@@ -303,6 +303,7 @@ onUnmounted(() => {
   <YouTubeModal
     :isOpen="isYoutubeModalOpen"
     :youtubeId="youtubeVideoId"
+    deviceMode="pc"
     @close="closeYoutubeModal"
   />
 </template>
