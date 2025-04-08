@@ -20,7 +20,6 @@ import creativeArea from '@/assets/img/creative-area.svg'
 
 // PC専用アセット
 import play_concept from '@/assets/img/play_concept_pc.svg'
-import lets_talk_pc from '@/assets/img/letstalk_pc.svg'
 import circle_hover from '@/assets/lottie/talk_hover.json'
 import circle_hover_out from '@/assets/lottie/talk_hover_out.json'
 
@@ -48,7 +47,6 @@ export const CommonAssets = {
 // PC用アセットのエクスポート
 export const PCAssets = {
   play_concept: play_concept,
-  lets_talk: lets_talk_pc,
   circle_hover: circle_hover,
   circle_hover_out: circle_hover_out,
 }

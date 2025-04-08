@@ -620,12 +620,6 @@ onUnmounted(() => {
   left: -10vw;
 }
 
-.letsTalk-circle {
-}
-
-.letsTalk-circle-hover {
-}
-
 .style-italic {
   font-family: ivyora-display, sans-serif;
   font-weight: 400;
