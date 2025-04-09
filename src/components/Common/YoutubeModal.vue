@@ -99,7 +99,7 @@ onUnmounted(() => {
       <div class="youtube-modal-body">
         <div class="youtube-video-container">
           <iframe
-            :src="`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=0`"
+            :src="`https://www.youtube.com/embed/${youtubeId}?autoplay=0&mute=0`"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
