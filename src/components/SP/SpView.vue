@@ -36,14 +36,14 @@ const handleScroll = () => {
   const windowHeight = window.innerHeight
 
   // content-wrapper1が完全に見えなくなったかどうかを確認
-  // wrapper1Rectの下端（bottom）が画面の上端（0）より上になった場合
   const isWrapper1Hidden = wrapper1Rect.bottom <= 0
 
   // content-wrapper2が表示領域内に入ったかどうかを確認
   const isContainer2Visible = containerRect.top < windowHeight && containerRect.bottom > 0
 
-  // content-wrapper1が見えなくなり、かつcontent-wrapper2が表示領域内に入っている場合
+  // 表示条件：content-wrapper1が見えなくなり、かつcontent-wrapper2が表示領域内に入っている場合
   if (isWrapper1Hidden && isContainer2Visible) {
+    // 表示の順序を設定：ビデオ → element7 → テキスト → 説明 → ロゴ
     // ビデオの表示
     isVideoVisible.value = true
 
@@ -63,8 +63,10 @@ const handleScroll = () => {
     setTimeout(() => {
       isLogoVisible.value = true
     }, 800)
-  } else if (!isContainer2Visible || !isWrapper1Hidden) {
-    // content-wrapper2が画面外に出たり、content-wrapper1が再度表示されたら要素を非表示に戻す
+  }
+  // 非表示条件：content-wrapper2が画面外に出たり、content-wrapper1が再度表示されたら
+  else if (!isContainer2Visible || !isWrapper1Hidden) {
+    // すべての要素を同時に非表示にする場合
     isVideoVisible.value = false
     isElement7Visible.value = false
     isTextVisible.value = false
@@ -211,6 +213,7 @@ onUnmounted(() => {
           :jsonSrc="CommonAssets.LINE_JSON"
           :loop="false"
           :isVisible="isElement7Visible"
+          :class="{ visible: isElement7Visible }"
           additionalClass="element-7"
           :delay="2000"
         />
