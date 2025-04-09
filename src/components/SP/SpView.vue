@@ -27,6 +27,19 @@ const emailAddress = 'info@kudaku.tokyo'
 const isYoutubeModalOpen = ref(false)
 const youtubeVideoId = ref('HswPW0qeEkE') // YouTube動画ID
 
+// セクションへのスクロール機能
+const scrollToSection = (sectionId) => {
+  // 対象のセクション要素を取得
+  const sectionElement = document.querySelector(`.${sectionId}`)
+  if (sectionElement) {
+    // スムーズスクロールでセクションまで移動
+    window.scrollTo({
+      top: sectionElement.offsetTop,
+      behavior: 'smooth',
+    })
+  }
+}
+
 // スクロール位置を監視する関数
 const handleScroll = () => {
   if (!contentContainer.value || !contentWrapper1.value) return
@@ -123,12 +136,19 @@ onUnmounted(() => {
   <div class="sp">
     <div class="hero">
       <div class="frame-6">
-        <div class="frame-6-text">Statement</div>
-        <div class="frame-6-text">Where We Are</div>
-        <div class="frame-7">
-          <div class="frame-6-text frame-6-text-gray">Our Projects</div>
+        <!-- スクロール機能を追加した各メニュー項目 -->
+        <div class="frame-6-text nav-item" @click="scrollToSection('content-wrapper1')">
+          Statement
         </div>
-        <div class="frame-6-text">Let's Talk</div>
+        <div class="frame-6-text nav-item" @click="scrollToSection('content-wrapper2')">
+          Where We Are
+        </div>
+        <div class="frame-7">
+          <div class="frame-6-text frame-6-text-gray nav-item-disabled">Our Projects</div>
+        </div>
+        <div class="frame-6-text nav-item" @click="scrollToSection('content-wrapper3')">
+          Let's Talk
+        </div>
         <div class="frame-6-text-italic youtube-modal-trigger" @click="openYoutubeModal">
           Play Concept
         </div>
@@ -361,6 +381,20 @@ onUnmounted(() => {
 
 .logo_red {
   filter: blur(10px);
+}
+
+/* ナビゲーションメニュー項目のスタイル */
+.nav-item {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: #ff0000;
+}
+
+.nav-item-disabled {
+  cursor: default;
 }
 
 /* YouTubeモーダルトリガー用スタイル */

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { CommonAssets, PCAssets } from '@/assets/assets.js'
 
 // 既存のコンポーネントをインポート
@@ -60,6 +60,20 @@ const copyEmailToClipboard = () => {
   setTimeout(() => {
     isCopied.value = false
   }, 2000)
+}
+
+// セクションへのスクロール機能
+const scrollToSection = (sectionId) => {
+  // 対象のセクション要素を取得
+  const sectionElement = document.querySelector(`.${sectionId}`)
+  if (sectionElement) {
+    // スムーズスクロールでセクションまで移動
+    // content-wrapper3だけは特別な処理が必要かもしれません
+    window.scrollTo({
+      top: sectionElement.offsetTop,
+      behavior: 'smooth',
+    })
+  }
 }
 
 // content-wrapper1の参照を追加
@@ -181,12 +195,19 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="frame-6">
-        <div class="frame-6-text">Statement</div>
-        <div class="frame-6-text">Where We Are</div>
-        <div class="frame-7">
-          <div class="frame-6-text frame-6-text-gray">Our Projects</div>
+        <!-- スクロール機能を追加した各メニュー項目 -->
+        <div class="frame-6-text nav-item" @click="scrollToSection('content-wrapper1')">
+          Statement
         </div>
-        <div class="frame-6-text">Let's Talk</div>
+        <div class="frame-6-text nav-item" @click="scrollToSection('content-wrapper2')">
+          Where We Are
+        </div>
+        <div class="frame-7">
+          <div class="frame-6-text frame-6-text-gray nav-item-disabled">Our Projects</div>
+        </div>
+        <div class="frame-6-text nav-item" @click="scrollToSection('content-wrapper3')">
+          Let's Talk
+        </div>
         <div class="frame-6-text-italic youtube-modal-trigger" @click="openYoutubeModal">
           Play Concept
         </div>
@@ -372,6 +393,20 @@ onUnmounted(() => {
 
 .youtube-modal-trigger:hover {
   color: #ff0000;
+}
+
+/* ナビゲーションメニュー項目のスタイル */
+.nav-item {
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: #ff0000;
+}
+
+.nav-item-disabled {
+  cursor: default;
 }
 
 /* 以下は既存のスタイル */
