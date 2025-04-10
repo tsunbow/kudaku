@@ -1,7 +1,7 @@
 // MouseFollower.vue
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { PCAssets } from '@/assets/assets.js'
 
 // 基本的なマウス位置の追跡
