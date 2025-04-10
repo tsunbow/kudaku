@@ -304,7 +304,7 @@ onMounted(() => {
 .text-follower.expanded {
   width: v-bind('textWidth + "px"');
   height: v-bind('textWidth + "px"');
-  animation: expand 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: expand 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
 @keyframes expand {
@@ -329,7 +329,7 @@ onMounted(() => {
   /* テキストの表示アニメーションを追加して遅延効果をつける */
   animation: fadeInText 0.3s ease-in forwards;
   /* テキストの表示を円の拡大後に開始するために遅延を追加 */
-  animation-delay: 0.3s;
+  animation-delay: 0.1s;
 }
 
 @keyframes fadeInText {
@@ -359,7 +359,7 @@ onMounted(() => {
   visibility: visible;
   transition:
     opacity 0.3s ease,
-    transform 0.7s ease; /* アニメーション時間を長く、イージングをeaseに */
+    transform 0.3s ease; /* アニメーション時間を長く、イージングをeaseに */
 }
 
 .play-icon.expanded {
