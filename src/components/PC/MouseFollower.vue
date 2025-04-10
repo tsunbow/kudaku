@@ -25,6 +25,7 @@ const textHoverState = ref(false)
 
 // フォロワー状態の管理
 const isExpanded = ref(false) // 円が拡大状態かどうか
+const isVideoExpanded = ref(false) // 動画アイコンが拡大状態かどうか
 
 // YouTubeモーダル用の状態
 const emit = defineEmits(['openYoutubeModal'])
@@ -105,9 +106,24 @@ const handleMouseMove = (e) => {
 
   // トップセクションにいる場合のみターゲットエリアをチェック
   if (isAtTopSection.value && targetRect.value) {
+    const wasInTargetArea = isInTargetArea.value
     isInTargetArea.value = isPointInRect(e.clientX, e.clientY, targetRect.value)
+
+    // ターゲットエリアに入った時のアニメーション
+    if (isInTargetArea.value && !wasInTargetArea) {
+      // アニメーションをリセットしてから開始
+      isVideoExpanded.value = false
+      // 次のフレームで拡大状態に設定
+      setTimeout(() => {
+        isVideoExpanded.value = true
+      }, 16) // 約1フレーム分の遅延
+    } else if (!isInTargetArea.value && wasInTargetArea) {
+      // ターゲットエリアから出た時
+      isVideoExpanded.value = false
+    }
   } else {
     isInTargetArea.value = false
+    isVideoExpanded.value = false
   }
 
   // ホバーしている要素をチェック (対象エリア外の場合のみ)
@@ -248,7 +264,12 @@ onMounted(() => {
       }"
       @click.stop="playVideo"
     >
-      <img alt="play_concept" :src="PCAssets.play_concept" />
+      <img
+        alt="play_concept"
+        :src="PCAssets.play_concept"
+        :class="{ expanded: isVideoExpanded }"
+        class="play-icon"
+      />
     </div>
   </div>
 </template>
@@ -283,7 +304,7 @@ onMounted(() => {
 .text-follower.expanded {
   width: v-bind('textWidth + "px"');
   height: v-bind('textWidth + "px"');
-  animation: expand 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  animation: expand 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
 @keyframes expand {
@@ -308,7 +329,7 @@ onMounted(() => {
   /* テキストの表示アニメーションを追加して遅延効果をつける */
   animation: fadeInText 0.3s ease-in forwards;
   /* テキストの表示を円の拡大後に開始するために遅延を追加 */
-  animation-delay: 0.1s;
+  animation-delay: 0.3s;
 }
 
 @keyframes fadeInText {
@@ -327,5 +348,32 @@ onMounted(() => {
   z-index: 50;
   pointer-events: auto;
   cursor: pointer;
+}
+
+.play-icon {
+  display: block;
+  transform-origin: center;
+  opacity: 0;
+  transform: scale(0.2); /* 初期スケールをより小さく */
+  /* アイコンが非表示の時も位置を維持 */
+  visibility: visible;
+  transition:
+    opacity 0.3s ease,
+    transform 0.7s ease; /* アニメーション時間を長く、イージングをeaseに */
+}
+
+.play-icon.expanded {
+  opacity: 1;
+  transform: scale(1);
+  /* 拡大と透明度変化を同時に行う */
+}
+
+@keyframes fadeInIcon {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 </style>
