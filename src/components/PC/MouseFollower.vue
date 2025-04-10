@@ -1,5 +1,3 @@
-// MouseFollower.vue
-
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { PCAssets } from '@/assets/assets.js'
@@ -25,32 +23,18 @@ const isAtTopSection = ref(true) // ページ上部にいるかどうか
 // テキスト要素のホバー状態
 const textHoverState = ref(false)
 
-// 遷移状態のためのリファレンス
-const isTextHoverTransitioning = ref(false)
-const isVideoHoverTransitioning = ref(false)
-const textHoverOpacity = ref(0)
-const videoHoverOpacity = ref(0)
-const transitionDelay = 300 // ミリ秒単位での遷移遅延
-
-// タイムアウトの参照を保持
-let textHoverTimeoutId = null
-let videoHoverTimeoutId = null
+// フォロワー状態の管理
+const isExpanded = ref(false) // 円が拡大状態かどうか
 
 // YouTubeモーダル用の状態
 const emit = defineEmits(['openYoutubeModal'])
 
-// フォロワーの表示状態 - 遷移状態を考慮
+// フォロワーの表示状態
 const showDefaultFollower = computed(
-  () =>
-    (!isVideoHoverTransitioning.value && !isTextHoverTransitioning.value) ||
-    (videoHoverOpacity.value < 1 && textHoverOpacity.value < 1),
+  () => (!isInTargetArea.value || !isAtTopSection.value) && !textHoverState.value,
 )
-const showTextFollower = computed(
-  () => isTextHoverTransitioning.value || textHoverOpacity.value > 0,
-)
-const showVideoFollower = computed(
-  () => isVideoHoverTransitioning.value || videoHoverOpacity.value > 0,
-)
+const showTextFollower = computed(() => !isInTargetArea.value && textHoverState.value)
+const showVideoFollower = computed(() => isInTargetArea.value && isAtTopSection.value)
 
 // トップセクションの高さ (hero要素の高さを基準にする)
 const topSectionHeight = ref(631) // デフォルト値、後でDOM要素から取得
@@ -73,24 +57,19 @@ const measureTextWidth = (text) => {
 }
 
 // 円のサイズを計算
-const circleSize = computed(() => {
-  if (!textHoverState.value && textHoverOpacity.value <= 0) return { width: 24, height: 24 }
+const getCircleSize = (text) => {
+  if (!text) return 24 // デフォルトサイズ
 
   // テキストの幅に基づいてサイズを計算
   const padding = 10 // テキストの左右のパディング
-  const size = textWidth.value + padding
+  const size = measureTextWidth(text) + padding
 
   // 最小サイズと最大サイズの制限
   const minSize = 80
   const maxSize = 200
 
-  const finalSize = Math.min(Math.max(size, minSize), maxSize)
-
-  return {
-    width: finalSize,
-    height: finalSize,
-  }
-})
+  return Math.min(Math.max(size, minSize), maxSize)
+}
 
 // 対象エリアの位置情報をキャッシュする関数
 const cacheTargetPosition = () => {
@@ -125,22 +104,15 @@ const handleMouseMove = (e) => {
   mousePosition.value = { x: e.clientX, y: e.clientY }
 
   // トップセクションにいる場合のみターゲットエリアをチェック
-  const wasInTargetArea = isInTargetArea.value
   if (isAtTopSection.value && targetRect.value) {
     isInTargetArea.value = isPointInRect(e.clientX, e.clientY, targetRect.value)
   } else {
     isInTargetArea.value = false
   }
 
-  // ターゲットエリアの状態が変わった場合、遷移状態を更新
-  if (wasInTargetArea !== isInTargetArea.value) {
-    handleTargetAreaTransition(isInTargetArea.value && isAtTopSection.value)
-  }
-
   // ホバーしている要素をチェック (対象エリア外の場合のみ)
   if (!isInTargetArea.value || !isAtTopSection.value) {
     const hoveredElement = document.elementFromPoint(e.clientX, e.clientY)
-    const wasHovered = textHoverState.value
 
     // ここで追加の条件チェック：frame-6-text-grayクラスを持つ要素は無視する
     if (
@@ -149,81 +121,28 @@ const handleMouseMove = (e) => {
       !hoveredElement?.classList.contains('frame-6-text-gray') &&
       !hoveredElement?.closest('.nav-item-disabled')
     ) {
+      // 以前の状態がfalseだった場合、拡大アニメーションを開始
+      if (!textHoverState.value) {
+        isExpanded.value = false // アニメーションをリセット
+        // 次のフレームで拡大状態に設定して、CSSアニメーションをトリガー
+        setTimeout(() => {
+          isExpanded.value = true
+        }, 10)
+      }
+
       textHoverState.value = true
-      hoveredText.value = hoveredElement.textContent.trim()
-      textWidth.value = measureTextWidth(hoveredText.value)
+      hoveredText.value = hoveredElement.textContent
+      textWidth.value = getCircleSize(hoveredText.value)
     } else {
       textHoverState.value = false
-    }
-
-    // テキストホバー状態が変わった場合、遷移状態を更新
-    if (wasHovered !== textHoverState.value) {
-      handleTextHoverTransition(textHoverState.value)
+      hoveredText.value = ''
+      isExpanded.value = false
     }
   } else {
     // 対象エリア内ではテキストホバーは無効
-    const wasHovered = textHoverState.value
     textHoverState.value = false
-
-    // テキストホバー状態が変わった場合、遷移状態を更新
-    if (wasHovered) {
-      handleTextHoverTransition(false)
-    }
-  }
-}
-
-// テキストホバー遷移を処理する関数
-const handleTextHoverTransition = (isHovering) => {
-  // 既存の遷移タイマーをクリア
-  if (textHoverTimeoutId) {
-    clearTimeout(textHoverTimeoutId)
-    textHoverTimeoutId = null
-  }
-
-  // 遷移状態を開始
-  isTextHoverTransitioning.value = true
-
-  if (isHovering) {
-    // ホバー開始時は遅延後に不透明度を徐々に上げる
-    textHoverTimeoutId = setTimeout(() => {
-      textHoverOpacity.value = 1
-    }, transitionDelay)
-  } else {
-    // ホバー終了時は不透明度を徐々に下げる
-    textHoverOpacity.value = 0
-
-    // 不透明度アニメーション完了後に遷移状態を終了
-    textHoverTimeoutId = setTimeout(() => {
-      isTextHoverTransitioning.value = false
-      hoveredText.value = ''
-    }, 300) // CSSトランジションの時間と合わせる
-  }
-}
-
-// ターゲットエリア遷移を処理する関数
-const handleTargetAreaTransition = (isInTarget) => {
-  // 既存の遷移タイマーをクリア
-  if (videoHoverTimeoutId) {
-    clearTimeout(videoHoverTimeoutId)
-    videoHoverTimeoutId = null
-  }
-
-  // 遷移状態を開始
-  isVideoHoverTransitioning.value = true
-
-  if (isInTarget) {
-    // ホバー開始時は遅延後に不透明度を徐々に上げる
-    videoHoverTimeoutId = setTimeout(() => {
-      videoHoverOpacity.value = 1
-    }, transitionDelay)
-  } else {
-    // ホバー終了時は不透明度を徐々に下げる
-    videoHoverOpacity.value = 0
-
-    // 不透明度アニメーション完了後に遷移状態を終了
-    videoHoverTimeoutId = setTimeout(() => {
-      isVideoHoverTransitioning.value = false
-    }, 300) // CSSトランジションの時間と合わせる
+    hoveredText.value = ''
+    isExpanded.value = false
   }
 }
 
@@ -243,7 +162,7 @@ const updateFollowerPosition = () => {
 
 // 動画を再生する関数
 const playVideo = () => {
-  if ((isInTargetArea.value && isAtTopSection.value) || videoHoverOpacity.value > 0.5) {
+  if (isInTargetArea.value && isAtTopSection.value) {
     // 親コンポーネントにYouTubeモーダルを開くイベントを発行
     emit('openYoutubeModal')
   }
@@ -286,10 +205,6 @@ onMounted(() => {
     window.removeEventListener('scroll', handleScroll)
     clearInterval(intervalId)
 
-    // タイマーをクリア
-    if (textHoverTimeoutId) clearTimeout(textHoverTimeoutId)
-    if (videoHoverTimeoutId) clearTimeout(videoHoverTimeoutId)
-
     // アニメーションフレームをキャンセル
     if (animationFrameId !== null) {
       cancelAnimationFrame(animationFrameId)
@@ -307,12 +222,6 @@ onMounted(() => {
       :style="{
         left: `${followerPosition.x}px`,
         top: `${followerPosition.y}px`,
-        width: '24px',
-        height: '24px',
-        opacity:
-          textHoverOpacity > 0 || videoHoverOpacity > 0
-            ? 1 - Math.max(textHoverOpacity, videoHoverOpacity)
-            : 1,
       }"
     ></div>
 
@@ -320,15 +229,13 @@ onMounted(() => {
     <div
       v-show="showTextFollower"
       class="follower text-follower"
+      :class="{ expanded: isExpanded }"
       :style="{
         left: `${followerPosition.x}px`,
         top: `${followerPosition.y}px`,
-        width: `${circleSize.width}px`,
-        height: `${circleSize.height}px`,
-        opacity: textHoverOpacity,
       }"
     >
-      <span class="follower-text">{{ hoveredText }}</span>
+      <span class="follower-text" v-if="isExpanded">{{ hoveredText }}</span>
     </div>
 
     <!-- 対象エリア上でのフォロワー（遅延あり） -->
@@ -338,7 +245,6 @@ onMounted(() => {
       :style="{
         left: `${followerPosition.x}px`,
         top: `${followerPosition.y}px`,
-        opacity: videoHoverOpacity,
       }"
       @click.stop="playVideo"
     >
@@ -363,16 +269,32 @@ onMounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition:
-    width 0.3s ease,
-    height 0.3s ease,
-    opacity 0.3s ease;
-  /* 位置のトランジションは削除（アニメーションフレームで処理） */
+  width: 24px;
+  height: 24px;
 }
 
 .text-follower {
-  /* テキスト表示用フォロワーのスタイル */
-  opacity: 0;
+  /* 初期の小さいサイズとテキスト表示用フォロワーのスタイル */
+  width: 24px;
+  height: 24px;
+}
+
+/* 拡大状態のクラス */
+.text-follower.expanded {
+  width: v-bind('textWidth + "px"');
+  height: v-bind('textWidth + "px"');
+  animation: expand 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes expand {
+  from {
+    width: 24px;
+    height: 24px;
+  }
+  to {
+    width: v-bind('textWidth + "px"');
+    height: v-bind('textWidth + "px"');
+  }
 }
 
 .follower-text {
@@ -382,6 +304,20 @@ onMounted(() => {
   text-align: center;
   font-family: ivyora-display, sans-serif;
   padding: 0 20px;
+  opacity: 0;
+  /* テキストの表示アニメーションを追加して遅延効果をつける */
+  animation: fadeInText 0.3s ease-in forwards;
+  /* テキストの表示を円の拡大後に開始するために遅延を追加 */
+  animation-delay: 0.1s;
+}
+
+@keyframes fadeInText {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Movie play follower styles */
@@ -391,7 +327,5 @@ onMounted(() => {
   z-index: 50;
   pointer-events: auto;
   cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease;
 }
 </style>
