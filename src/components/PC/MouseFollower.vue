@@ -115,9 +115,13 @@ const handleMouseMove = (e) => {
   // ホバーしている要素をチェック (対象エリア外の場合のみ)
   if (!isInTargetArea.value || !isAtTopSection.value) {
     const hoveredElement = document.elementFromPoint(e.clientX, e.clientY)
+
+    // ここで追加の条件チェック：frame-6-text-grayクラスを持つ要素は無視する
     if (
-      hoveredElement?.classList.contains('frame-6-text') ||
-      hoveredElement?.classList.contains('frame-6-text-italic')
+      (hoveredElement?.classList.contains('frame-6-text') ||
+        hoveredElement?.classList.contains('frame-6-text-italic')) &&
+      !hoveredElement?.classList.contains('frame-6-text-gray') &&
+      !hoveredElement?.closest('.nav-item-disabled')
     ) {
       textHoverState.value = true
       hoveredText.value = hoveredElement.textContent
