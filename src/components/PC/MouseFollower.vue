@@ -1,5 +1,7 @@
+// MouseFollower.vue
+
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue'
 import { PCAssets } from '@/assets/assets.js'
 
 // 基本的なマウス位置の追跡
@@ -23,15 +25,32 @@ const isAtTopSection = ref(true) // ページ上部にいるかどうか
 // テキスト要素のホバー状態
 const textHoverState = ref(false)
 
+// 遷移状態のためのリファレンス
+const isTextHoverTransitioning = ref(false)
+const isVideoHoverTransitioning = ref(false)
+const textHoverOpacity = ref(0)
+const videoHoverOpacity = ref(0)
+const transitionDelay = 300 // ミリ秒単位での遷移遅延
+
+// タイムアウトの参照を保持
+let textHoverTimeoutId = null
+let videoHoverTimeoutId = null
+
 // YouTubeモーダル用の状態
 const emit = defineEmits(['openYoutubeModal'])
 
-// フォロワーの表示状態 - トップセクションにいる場合のみvideo-frame機能を有効化
+// フォロワーの表示状態 - 遷移状態を考慮
 const showDefaultFollower = computed(
-  () => (!isInTargetArea.value || !isAtTopSection.value) && !textHoverState.value,
+  () =>
+    (!isVideoHoverTransitioning.value && !isTextHoverTransitioning.value) ||
+    (videoHoverOpacity.value < 1 && textHoverOpacity.value < 1),
 )
-const showTextFollower = computed(() => !isInTargetArea.value && textHoverState.value)
-const showVideoFollower = computed(() => isInTargetArea.value && isAtTopSection.value)
+const showTextFollower = computed(
+  () => isTextHoverTransitioning.value || textHoverOpacity.value > 0,
+)
+const showVideoFollower = computed(
+  () => isVideoHoverTransitioning.value || videoHoverOpacity.value > 0,
+)
 
 // トップセクションの高さ (hero要素の高さを基準にする)
 const topSectionHeight = ref(631) // デフォルト値、後でDOM要素から取得
@@ -55,7 +74,7 @@ const measureTextWidth = (text) => {
 
 // 円のサイズを計算
 const circleSize = computed(() => {
-  if (!textHoverState.value) return { width: 24, height: 24 }
+  if (!textHoverState.value && textHoverOpacity.value <= 0) return { width: 24, height: 24 }
 
   // テキストの幅に基づいてサイズを計算
   const padding = 10 // テキストの左右のパディング
@@ -106,15 +125,22 @@ const handleMouseMove = (e) => {
   mousePosition.value = { x: e.clientX, y: e.clientY }
 
   // トップセクションにいる場合のみターゲットエリアをチェック
+  const wasInTargetArea = isInTargetArea.value
   if (isAtTopSection.value && targetRect.value) {
     isInTargetArea.value = isPointInRect(e.clientX, e.clientY, targetRect.value)
   } else {
     isInTargetArea.value = false
   }
 
+  // ターゲットエリアの状態が変わった場合、遷移状態を更新
+  if (wasInTargetArea !== isInTargetArea.value) {
+    handleTargetAreaTransition(isInTargetArea.value && isAtTopSection.value)
+  }
+
   // ホバーしている要素をチェック (対象エリア外の場合のみ)
   if (!isInTargetArea.value || !isAtTopSection.value) {
     const hoveredElement = document.elementFromPoint(e.clientX, e.clientY)
+    const wasHovered = textHoverState.value
 
     // ここで追加の条件チェック：frame-6-text-grayクラスを持つ要素は無視する
     if (
@@ -124,16 +150,80 @@ const handleMouseMove = (e) => {
       !hoveredElement?.closest('.nav-item-disabled')
     ) {
       textHoverState.value = true
-      hoveredText.value = hoveredElement.textContent
+      hoveredText.value = hoveredElement.textContent.trim()
       textWidth.value = measureTextWidth(hoveredText.value)
     } else {
       textHoverState.value = false
-      hoveredText.value = ''
+    }
+
+    // テキストホバー状態が変わった場合、遷移状態を更新
+    if (wasHovered !== textHoverState.value) {
+      handleTextHoverTransition(textHoverState.value)
     }
   } else {
     // 対象エリア内ではテキストホバーは無効
+    const wasHovered = textHoverState.value
     textHoverState.value = false
-    hoveredText.value = ''
+
+    // テキストホバー状態が変わった場合、遷移状態を更新
+    if (wasHovered) {
+      handleTextHoverTransition(false)
+    }
+  }
+}
+
+// テキストホバー遷移を処理する関数
+const handleTextHoverTransition = (isHovering) => {
+  // 既存の遷移タイマーをクリア
+  if (textHoverTimeoutId) {
+    clearTimeout(textHoverTimeoutId)
+    textHoverTimeoutId = null
+  }
+
+  // 遷移状態を開始
+  isTextHoverTransitioning.value = true
+
+  if (isHovering) {
+    // ホバー開始時は遅延後に不透明度を徐々に上げる
+    textHoverTimeoutId = setTimeout(() => {
+      textHoverOpacity.value = 1
+    }, transitionDelay)
+  } else {
+    // ホバー終了時は不透明度を徐々に下げる
+    textHoverOpacity.value = 0
+
+    // 不透明度アニメーション完了後に遷移状態を終了
+    textHoverTimeoutId = setTimeout(() => {
+      isTextHoverTransitioning.value = false
+      hoveredText.value = ''
+    }, 300) // CSSトランジションの時間と合わせる
+  }
+}
+
+// ターゲットエリア遷移を処理する関数
+const handleTargetAreaTransition = (isInTarget) => {
+  // 既存の遷移タイマーをクリア
+  if (videoHoverTimeoutId) {
+    clearTimeout(videoHoverTimeoutId)
+    videoHoverTimeoutId = null
+  }
+
+  // 遷移状態を開始
+  isVideoHoverTransitioning.value = true
+
+  if (isInTarget) {
+    // ホバー開始時は遅延後に不透明度を徐々に上げる
+    videoHoverTimeoutId = setTimeout(() => {
+      videoHoverOpacity.value = 1
+    }, transitionDelay)
+  } else {
+    // ホバー終了時は不透明度を徐々に下げる
+    videoHoverOpacity.value = 0
+
+    // 不透明度アニメーション完了後に遷移状態を終了
+    videoHoverTimeoutId = setTimeout(() => {
+      isVideoHoverTransitioning.value = false
+    }, 300) // CSSトランジションの時間と合わせる
   }
 }
 
@@ -153,7 +243,7 @@ const updateFollowerPosition = () => {
 
 // 動画を再生する関数
 const playVideo = () => {
-  if (isInTargetArea.value && isAtTopSection.value) {
+  if ((isInTargetArea.value && isAtTopSection.value) || videoHoverOpacity.value > 0.5) {
     // 親コンポーネントにYouTubeモーダルを開くイベントを発行
     emit('openYoutubeModal')
   }
@@ -196,6 +286,10 @@ onMounted(() => {
     window.removeEventListener('scroll', handleScroll)
     clearInterval(intervalId)
 
+    // タイマーをクリア
+    if (textHoverTimeoutId) clearTimeout(textHoverTimeoutId)
+    if (videoHoverTimeoutId) clearTimeout(videoHoverTimeoutId)
+
     // アニメーションフレームをキャンセル
     if (animationFrameId !== null) {
       cancelAnimationFrame(animationFrameId)
@@ -215,6 +309,10 @@ onMounted(() => {
         top: `${followerPosition.y}px`,
         width: '24px',
         height: '24px',
+        opacity:
+          textHoverOpacity > 0 || videoHoverOpacity > 0
+            ? 1 - Math.max(textHoverOpacity, videoHoverOpacity)
+            : 1,
       }"
     ></div>
 
@@ -227,6 +325,7 @@ onMounted(() => {
         top: `${followerPosition.y}px`,
         width: `${circleSize.width}px`,
         height: `${circleSize.height}px`,
+        opacity: textHoverOpacity,
       }"
     >
       <span class="follower-text">{{ hoveredText }}</span>
@@ -239,6 +338,7 @@ onMounted(() => {
       :style="{
         left: `${followerPosition.x}px`,
         top: `${followerPosition.y}px`,
+        opacity: videoHoverOpacity,
       }"
       @click.stop="playVideo"
     >
@@ -264,13 +364,15 @@ onMounted(() => {
   align-items: center;
   justify-content: center;
   transition:
-    width 0.2s ease,
-    height 0.2s ease;
+    width 0.3s ease,
+    height 0.3s ease,
+    opacity 0.3s ease;
   /* 位置のトランジションは削除（アニメーションフレームで処理） */
 }
 
 .text-follower {
   /* テキスト表示用フォロワーのスタイル */
+  opacity: 0;
 }
 
 .follower-text {
@@ -289,5 +391,7 @@ onMounted(() => {
   z-index: 50;
   pointer-events: auto;
   cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 </style>
