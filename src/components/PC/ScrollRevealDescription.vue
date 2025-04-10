@@ -67,7 +67,7 @@ const descriptionSections = [
     lines: [
       { text: '私たちは並び歩む.', isEmphasis: false },
       {
-        text: 'クライアントと本音で向きあい, 感性を共有しながら.',
+        text: 'クライアントと本音で向き合い, 感性を共有しながら.',
         isEmphasis: false,
         emphasisParts: [
           { start: 10, end: 14 },
