@@ -489,7 +489,7 @@ onUnmounted(() => {
   aspect-ratio: 116 / 56;
   position: absolute;
   left: 14%;
-  top: 21vw;
+  top: calc(35vh - 200px);
 }
 
 .logo_kudaku {
